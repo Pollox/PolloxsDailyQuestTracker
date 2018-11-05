@@ -9,7 +9,7 @@
 					<Dimensions x="150" y="25" />
 				</Label>
 				<Texture name="$(parent)Status">
-					<Anchor point="LEFT" relativeTo="$(parent)Name" relativePoint="RIGHT" offsetX="10" />
+					<Anchor point="RIGHT" relativeTo="$(parent)" relativePoint="RIGHT" />
 					<Dimensions x="25" y="25" />
 				</Texture>
 			</Controls>
@@ -21,7 +21,7 @@
 			<Controls>
 				<Label name="$(parent)Name" font="ZoFontGameBold">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
-					<Dimensions y="25"/>
+					<Dimensions x="200" y="25"/>
 				</Label>
 			</Controls>
 		</Control>
@@ -43,7 +43,7 @@
 				
 				<Button name="$(parent)CloseButton">
 					<Dimensions y="25" x="25" />
-					<Anchor point="9" relativePoint="9" relativeTo="$(parent)" offsetX="-5" offsetY="5" />
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetX="-5" offsetY="5" />
 					<Textures normal="esoui/art/buttons/decline_up.dds" pressed="esoui/art/buttons/decline_down.dds" mouseOver="esoui/art/buttons/decline_over.dds" />
 					<OnClicked>DailyQuestTracker.closeWindow()</OnClicked>
 				</Button>
