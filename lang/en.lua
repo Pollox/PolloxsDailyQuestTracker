@@ -58,7 +58,7 @@ L = {}
 -- Murkmire Prequel (Cyrodilic Collections) Quests
 	L.DQT_CYRODILIC_COLLECTIONS_1 		= "A Taste for Toxins"
 	L.DQT_CYRODILIC_COLLECTIONS_2 		= "Anti-Venom Agitation"
-	L.DQT_CYRODILIC_COLLECTIONS_3 		= "Bug Off"
+	L.DQT_CYRODILIC_COLLECTIONS_3 		= "Bug Off!"
 	L.DQT_CYRODILIC_COLLECTIONS_4 		= "Reeling in Recruits"
 	L.DQT_CYRODILIC_COLLECTIONS_5 		= "Salty Meats"
 	L.DQT_CYRODILIC_COLLECTIONS_6 		= "The Winds of Kyne"
