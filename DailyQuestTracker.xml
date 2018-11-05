@@ -1,0 +1,57 @@
+<GuiXml>
+    <Controls>
+		<Control name="DQTQuestRow" virtual="true">
+			<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+			<Dimensions y="25"/>
+			<Controls>
+				<Label name="$(parent)Name" font="ZoFontGame">
+					<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+					<Dimensions x="150" y="25" />
+				</Label>
+				<Texture name="$(parent)Status">
+					<Anchor point="LEFT" relativeTo="$(parent)Name" relativePoint="RIGHT" offsetX="10" />
+					<Dimensions x="25" y="25" />
+				</Texture>
+			</Controls>
+		</Control>
+		
+		<!-- Container for multiple DQTQuestRow controls -->
+		<Control name="DQTQuestSection" virtual="true">
+			<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+			<Controls>
+				<Label name="$(parent)Name" font="ZoFontGameBold">
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+					<Dimensions y="25"/>
+				</Label>
+			</Controls>
+		</Control>
+		
+        <TopLevelControl name="DQTWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true">
+            <Dimensions x="400" y="900" />
+            <Anchor point="CENTER" />
+ 
+            <OnUpdate>
+                DailyQuestTracker:update()
+            </OnUpdate>
+			
+            <Controls>
+                <Backdrop name="$(parent)BG" inherits="ZO_ThinBackdrop" />
+				
+                <Label name="$(parent)TimeUntilReset" font="ZoFontWindowSubtitle" text="Time until reset: unknown">
+                    <Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="10" offsetY="5" />
+                </Label>
+				
+				<Button name="$(parent)CloseButton">
+					<Dimensions y="25" x="25" />
+					<Anchor point="9" relativePoint="9" relativeTo="$(parent)" offsetX="-5" offsetY="5" />
+					<Textures normal="esoui/art/buttons/decline_up.dds" pressed="esoui/art/buttons/decline_down.dds" mouseOver="esoui/art/buttons/decline_over.dds" />
+					<OnClicked>DailyQuestTracker.closeWindow()</OnClicked>
+				</Button>
+				
+				<Control name="$(parent)DummyFrame" horizontalAlignment="0" verticalAlignment="1">
+					<Anchor point="3" relativePoint="3" relativeTo="$(parent)" offsetX="10" offsetY="40" />
+				</Control>
+            </Controls>
+        </TopLevelControl>
+    </Controls>
+</GuiXml>
