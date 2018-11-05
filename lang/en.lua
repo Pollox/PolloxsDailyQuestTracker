@@ -97,6 +97,23 @@ L = {}
 	L.DQT_MAGES_GUILD_14				= "Madness in Stormhaven"
 	L.DQT_MAGES_GUILD_15				= "Madness in the Rift"
 
+-- Undaunted Delve Quests
+	L.DQT_UNDAUNTED_DELVE_1				= "Ancestor Wards in Deshaan"
+	L.DQT_UNDAUNTED_DELVE_2				= "Ancient Armaments in Bangkorai"
+	L.DQT_UNDAUNTED_DELVE_3				= "Ayleid Trinkets in Grahtwood"
+	L.DQT_UNDAUNTED_DELVE_4				= "Culinary Justice in Greenshade"
+	L.DQT_UNDAUNTED_DELVE_5				= "Cursed Baubles of Stormhaven"
+	L.DQT_UNDAUNTED_DELVE_6				= "Darkness Blooms in Rivenspire"
+	L.DQT_UNDAUNTED_DELVE_7				= "Dwarven Relics of Stonefalls"
+	L.DQT_UNDAUNTED_DELVE_8				= "Give and Take in Shadowfen"
+	L.DQT_UNDAUNTED_DELVE_9				= "Icy Intrigue in Eastmarch"
+	L.DQT_UNDAUNTED_DELVE_10			= "Inflamed Pyres of The Rift"
+	L.DQT_UNDAUNTED_DELVE_11			= "Mascot Theft in Reaper's March"
+	L.DQT_UNDAUNTED_DELVE_12			= "Molten Pearls of Alik'r Desert"
+	L.DQT_UNDAUNTED_DELVE_13			= "Red Rook Ransack in Glenumbra"
+	L.DQT_UNDAUNTED_DELVE_14			= "The Spirit Trap in Malabal Tor"
+	L.DQT_UNDAUNTED_DELVE_15			= "Veiled Darkness in Auridon"
+
 -- Wrothgar Delve Quests
 	L.DQT_WROTHGAR_DELVE_1				= "Breakfast of the Bizarre"
 	L.DQT_WROTHGAR_DELVE_2				= "Fire in the Hold"
