@@ -1,8 +1,11 @@
 ## Title: Pollox's Daily Quest Tracker
 ## Author: pollox
 ## Version: 0.3
-## APIVersion: 100024
+## APIVersion: 100025
+## DependsOn: LibAddonMenu-2.0
 ## SavedVariables: PolloxsDailyQuestTracker_SavedVarsChar PolloxsDailyQuestTracker_SavedVarsAccount
+##
+## Description: Tracks which daily quests you've completed today, and which ones you're still eligible for.
 ##
 ## This Add-on is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. 
 ## The Elder Scrolls® and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the United States and/or other countries. 
@@ -14,6 +17,7 @@ lang/en.lua
 lang/$(language.lua)
 
 DQTInfo.lua
+settings.lua
 DailyQuestTracker.lua
 DailyQuestTracker.xml
 Bindings.xml

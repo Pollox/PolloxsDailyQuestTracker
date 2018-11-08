@@ -4,6 +4,22 @@ DailyQuestTracker.name = "PolloxsDailyQuestTracker"
 DailyQuestTracker.checkedTexture = "/esoui/art/buttons/checkbox_checked.dds"
 DailyQuestTracker.uncheckedTexture = "esoui/art/buttons/checkbox_unchecked.dds"
 
+--[[ Get the quest sections to show
+
+	 @return a filtered version of DQTInfo.Quests
+--]]
+function DailyQuestTracker:getSectionsToShow()
+	local questSections = {}
+	
+	for _, section in ipairs(DQTInfo.Quests) do
+		if self.savedVarsAccount.settings.sectionsToShow[section.name] then
+			questSections[#questSections + 1] = section
+		end
+	end
+	
+	return questSections
+end
+
 --[[ Get the names of all the quests to track
      
      @return a set of quest names. Do "if questNames['foo']" to see if foo is in set
@@ -12,6 +28,7 @@ function DailyQuestTracker:getAllQuestNames()
 	if not self.allQuestNames then
 		local allQuestNames = {}
 		
+		-- track all quests, even if we're not currently showing them
 		for _, section in ipairs(DQTInfo.Quests) do		
 			for _, questNames in pairs(section.quests) do
 				for _, questName in ipairs(questNames) do
@@ -208,7 +225,7 @@ function DailyQuestTracker:updateRows()
 	self.tree:Reset()
 	
 	-- Create a section for each category of quests
-	for _, section in ipairs(DQTInfo.Quests) do
+	for _, section in ipairs(self:getSectionsToShow()) do
 		local sectionNode = self.tree:AddNode("DQTQuestSection", {name = section.name})
 		
 		-- Create a row for each quest in this section
@@ -283,18 +300,7 @@ function DailyQuestTracker:initialize()
 	ZO_CreateStringId("SI_BINDING_NAME_DTQ_TOGGLE_DISPLAY", GetString(SI_DQT_TOGGLE_DISPLAY))
 	
 	-- load account-wide saved variables
-	local x, y = DQTWindow:GetScreenRect()
-	local width, height = DQTWindow:GetDimensions()
-	
-	defaultSavedVarsAccount = {
-		windowProperties = {
-			x = x,
-			y = y,
-			width = width,
-			height = height
-		}
-	}
-	self.savedVarsAccount = ZO_SavedVars:NewAccountWide("PolloxsDailyQuestTracker_SavedVarsAccount", 1, nil, defaultSavedVarsAccount)
+	self.savedVarsAccount = ZO_SavedVars:NewAccountWide("PolloxsDailyQuestTracker_SavedVarsAccount", 1, nil, DQTSettings:getAccountDefaults())
 	
 	-- reload previous window postion/size, and enable saving of postion/size
 	self.windowProperties = self.savedVarsAccount.windowProperties
@@ -317,6 +323,9 @@ function DailyQuestTracker:initialize()
 		self.savedVarsPerChar[character.id] = ZO_SavedVars:New("PolloxsDailyQuestTracker_SavedVarsChar",
 			1, nil, defaultSavedVarsChar, nil, nil, character.name, character.id, ZO_SAVED_VARS_CHARACTER_ID_KEY)
 	end
+	
+	-- setup settings in menu
+	DQTSettings:initialize(self.savedVarsAccount.settings)
 	
 	-- quest statuses for the current character
 	self.questStatuses = self.savedVarsPerChar[GetCurrentCharacterId()].questStatuses
