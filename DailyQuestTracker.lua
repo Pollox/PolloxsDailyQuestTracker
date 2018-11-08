@@ -20,7 +20,8 @@ local function getCurrentTime()
 	return os.time(os.date("!*t"))
 end
 
---[[
+--[[ Update quest added time
+	
 	@param eventCode (number)
 	@param journalIndex (number)
 	@param questName (string)
@@ -36,7 +37,8 @@ function DailyQuestTracker.onQuestAdded(eventCode, journalIndex, questName, obje
 	end
 end
 
---[[
+--[[ Update quest completed status
+	
 	@param eventCode (number)
 	@param questName (string)
 	@param level (number)
@@ -62,11 +64,12 @@ end
 	@param resetTime (integer) UTC time in seconds
 	@param questNames (list of strings) all the possible quest names for this quest
 --]]
-function DailyQuestTracker:isDailyQuestComplete(questNames)
+function DailyQuestTracker:isDailyQuestComplete(characterId, questNames)
+	local questStatuses = self.savedVarsPerChar[characterId].questStatuses
 	local previousResetTime = self.resetTime - 86400
 	
 	for _, questName in ipairs(questNames) do
-		questStatus = self.questStatuses[questName]
+		questStatus = questStatuses[questName]
 		
 		if questStatus then			
 			-- only count quest if it is completed and it wasn't picked up yesterday
@@ -95,13 +98,18 @@ function DailyQuestTracker.getResetTime()
 	return resetTime
 end
 
+function DailyQuestTracker:onShow()
+	-- FIXME: this reads in the latest quest data when you show the window, but it doesn't work if you have it open when you turn in a quest
+	self:updateRows()
+end
+
 function DailyQuestTracker:update()
 	local currentTime = getCurrentTime()
 	
-	-- calculate next reset time if necessary
+	-- calculate next reset time if necessary, and update rows
 	if self.resetTime < currentTime then
 		self.resetTime = self.getResetTime()
-		self:createRows()
+		self:updateRows()
 	end
 	
 	local timeUntilReset = os.difftime(self.resetTime, currentTime)
@@ -129,23 +137,81 @@ local function TreeSectionSetup(node, control, data, open, userRequested, enable
 	control:GetNamedChild("Name"):SetText(data.name)
 end
 
--- data {name: quest type name, isCompletedToday: (boolean)}
-local function TreeQuestTypeSetup(node, control, data, open, userRequested, enabled)
-	control:GetNamedChild("Name"):SetText(data.name)
+-- data {name: quest type name, isCompletedTodays: characterId -> (boolean)}
+function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open, userRequested, enabled)
+	local nameControl = questTypeControl:GetNamedChild("Name")
+	nameControl:SetText(data.name)
 	
-	local statusTexture = data.isCompletedToday and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture	
-	control:GetNamedChild("Status"):SetTexture(statusTexture)
+	local columnIndex = 1
+	local previousStatusControl = nil
+	
+	for characterId, _ in pairs(DailyQuestTracker.characterNames) do
+		local statusTexture = data.isCompletedTodays[characterId] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
+		local statusControl = questTypeControl:GetNamedChild("Status"..columnIndex)
+		statusControl:SetHidden(false)
+		statusControl:SetTexture(statusTexture)
+		
+		if previousStatusControl then
+			statusControl:SetAnchor(LEFT, previousStatusControl, RIGHT, DailyQuestTracker.headerColumnWidth - statusControl:GetWidth())
+		else
+			statusControl:SetAnchor(LEFT, nameControl, RIGHT)
+		end
+		
+		columnIndex = columnIndex + 1
+		previousStatusControl = statusControl
+	end
 end
 
-function DailyQuestTracker:createRows()
+function DailyQuestTracker:createHeader()
+	local headerControl = DQTWindow:GetNamedChild("Header")
+	local previousControl = nil
+	local headerHeight = 0
+	local headerXOffset = 10
+	
+	for characterId, characterName in pairs(self.characterNames) do
+		-- convert character name to display name
+		characterName = zo_strformat("<<1>>", characterName)
+		
+		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", characterId)
+		columnHeaderControl:SetText(characterName)
+		columnHeaderControl:SetWidth(self.headerColumnWidth - headerXOffset)
+		
+		if previousControl then
+			columnHeaderControl:SetAnchor(LEFT, previousControl, RIGHT, headerXOffset)
+		end
+		
+		columnHeaderHeight = columnHeaderControl:GetHeight()
+		
+		if columnHeaderHeight > headerHeight then
+			headerHeight = columnHeaderHeight
+		end
+		
+		previousControl = columnHeaderControl
+	end
+	
+	headerControl:SetHeight(columnHeaderHeight)
+end
+
+function DailyQuestTracker:updateRows()
+	-- seems that we have to remake the tree for any of our changes to show
+	self.tree:Reset()
+	
 	-- Create a section for each category of quests
 	for _, section in ipairs(DQTInfo.Quests) do
 		local sectionNode = self.tree:AddNode("DQTQuestSection", {name = section.name})
 		
 		-- Create a row for each quest in this section
 		for questTypeName, questNames in pairs(section.quests) do
-			local questTypeData = {name = questTypeName,
-				isCompletedToday = self:isDailyQuestComplete(questNames)}
+			local isCompletedTodays = {}
+			
+			for characterId, _ in pairs(self.characterNames) do
+				isCompletedTodays[characterId] = self:isDailyQuestComplete(characterId, questNames)
+			end
+			
+			local questTypeData = {
+				name = questTypeName,
+				isCompletedTodays = isCompletedTodays
+			}
 			self.tree:AddNode("DQTQuestType", questTypeData, sectionNode)
 		end
 		
@@ -153,22 +219,85 @@ function DailyQuestTracker:createRows()
 	end
 end
 
+function DailyQuestTracker:onMoveStop()
+	local x, y = DQTWindow:GetScreenRect()
+	self.windowProperties.x = x
+	self.windowProperties.y = y
+end
+
+function DailyQuestTracker:onResizeStop()
+	local width, height = DQTWindow:GetDimensions()
+	self.windowProperties.width = width
+	self.windowProperties.height = height
+end
+
+-- initializes window size and position from saved properties
+function DailyQuestTracker:initializeWindowProperties()
+	local properties = self.windowProperties
+	DQTWindow:ClearAnchors()
+	DQTWindow:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, properties.x, properties.y)
+	DQTWindow:SetDimensions(properties.width, properties.height)
+end
+
 function DailyQuestTracker:initialize()
 	-- Register keybindings
 	ZO_CreateStringId("SI_BINDING_NAME_DTQ_TOGGLE_DISPLAY", "Toggle Display")
 	
-	self.SavedVariables = ZO_SavedVars:New("PolloxsDailyQuestTracker_SavedVariables", 3, nil, {questStatuses = {}})
+	-- load account-wide saved variables
+	local x, y = DQTWindow:GetScreenRect()
+	local width, height = DQTWindow:GetDimensions()
 	
-	-- Quest Name -> (time added (in utc), completed (boolean))
-	self.questStatuses = self.SavedVariables.questStatuses
+	defaultSavedVarsAccount = {
+		windowProperties = {
+			x = x,
+			y = y,
+			width = width,
+			height = height
+		}
+	}
+	self.savedVarsAccount = ZO_SavedVars:NewAccountWide("PolloxsDailyQuestTracker_SavedVarsAccount", 1, nil, defaultSavedVarsAccount)
 	
+	--[[ character id ->
+			Quest Name -> (time added (in utc), completed (boolean))
+	--]]
+	
+	-- reload previous window postion/size, and enable saving of postion/size
+	self.windowProperties = self.savedVarsAccount.windowProperties
+	self:initializeWindowProperties()
+	
+	--[[ load saved variables for each character
+		 character id -> saved variables for that character
+	--]]
+	self.savedVarsPerChar = {}
+	
+	-- character id -> character name
+	self.characterNames = {}
+	
+	for i = 1, GetNumCharacters() do
+		defaultSavedVarsChar = {
+			questStatuses = {},
+		}
+		
+		local characterName, _, _, _, _, _, characterId = GetCharacterInfo(i)
+		self.characterNames[characterId] = characterName
+		self.savedVarsPerChar[characterId] = ZO_SavedVars:New("PolloxsDailyQuestTracker_SavedVarsChar", 1, nil, defaultSavedVarsChar, nil, nil, characterName, characterId, nil)
+	end
+	
+	-- quest statuses for the current character
+	self.questStatuses = self.savedVarsPerChar[GetCurrentCharacterId()].questStatuses
+	
+	-- initialize window data
 	self.resetTime = self.getResetTime()
 	
+	-- self.headerColumnWidth = self:getLongestCharName()
+	self.headerColumnWidth = 100
+	self:createHeader()
+	
 	local scrollContainer = DQTWindow:GetNamedChild("ScrollFrame")
-	self.tree = ZO_Tree:New(scrollContainer:GetNamedChild("ScrollChild"), 0, 0, 500)
-	self.tree:AddTemplate("DQTQuestSection", TreeSectionSetup, nil, nil, 0, 0)
-	self.tree:AddTemplate("DQTQuestType", TreeQuestTypeSetup, nil, nil, 0, 0)
-	self:createRows()
+	self.tree = ZO_Tree:New(scrollContainer:GetNamedChild("ScrollChild"), 0, 0, 2000)
+	self.tree:AddTemplate("DQTQuestSection", TreeSectionSetup, nil, nil, 40, 0)
+	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, 0, 0)
+	self:updateRows()
 end
 
 function DailyQuestTracker.OnAddOnLoaded(event, addonName)

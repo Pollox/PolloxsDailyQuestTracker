@@ -1,21 +1,42 @@
 <GuiXml>
     <Controls>
+		<Texture name="DQTStatus" virtual="true" hidden="true">
+			<Dimensions x="24" y="24" />
+		</Texture>
+		
+		<Label name="DQTColumnHeader" virtual="true" font="ZoFontHeader">
+			<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+		</Label>
+		
 		<Control name="DQTQuestType" inherits="ZO_TreeEntry" virtual="true">
 			<Dimensions y="28" />
 			<Controls>
 				<Label name="$(parent)Name" font="TBFontGame16">
 					<Dimensions x="150" y="24" />
-					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="40" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 				</Label>
-				<Texture name="$(parent)Status">
-					<Anchor point="LEFT" relativeTo="$(parent)Name" relativePoint="RIGHT" />
-					<Dimensions x="24" y="24" />
-				</Texture>
+				
+				<!-- HACK: Couldn't figure out how to dynamically add columns to a tree node, nor how to add them to the template, so hardcoding here -->
+				<Texture name="$(parent)Status1" inherits="DQTStatus" />
+				<Texture name="$(parent)Status2" inherits="DQTStatus" />
+				<Texture name="$(parent)Status3" inherits="DQTStatus" />
+				<Texture name="$(parent)Status4" inherits="DQTStatus" />
+				<Texture name="$(parent)Status5" inherits="DQTStatus" />
+				<Texture name="$(parent)Status6" inherits="DQTStatus" />
+				<Texture name="$(parent)Status7" inherits="DQTStatus" />
+				<Texture name="$(parent)Status8" inherits="DQTStatus" />
+				<Texture name="$(parent)Status9" inherits="DQTStatus" />
+				<Texture name="$(parent)Status10" inherits="DQTStatus" />
+				<Texture name="$(parent)Status11" inherits="DQTStatus" />
+				<Texture name="$(parent)Status12" inherits="DQTStatus" />
+				<Texture name="$(parent)Status13" inherits="DQTStatus" />
+				<Texture name="$(parent)Status14" inherits="DQTStatus" />
+				<Texture name="$(parent)Status15" inherits="DQTStatus" />
 			</Controls>
 		</Control>
 		
 		<Control name="DQTQuestSection" inherits="ZO_TreeHeader" virtual="true">
-			<Dimensions x="450" y="42" />
+			<Dimensions y="42" />
 			<Controls>
 				<Label name="$(parent)Name" font="ZoFontHeader">
 					<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
@@ -24,14 +45,26 @@
 			</Controls>
 		</Control>
 		
-        <TopLevelControl name="DQTWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true">
+        <TopLevelControl name="DQTWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true" resizeHandleSize="8">
             <Dimensions x="500" y="500" />
-			<DimensionConstraints minX="500" minY="200" />
+			<DimensionConstraints minX="200" minY="200" />
             <Anchor point="CENTER" />
  
             <OnUpdate>
                 DailyQuestTracker:update()
             </OnUpdate>
+			
+			<OnMoveStop>
+				DailyQuestTracker:onMoveStop()
+			</OnMoveStop>
+			
+			<OnResizeStop>
+				DailyQuestTracker:onResizeStop()
+			</OnResizeStop>
+			
+			<OnShow>
+				DailyQuestTracker:onShow()
+			</OnShow>
 			
             <Controls>
                 <Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop">
@@ -49,8 +82,12 @@
 					<OnClicked>DailyQuestTracker.closeWindow()</OnClicked>
 				</Button>
 				
+				<Control name="$(parent)Header">
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TimeUntilReset" offsetX="200" offsetY="5" />
+				</Control>
+				
 				<Control name="$(parent)ScrollFrame" inherits="ZO_ScrollContainer">
-					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TimeUntilReset" offsetY="10" />
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Header" offsetX="-200" />
 					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$(parent)" offsetY="-10" />
 				</Control>
             </Controls>
