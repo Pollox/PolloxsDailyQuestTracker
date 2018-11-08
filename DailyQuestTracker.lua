@@ -4,15 +4,26 @@ DailyQuestTracker.name = "PolloxsDailyQuestTracker"
 DailyQuestTracker.checkedTexture = "/esoui/art/buttons/checkbox_checked.dds"
 DailyQuestTracker.uncheckedTexture = "esoui/art/buttons/checkbox_unchecked.dds"
 
--- TODO: can we implement as a set instead?
-local function tableContains(t, v)
-	for _, value in pairs(t) do
-		if v == value then
-			return true
+--[[ Get the names of all the quests to track
+     
+     @return a set of quest names. Do "if questNames['foo']" to see if foo is in set
+--]]
+function DailyQuestTracker:getAllQuestNames()
+	if not self.allQuestNames then
+		local allQuestNames = {}
+		
+		for _, section in ipairs(DQTInfo.Quests) do		
+			for _, questNames in pairs(section.quests) do
+				for _, questName in ipairs(questNames) do
+					allQuestNames[questName] = true
+				end
+			end
 		end
+		
+		self.allQuestNames = allQuestNames
 	end
 	
-	return false
+	return self.allQuestNames
 end
 
 -- get current time in UTC seconds
@@ -29,10 +40,12 @@ end
 --]]
 function DailyQuestTracker.onQuestAdded(eventCode, journalIndex, questName, objectiveName)
 	-- if this is one of the daily quests we track, then update the quest status
-	if tableContains(L, questName) then
+	if DailyQuestTracker:getAllQuestNames()[questName] then
 		DailyQuestTracker.questStatuses[questName] = {
 			addedTime = getCurrentTime(),
-			isCompleted = false
+			-- isCompleted = false
+			-- fixme: just for testing
+			isCompleted = true
 		}
 	end
 end
@@ -119,7 +132,8 @@ function DailyQuestTracker:update()
 	
 	-- round minutes up since we're not displaying seconds
 	local minutesRemaining = math.ceil((timeUntilReset - hoursRemaining * 3600) / 60)
-    DQTWindowTimeUntilReset:SetText(string.format("Time until reset: %d hours %d minutes", hoursRemaining, minutesRemaining))
+	
+    DQTWindowTimeUntilReset:SetText(zo_strformat(GetString(SI_DQT_TIME_UNTIL_RESET), hoursRemaining, minutesRemaining))
 end
 
 -- Show or hide the window
@@ -147,7 +161,7 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 	
 	for _, character in ipairs(DailyQuestTracker.GetCharacters()) do
 		local statusTexture = data.isCompletedTodays[character.id] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
-		local statusControl = questTypeControl:GetNamedChild("Status"..columnIndex)
+		local statusControl = questTypeControl:GetNamedChild(string.format("Status%s",columnIndex))
 		statusControl:SetHidden(false)
 		statusControl:SetTexture(statusTexture)
 		
@@ -265,7 +279,8 @@ end
 
 function DailyQuestTracker:initialize()
 	-- Register keybindings
-	ZO_CreateStringId("SI_BINDING_NAME_DTQ_TOGGLE_DISPLAY", "Toggle Display")
+	-- TODO: do we need a seperate string for this, or can we do directly in language file?
+	ZO_CreateStringId("SI_BINDING_NAME_DTQ_TOGGLE_DISPLAY", GetString(SI_DQT_TOGGLE_DISPLAY))
 	
 	-- load account-wide saved variables
 	local x, y = DQTWindow:GetScreenRect()
@@ -281,10 +296,6 @@ function DailyQuestTracker:initialize()
 	}
 	self.savedVarsAccount = ZO_SavedVars:NewAccountWide("PolloxsDailyQuestTracker_SavedVarsAccount", 1, nil, defaultSavedVarsAccount)
 	
-	--[[ character id ->
-			Quest Name -> (time added (in utc), completed (boolean))
-	--]]
-	
 	-- reload previous window postion/size, and enable saving of postion/size
 	self.windowProperties = self.savedVarsAccount.windowProperties
 	self:initializeWindowProperties()
@@ -295,6 +306,9 @@ function DailyQuestTracker:initialize()
 	self.savedVarsPerChar = {}
 	
 	for _, character in ipairs(self.GetCharacters()) do
+		--[[ questStatuses:
+				Quest Name -> (time added (in utc), completed (boolean))
+		--]]
 		defaultSavedVarsChar = {
 			questStatuses = {},
 		}
