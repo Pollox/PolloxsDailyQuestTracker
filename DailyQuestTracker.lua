@@ -145,8 +145,8 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 	local columnIndex = 1
 	local previousStatusControl = nil
 	
-	for characterId, _ in pairs(DailyQuestTracker.characterNames) do
-		local statusTexture = data.isCompletedTodays[characterId] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
+	for _, character in ipairs(DailyQuestTracker.GetCharacters()) do
+		local statusTexture = data.isCompletedTodays[character.id] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
 		local statusControl = questTypeControl:GetNamedChild("Status"..columnIndex)
 		statusControl:SetHidden(false)
 		statusControl:SetTexture(statusTexture)
@@ -168,12 +168,9 @@ function DailyQuestTracker:createHeader()
 	local headerHeight = 0
 	local headerXOffset = 10
 	
-	for characterId, characterName in pairs(self.characterNames) do
-		-- convert character name to display name
-		characterName = zo_strformat("<<1>>", characterName)
-		
-		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", characterId)
-		columnHeaderControl:SetText(characterName)
+	for index, character in ipairs(self.GetCharacters()) do
+		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", index)
+		columnHeaderControl:SetText(character.name)
 		columnHeaderControl:SetWidth(self.headerColumnWidth - headerXOffset)
 		
 		if previousControl then
@@ -204,8 +201,8 @@ function DailyQuestTracker:updateRows()
 		for questTypeName, questNames in pairs(section.quests) do
 			local isCompletedTodays = {}
 			
-			for characterId, _ in pairs(self.characterNames) do
-				isCompletedTodays[characterId] = self:isDailyQuestComplete(characterId, questNames)
+			for _, character in ipairs(self.GetCharacters()) do
+				isCompletedTodays[character.id] = self:isDailyQuestComplete(character.id, questNames)
 			end
 			
 			local questTypeData = {
@@ -239,6 +236,33 @@ function DailyQuestTracker:initializeWindowProperties()
 	DQTWindow:SetDimensions(properties.width, properties.height)
 end
 
+--[[ Get a sorted table of characters to display info about
+
+	 @return list of {id=character id, name = character display name, rawName = character raw name}
+-]]
+function DailyQuestTracker.GetCharacters()
+	if not DailyQuestTracker.characters then
+		local characters = {}
+		
+		for i = 1, GetNumCharacters() do
+			local characterRawName, _, _, _, _, _, characterId = GetCharacterInfo(i)
+			
+			characters[#characters + 1] = {
+				id = characterId,
+				name = zo_strformat("<<1>>", characterRawName),
+				rawName = characterRawName
+			}
+		end
+		
+		-- sort table alphabetically
+		table.sort(characters, function(a, b) return a.name < b.name end)
+		
+		DailyQuestTracker.characters = characters
+	end
+	
+	return DailyQuestTracker.characters
+end
+
 function DailyQuestTracker:initialize()
 	-- Register keybindings
 	ZO_CreateStringId("SI_BINDING_NAME_DTQ_TOGGLE_DISPLAY", "Toggle Display")
@@ -270,17 +294,14 @@ function DailyQuestTracker:initialize()
 	--]]
 	self.savedVarsPerChar = {}
 	
-	-- character id -> character name
-	self.characterNames = {}
-	
-	for i = 1, GetNumCharacters() do
+	for _, character in ipairs(self.GetCharacters()) do
 		defaultSavedVarsChar = {
 			questStatuses = {},
 		}
 		
-		local characterName, _, _, _, _, _, characterId = GetCharacterInfo(i)
-		self.characterNames[characterId] = characterName
-		self.savedVarsPerChar[characterId] = ZO_SavedVars:New("PolloxsDailyQuestTracker_SavedVarsChar", 1, nil, defaultSavedVarsChar, nil, nil, characterName, characterId, nil)
+		-- Load a different set of variables for each character, and use character id as the key
+		self.savedVarsPerChar[character.id] = ZO_SavedVars:New("PolloxsDailyQuestTracker_SavedVarsChar",
+			1, nil, defaultSavedVarsChar, nil, nil, character.name, character.id, ZO_SAVED_VARS_CHARACTER_ID_KEY)
 	end
 	
 	-- quest statuses for the current character
