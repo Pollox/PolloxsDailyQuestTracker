@@ -1,33 +1,32 @@
 <GuiXml>
     <Controls>
-		<Control name="DQTQuestRow" virtual="true">
-			<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
-			<Dimensions y="25"/>
+		<Control name="DQTQuestType" inherits="ZO_TreeEntry" virtual="true">
+			<Dimensions y="28" />
 			<Controls>
-				<Label name="$(parent)Name" font="ZoFontGame">
-					<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-					<Dimensions x="150" y="25" />
+				<Label name="$(parent)Name" font="TBFontGame16">
+					<Dimensions x="150" y="24" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="40" />
 				</Label>
 				<Texture name="$(parent)Status">
-					<Anchor point="RIGHT" relativeTo="$(parent)" relativePoint="RIGHT" />
-					<Dimensions x="25" y="25" />
+					<Anchor point="LEFT" relativeTo="$(parent)Name" relativePoint="RIGHT" />
+					<Dimensions x="24" y="24" />
 				</Texture>
 			</Controls>
 		</Control>
 		
-		<!-- Container for multiple DQTQuestRow controls -->
-		<Control name="DQTQuestSection" virtual="true">
-			<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+		<Control name="DQTQuestSection" inherits="ZO_TreeHeader" virtual="true">
+			<Dimensions x="450" y="42" />
 			<Controls>
-				<Label name="$(parent)Name" font="ZoFontGameBold">
-					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
-					<Dimensions x="200" y="25"/>
+				<Label name="$(parent)Name" font="ZoFontHeader">
+					<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+					<Dimensions x="200" y="25" />
 				</Label>
 			</Controls>
 		</Control>
 		
         <TopLevelControl name="DQTWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true">
-            <Dimensions x="400" y="900" />
+            <Dimensions x="500" y="500" />
+			<DimensionConstraints minX="500" minY="200" />
             <Anchor point="CENTER" />
  
             <OnUpdate>
@@ -35,7 +34,9 @@
             </OnUpdate>
 			
             <Controls>
-                <Backdrop name="$(parent)BG" inherits="ZO_ThinBackdrop" />
+                <Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop">
+					<AnchorFill />
+				</Backdrop>
 				
                 <Label name="$(parent)TimeUntilReset" font="ZoFontWindowSubtitle" text="Time until reset: unknown">
                     <Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" offsetX="10" offsetY="5" />
@@ -48,8 +49,9 @@
 					<OnClicked>DailyQuestTracker.closeWindow()</OnClicked>
 				</Button>
 				
-				<Control name="$(parent)DummyFrame" horizontalAlignment="0" verticalAlignment="1">
-					<Anchor point="3" relativePoint="3" relativeTo="$(parent)" offsetX="10" offsetY="40" />
+				<Control name="$(parent)ScrollFrame" inherits="ZO_ScrollContainer">
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TimeUntilReset" offsetY="10" />
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$(parent)" offsetY="-10" />
 				</Control>
             </Controls>
         </TopLevelControl>
