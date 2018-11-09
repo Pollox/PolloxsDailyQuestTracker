@@ -8,6 +8,7 @@ local L = {}
 	L.SI_DQT_SECTION_HEADER				= "Sections to Show"
 
 -- Section Names
+	L.SI_DQT_CRAFTING					= "Crafting"
 	L.SI_DQT_SUMMERSET					= "Summerset"
 	L.SI_DQT_VVARDENFELL				= "Vvardenfell"
 	L.SI_DQT_GUILD						= "Guild"
@@ -32,8 +33,25 @@ local L = {}
 	L.SI_DQT_HEIST						= "Heist"
 	L.SI_DQT_GOLD_COAST_BOUNTY			= "Bounty"
 	L.SI_DQT_SACRAMENT					= "Sacrament"
+	
+	L.SI_DQT_CLOTHING					= "Clothing"
+	L.SI_DQT_BLACKSMITHING				= "Blacksmithing"
+	L.SI_DQT_WOODWORKING				= "Woodworking"
+	L.SI_DQT_JEWELRY					= "Jewelry"
+	L.SI_DQT_ALCHEMY					= "Alchemy"
+	L.SI_DQT_ENCHANTING					= "Enchanting"
+	L.SI_DQT_PROVISIONING				= "Provisioning"
 
 -- QUEST NAMES MUST BE EXACTLY AS THEY APPEAR IN GAME IN THE QUEST JOURNAL
+
+-- Daily Crafting Quests
+	L.SI_DQT_CLOTHIER_WRIT				= "Clothier Writ"
+	L.SI_DQT_BLACKSMITH_WRIT			= "Blacksmith Writ"
+	L.SI_DQT_WOODWORKER_WRIT			= "Woodworker Writ"
+	L.SI_DQT_JEWELRY_WRIT				= "Jewelry Crafting Writ"
+	L.SI_DQT_ALCHEMIST_WRIT				= "Alchemist Writ"
+	L.SI_DQT_ENCHANTER_WRIT				= "Enchanter Writ"
+	L.SI_DQT_PROVISIONER_WRIT			= "Provisioner Writ"
 
 -- Summerset Bounty Quests (World Boss)
 	L.SI_DQT_SUMMERSET_BOUNTY_1			= "The Abyssal Alchemist"

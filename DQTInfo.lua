@@ -7,6 +7,19 @@ Quests Object
 		quest type -> list of names of quests
 --]]
 
+DQTInfo.CraftingQuests = {
+	name=GetString(SI_DQT_CRAFTING),
+	quests={
+		[GetString(SI_DQT_CLOTHING)] = {GetString(SI_DQT_CLOTHIER_WRIT)},
+		[GetString(SI_DQT_BLACKSMITHING)] = {GetString(SI_DQT_BLACKSMITH_WRIT)},
+		[GetString(SI_DQT_WOODWORKING)] = {GetString(SI_DQT_WOODWORKER_WRIT)},
+		[GetString(SI_DQT_JEWELRY)] = {GetString(SI_DQT_JEWELRY_WRIT)},
+		[GetString(SI_DQT_ALCHEMY)] = {GetString(SI_DQT_ALCHEMIST_WRIT)},
+		[GetString(SI_DQT_ENCHANTING)] = {GetString(SI_DQT_ENCHANTER_WRIT)},
+		[GetString(SI_DQT_PROVISIONING)] = {GetString(SI_DQT_PROVISIONER_WRIT)}
+	}
+}
+
 DQTInfo.SummersetQuests = {
 	name=GetString(SI_DQT_SUMMERSET),
 	quests={
@@ -234,6 +247,7 @@ DQTInfo.DarkBrotherhoodQuests = {
 }
 
 DQTInfo.Quests = {
+	DQTInfo.CraftingQuests,
 	DQTInfo.SummersetQuests,
 	DQTInfo.VvardenfellQuests,
 	DQTInfo.CyrodilicCollectionsQuests,

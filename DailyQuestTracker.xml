@@ -47,7 +47,7 @@
 		
         <TopLevelControl name="DQTWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true" resizeHandleSize="8">
             <Dimensions x="500" y="500" />
-			<DimensionConstraints minX="200" minY="200" />
+			<DimensionConstraints minX="200" minY="300" />
             <Anchor point="CENTER" />
  
             <OnUpdate>
