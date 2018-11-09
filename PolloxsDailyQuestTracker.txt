@@ -1,6 +1,6 @@
 ## Title: Pollox's Daily Quest Tracker
 ## Author: pollox
-## Version: 0.3
+## Version: 0.4
 ## APIVersion: 100025
 ## DependsOn: LibAddonMenu-2.0
 ## SavedVariables: PolloxsDailyQuestTracker_SavedVarsChar PolloxsDailyQuestTracker_SavedVarsAccount
