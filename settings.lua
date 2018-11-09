@@ -24,6 +24,12 @@ function DQTSettings:getAccountDefaults()
 	}
 	
 	------ get default settings ------
+	-- by default, show all characters
+	local charactersToShow = {}
+	
+	for _, character in ipairs(DQTUtils:getCharacters()) do
+		charactersToShow[character.id] = true
+	end
 	
 	-- by default, show all sections
 	local sectionsToShow = {}
@@ -35,31 +41,66 @@ function DQTSettings:getAccountDefaults()
 	return {
 		windowProperties = windowProperties,
 		settings = {
-			sectionsToShow = sectionsToShow
+			sectionsToShow = sectionsToShow,
+			charactersToShow = charactersToShow
 		}
 	}
 end
 
 -- @param savedSettings settings table that gets saved to disk
 function DQTSettings:initialize(savedSettings)
+	self.settings = savedSettings
 	local LAM = LibStub("LibAddonMenu-2.0")
 	LAM:RegisterAddonPanel(DailyQuestTracker.name, self.panelData)
 
-	--options to filter by character
-
 	local optionsData = {}
 	
-	-- options to filter by section
-	for _, section in ipairs(DQTInfo.Quests) do
-		local checkboxData = {
+	-- options to filter by character
+	local characterHeader = {
+		type = "header",
+		name = GetString(SI_DQT_CHARACTERS_HEADER)
+	}
+	
+	optionsData[#optionsData + 1] = characterHeader
+		
+	for _, character in ipairs(DQTUtils:getCharacters()) do
+		local checkbox = {
 			type = "checkbox",
-			name = section.name,
-			getFunc = function() return savedSettings.sectionsToShow[section.name] end,
-			setFunc = function(value) savedSettings.sectionsToShow[section.name] = value end,
+			name = character.name,
+			getFunc = function() return self.settings.charactersToShow[character.id] end,
+			setFunc = function(value) self.settings.charactersToShow[character.id] = value end,
+			requiresReload = true
 		}
 		
-		optionsData[#optionsData + 1] = checkboxData
+		optionsData[#optionsData + 1] = checkbox
+	end
+	
+	-- options to filter by section
+	local sectionHeader = {
+		type = "header",
+		name = GetString(SI_DQT_SECTION_HEADER)
+	}
+	
+	optionsData[#optionsData + 1] = sectionHeader
+	
+	for _, section in ipairs(DQTInfo.Quests) do
+		local checkbox = {
+			type = "checkbox",
+			name = section.name,
+			getFunc = function() return self.settings.sectionsToShow[section.name] end,
+			setFunc = function(value) self.settings.sectionsToShow[section.name] = value end
+		}
+		
+		optionsData[#optionsData + 1] = checkbox
 	end
 
 	LAM:RegisterOptionControls(DailyQuestTracker.name, optionsData)
+end
+
+function DQTSettings:shouldShowSection(sectionName)
+	return self.settings.sectionsToShow[sectionName]
+end
+
+function DQTSettings:shouldShowCharacter(characterId)
+	return self.settings.charactersToShow[characterId]
 end

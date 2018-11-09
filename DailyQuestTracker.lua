@@ -1,3 +1,7 @@
+--[[
+	Main file for the addon
+--]]
+
 DailyQuestTracker = {}
 
 DailyQuestTracker.name = "PolloxsDailyQuestTracker"
@@ -12,12 +16,24 @@ function DailyQuestTracker:getSectionsToShow()
 	local questSections = {}
 	
 	for _, section in ipairs(DQTInfo.Quests) do
-		if self.savedVarsAccount.settings.sectionsToShow[section.name] then
+		if DQTSettings:shouldShowSection(section.name) then
 			questSections[#questSections + 1] = section
 		end
 	end
 	
 	return questSections
+end
+
+function DailyQuestTracker:getCharactersToShow()
+	local characters = {}
+	
+	for _, character in ipairs(DQTUtils:getCharacters()) do
+		if DQTSettings:shouldShowCharacter(character.id) then
+			characters[#characters + 1] = character
+		end
+	end
+	
+	return characters
 end
 
 --[[ Get the names of all the quests to track
@@ -43,11 +59,6 @@ function DailyQuestTracker:getAllQuestNames()
 	return self.allQuestNames
 end
 
--- get current time in UTC seconds
-local function getCurrentTime()
-	return os.time(os.date("!*t"))
-end
-
 --[[ Update quest added time
 	
 	@param eventCode (number)
@@ -59,10 +70,8 @@ function DailyQuestTracker.onQuestAdded(eventCode, journalIndex, questName, obje
 	-- if this is one of the daily quests we track, then update the quest status
 	if DailyQuestTracker:getAllQuestNames()[questName] then
 		DailyQuestTracker.questStatuses[questName] = {
-			addedTime = getCurrentTime(),
-			-- isCompleted = false
-			-- fixme: just for testing
-			isCompleted = true
+			addedTime = DQTUtils:getCurrentTime(),
+			isCompleted = false
 		}
 	end
 end
@@ -112,33 +121,17 @@ function DailyQuestTracker:isDailyQuestComplete(characterId, questNames)
 	return false
 end
 
---[[ Calculates time of next daily quest reset in UTC.
-     If your computer clock is off, this will be off.
---]]
-function DailyQuestTracker.getResetTime()
-	local currentDate = os.date("!*t")
-	local resetTime = os.time({year=currentDate.year, month=currentDate.month, day=currentDate.day, hour=6, minute=0, second=0, isdst=currentDate.isdst})
-	local currentTime = os.time(currentDate)
-	
-	-- if reset time has already happened today, increment to tomorrow's reset time
-	if resetTime < currentTime then
-		resetTime = resetTime + 86400
-	end
-	
-	return resetTime
-end
-
 function DailyQuestTracker:onShow()
 	-- FIXME: this reads in the latest quest data when you show the window, but it doesn't work if you have it open when you turn in a quest
 	self:updateRows()
 end
 
 function DailyQuestTracker:update()
-	local currentTime = getCurrentTime()
+	local currentTime = DQTUtils:getCurrentTime()
 	
 	-- calculate next reset time if necessary, and update rows
 	if self.resetTime < currentTime then
-		self.resetTime = self.getResetTime()
+		self.resetTime = DQTUtils:getResetTime()
 		self:updateRows()
 	end
 	
@@ -176,7 +169,7 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 	local columnIndex = 1
 	local previousStatusControl = nil
 	
-	for _, character in ipairs(DailyQuestTracker.GetCharacters()) do
+	for _, character in ipairs(DailyQuestTracker:getCharactersToShow()) do
 		local statusTexture = data.isCompletedTodays[character.id] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
 		local statusControl = questTypeControl:GetNamedChild(string.format("Status%s",columnIndex))
 		statusControl:SetHidden(false)
@@ -199,7 +192,7 @@ function DailyQuestTracker:createHeader()
 	local headerHeight = 0
 	local headerXOffset = 10
 	
-	for index, character in ipairs(self.GetCharacters()) do
+	for index, character in ipairs(self:getCharactersToShow()) do
 		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", index)
 		columnHeaderControl:SetText(character.name)
 		columnHeaderControl:SetWidth(self.headerColumnWidth - headerXOffset)
@@ -232,7 +225,7 @@ function DailyQuestTracker:updateRows()
 		for questTypeName, questNames in pairs(section.quests) do
 			local isCompletedTodays = {}
 			
-			for _, character in ipairs(self.GetCharacters()) do
+			for _, character in ipairs(self:getCharactersToShow()) do
 				isCompletedTodays[character.id] = self:isDailyQuestComplete(character.id, questNames)
 			end
 			
@@ -267,33 +260,6 @@ function DailyQuestTracker:initializeWindowProperties()
 	DQTWindow:SetDimensions(properties.width, properties.height)
 end
 
---[[ Get a sorted table of characters to display info about
-
-	 @return list of {id=character id, name = character display name, rawName = character raw name}
--]]
-function DailyQuestTracker.GetCharacters()
-	if not DailyQuestTracker.characters then
-		local characters = {}
-		
-		for i = 1, GetNumCharacters() do
-			local characterRawName, _, _, _, _, _, characterId = GetCharacterInfo(i)
-			
-			characters[#characters + 1] = {
-				id = characterId,
-				name = zo_strformat("<<1>>", characterRawName),
-				rawName = characterRawName
-			}
-		end
-		
-		-- sort table alphabetically
-		table.sort(characters, function(a, b) return a.name < b.name end)
-		
-		DailyQuestTracker.characters = characters
-	end
-	
-	return DailyQuestTracker.characters
-end
-
 function DailyQuestTracker:initialize()
 	-- Register keybindings
 	-- TODO: do we need a seperate string for this, or can we do directly in language file?
@@ -311,7 +277,7 @@ function DailyQuestTracker:initialize()
 	--]]
 	self.savedVarsPerChar = {}
 	
-	for _, character in ipairs(self.GetCharacters()) do
+	for _, character in ipairs(DQTUtils:getCharacters()) do
 		--[[ questStatuses:
 				Quest Name -> (time added (in utc), completed (boolean))
 		--]]
@@ -331,7 +297,7 @@ function DailyQuestTracker:initialize()
 	self.questStatuses = self.savedVarsPerChar[GetCurrentCharacterId()].questStatuses
 	
 	-- initialize window data
-	self.resetTime = self.getResetTime()
+	self.resetTime = DQTUtils:getResetTime()
 	
 	-- self.headerColumnWidth = self:getLongestCharName()
 	self.headerColumnWidth = 100

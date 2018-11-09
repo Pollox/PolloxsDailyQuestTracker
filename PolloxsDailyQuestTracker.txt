@@ -16,6 +16,7 @@
 lang/en.lua
 lang/$(language.lua)
 
+Utils.lua
 DQTInfo.lua
 settings.lua
 DailyQuestTracker.lua
