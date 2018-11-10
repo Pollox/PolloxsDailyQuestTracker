@@ -234,6 +234,6 @@ local L = {}
 	L.SI_DQT_CWC_BLACKFEATHER_6			= "Nibbles and Bits"
 
 for stringId, translation in pairs(L) do
-	-- In other language files, use SafeAddString instead, e.g. SafeAddString(stringId, translation, 1)
+	-- In other language files, use SafeAddString instead, e.g. SafeAddString(stringId, translation, 0)
 	ZO_CreateStringId(stringId, translation)
 end

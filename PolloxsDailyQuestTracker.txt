@@ -14,7 +14,7 @@
 ## You can read the full terms at https://account.elderscrollsonline.com/add-on-terms
 
 lang/en.lua
-lang/$(language.lua)
+lang/$(language).lua
 
 Utils.lua
 DQTInfo.lua
