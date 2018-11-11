@@ -59,8 +59,8 @@ function DailyQuestTracker:getAllQuestNames()
 		
 		-- track all quests, even if we're not currently showing them
 		for _, section in ipairs(DQTInfo.Quests) do		
-			for _, questNames in pairs(section.quests) do
-				for _, questName in ipairs(questNames) do
+			for _, questType in ipairs(section.questTypes) do
+				for _, questName in ipairs(questType.questNames) do
 					allQuestNames[questName] = true
 				end
 			end
@@ -188,7 +188,7 @@ end
 
 -- Show or hide the window
 function DailyQuestTracker.toggleDisplay()
-	DQTWindow:SetHidden(not DQTWindow:IsHidden())
+	DQTWindow:ToggleHidden()
 end
 
 -- Hide the window
@@ -300,23 +300,23 @@ function DailyQuestTracker:updateRows()
 		local sectionNode = self.tree:AddNode("DQTQuestSection", {name = section.name})
 		
 		-- Create a row for each quest in this section
-		for questTypeName, questNames in pairs(section.quests) do
+		for _, questType in ipairs(section.questTypes) do
 			local isCompletedTodays = {}
 			
 			for _, character in ipairs(self:getCharactersToShow()) do
-				isCompletedTodays[character.id] = self:isDailyQuestTypeComplete(character.id, questNames)
+				isCompletedTodays[character.id] = self:isDailyQuestTypeComplete(character.id, questType.questNames)
 			end
 			
 			local questTypeData = {
-				name = questTypeName,
+				name = questType.name,
 				isCompletedTodays = isCompletedTodays,
-				hasChildNodes = (#questNames > 1)
+				hasChildNodes = (#questType.questNames > 1)
 			}
 			local questTypeNode = self.tree:AddNode("DQTQuestType", questTypeData, sectionNode)
 			
 			-- for quest types with multiple quests that you can share, add option to show each one
-			if (#questNames > 1) then
-				for _, questName in ipairs(questNames) do
+			if (#questType.questNames > 1) then
+				for _, questName in ipairs(questType.questNames) do
 					local isQuestComplete = {}
 					
 					for _, character in ipairs(self:getCharactersToShow()) do
