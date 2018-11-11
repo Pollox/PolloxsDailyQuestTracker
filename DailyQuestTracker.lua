@@ -8,9 +8,23 @@ DailyQuestTracker.name = "PolloxsDailyQuestTracker"
 DailyQuestTracker.checkedTexture = "/esoui/art/buttons/checkbox_checked.dds"
 DailyQuestTracker.uncheckedTexture = "esoui/art/buttons/checkbox_unchecked.dds"
 
---[[ Get the quest sections to show
+--[[
+	GUI layout settings
+--]]
+	DailyQuestTracker.QUEST_TYPE_INDENT = 20
+	
+	-- how wide is each column with status box and character name
+	DailyQuestTracker.COLUMN_WIDTH = 100
+	
+	-- how far indented from left side is first column of character name
+	-- fixme: can we get from xml?
+	DailyQuestTracker.COLUMN_INDENT = 200
 
-	 @return a filtered version of DQTInfo.Quests
+
+--[[
+	Get the quest sections to show
+
+	@return a filtered version of DQTInfo.Quests
 --]]
 function DailyQuestTracker:getSectionsToShow()
 	local questSections = {}
@@ -36,9 +50,9 @@ function DailyQuestTracker:getCharactersToShow()
 	return characters
 end
 
---[[ Get the names of all the quests to track
+--[[Get the names of all the quests to track
      
-     @return a set of quest names. Do "if questNames['foo']" to see if foo is in set
+    @return a set of quest names. Do "if questNames['foo']" to see if foo is in set
 --]]
 function DailyQuestTracker:getAllQuestNames()
 	if not self.allQuestNames then
@@ -59,7 +73,8 @@ function DailyQuestTracker:getAllQuestNames()
 	return self.allQuestNames
 end
 
---[[ Update quest added time
+--[[
+	Update quest added time
 	
 	@param eventCode (number)
 	@param journalIndex (number)
@@ -76,7 +91,8 @@ function DailyQuestTracker.onQuestAdded(eventCode, journalIndex, questName, obje
 	end
 end
 
---[[ Update quest completed status
+--[[
+	Update quest completed status
 	
 	@param eventCode (number)
 	@param questName (string)
@@ -103,7 +119,7 @@ end
 	@param resetTime (integer) UTC time in seconds
 	@param questNames (list of strings) all the possible quest names for this quest
 --]]
-function DailyQuestTracker:isDailyQuestComplete(characterId, questNames)
+function DailyQuestTracker:isDailyQuestTypeComplete(characterId, questNames)
 	local questStatuses = self.savedVarsPerChar[characterId].questStatuses
 	local previousResetTime = self.resetTime - 86400
 	
@@ -176,14 +192,15 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 	
 	for _, character in ipairs(DailyQuestTracker:getCharactersToShow()) do
 		local statusTexture = data.isCompletedTodays[character.id] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
-		local statusControl = questTypeControl:GetNamedChild(string.format("Status%s",columnIndex))
+		local statusControl = questTypeControl:GetNamedChild(string.format("Status%s", columnIndex))
 		statusControl:SetHidden(false)
 		statusControl:SetTexture(statusTexture)
 		
+		-- center status control in column
 		if previousStatusControl then
-			statusControl:SetAnchor(LEFT, previousStatusControl, RIGHT, DailyQuestTracker.headerColumnWidth - statusControl:GetWidth())
+			statusControl:SetAnchor(LEFT, previousStatusControl, RIGHT, DailyQuestTracker.COLUMN_WIDTH - statusControl:GetWidth())
 		else
-			statusControl:SetAnchor(LEFT, nameControl, RIGHT)
+			statusControl:SetAnchor(CENTER, nameControl, LEFT, DailyQuestTracker.COLUMN_INDENT - DailyQuestTracker.QUEST_TYPE_INDENT + (DailyQuestTracker.COLUMN_WIDTH - statusControl:GetWidth()) / 2)
 		end
 		
 		columnIndex = columnIndex + 1
@@ -200,7 +217,7 @@ function DailyQuestTracker:createHeader()
 	for index, character in ipairs(self:getCharactersToShow()) do
 		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", index)
 		columnHeaderControl:SetText(character.name)
-		columnHeaderControl:SetWidth(self.headerColumnWidth - headerXOffset)
+		columnHeaderControl:SetWidth(self.COLUMN_WIDTH - headerXOffset)
 		
 		if previousControl then
 			columnHeaderControl:SetAnchor(LEFT, previousControl, RIGHT, headerXOffset)
@@ -231,14 +248,14 @@ function DailyQuestTracker:updateRows()
 			local isCompletedTodays = {}
 			
 			for _, character in ipairs(self:getCharactersToShow()) do
-				isCompletedTodays[character.id] = self:isDailyQuestComplete(character.id, questNames)
+				isCompletedTodays[character.id] = self:isDailyQuestTypeComplete(character.id, questNames)
 			end
 			
 			local questTypeData = {
 				name = questTypeName,
 				isCompletedTodays = isCompletedTodays
 			}
-			self.tree:AddNode("DQTQuestType", questTypeData, sectionNode)
+			local questTypeNode = self.tree:AddNode("DQTQuestType", questTypeData, sectionNode)
 		end
 		
 		sectionNode:SetOpen(true)
@@ -303,14 +320,11 @@ function DailyQuestTracker:initialize()
 	
 	-- initialize window data
 	self.resetTime = DQTUtils:getResetTime()
-	
-	-- self.headerColumnWidth = self:getLongestCharName()
-	self.headerColumnWidth = 100
 	self:createHeader()
 	
 	local scrollContainer = DQTWindow:GetNamedChild("ScrollFrame")
 	self.tree = ZO_Tree:New(scrollContainer:GetNamedChild("ScrollChild"), 0, 0, 2000)
-	self.tree:AddTemplate("DQTQuestSection", TreeSectionSetup, nil, nil, 40, 0)
+	self.tree:AddTemplate("DQTQuestSection", TreeSectionSetup, nil, nil, DailyQuestTracker.QUEST_TYPE_INDENT, 0)
 	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, 0, 0)
 	self:updateRows()
 end
