@@ -168,7 +168,7 @@ function DailyQuestTracker:update()
 end
 
 -- Show or hide the window
-function DailyQuestTracker:toggleDisplay()
+function DailyQuestTracker.toggleDisplay()
 	DQTWindow:SetHidden(not DQTWindow:IsHidden())
 end
 
@@ -327,6 +327,9 @@ function DailyQuestTracker:initialize()
 	self.tree:AddTemplate("DQTQuestSection", TreeSectionSetup, nil, nil, DailyQuestTracker.QUEST_TYPE_INDENT, 0)
 	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, 0, 0)
 	self:updateRows()
+	
+	-- register a slash command for showing the window by typing in the chat window
+	SLASH_COMMANDS["/dqt"] = DailyQuestTracker.toggleDisplay
 end
 
 function DailyQuestTracker.OnAddOnLoaded(event, addonName)
