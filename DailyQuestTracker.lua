@@ -11,15 +11,14 @@ DailyQuestTracker.uncheckedTexture = "esoui/art/buttons/checkbox_unchecked.dds"
 --[[
 	GUI layout settings
 --]]
-	DailyQuestTracker.QUEST_TYPE_INDENT = 20
+	DailyQuestTracker.QUEST_TYPE_INDENT = 2
+	DailyQuestTracker.QUEST_INDENT = 30
 	
 	-- how wide is each column with status box and character name
 	DailyQuestTracker.COLUMN_WIDTH = 100
 	
 	-- how far indented from left side is first column of character name
-	-- fixme: can we get from xml?
-	DailyQuestTracker.COLUMN_INDENT = 200
-
+	DailyQuestTracker.COLUMN_INDENT = 240
 
 --[[
 	Get the quest sections to show
@@ -137,6 +136,26 @@ function DailyQuestTracker:isDailyQuestTypeComplete(characterId, questNames)
 	return false
 end
 
+--[[
+	Is the given daily quest complete today?
+	
+	@param resetTime (integer) UTC time in seconds
+	@param questName (string)
+--]]
+function DailyQuestTracker:isDailyQuestComplete(characterId, questName)
+	local questStatuses = self.savedVarsPerChar[characterId].questStatuses
+	local previousResetTime = self.resetTime - 86400
+	
+	questStatus = questStatuses[questName]
+		
+	if questStatus then			
+		-- only count quest if it is completed and it wasn't picked up yesterday
+		return questStatus.isCompleted and (questStatus.addedTime > previousResetTime)
+	else
+		return false
+	end
+end
+
 function DailyQuestTracker:onShow()
 	-- FIXME: this reads in the latest quest data when you show the window, but it doesn't work if you have it open when you turn in a quest
 	self:updateRows()
@@ -187,6 +206,10 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 	local nameControl = questTypeControl:GetNamedChild("Name")
 	nameControl:SetText(data.name)
 	
+	if not data.hasChildNodes then
+		questTypeControl:GetNamedChild("Toggle"):SetHidden(true)
+	end
+	
 	local columnIndex = 1
 	local previousStatusControl = nil
 	
@@ -198,9 +221,38 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 		
 		-- center status control in column
 		if previousStatusControl then
-			statusControl:SetAnchor(LEFT, previousStatusControl, RIGHT, DailyQuestTracker.COLUMN_WIDTH - statusControl:GetWidth())
+			statusControl:SetAnchor(CENTER, previousStatusControl, CENTER, DailyQuestTracker.COLUMN_WIDTH)
 		else
-			statusControl:SetAnchor(CENTER, nameControl, LEFT, DailyQuestTracker.COLUMN_INDENT - DailyQuestTracker.QUEST_TYPE_INDENT + (DailyQuestTracker.COLUMN_WIDTH - statusControl:GetWidth()) / 2)
+			statusControl:SetAnchor(CENTER, nameControl, LEFT,
+				DailyQuestTracker.COLUMN_INDENT - DailyQuestTracker.QUEST_TYPE_INDENT - questTypeControl:GetNamedChild("Toggle"):GetWidth()
+				+ (DailyQuestTracker.COLUMN_WIDTH - statusControl:GetWidth()) / 2)
+		end
+		
+		columnIndex = columnIndex + 1
+		previousStatusControl = statusControl
+	end
+end
+
+-- data {name: quest name, isQuestComplete: characterId -> (boolean)}
+function DailyQuestTracker.TreeQuestSetup(node, questControl, data, open, userRequested, enabled)
+	local nameControl = questControl:GetNamedChild("Name")
+	nameControl:SetText(data.name)
+	
+	local columnIndex = 1
+	local previousStatusControl = nil
+	
+	for _, character in ipairs(DailyQuestTracker:getCharactersToShow()) do
+		local statusTexture = data.isQuestComplete[character.id] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
+		local statusControl = questControl:GetNamedChild(string.format("Status%s", columnIndex))
+		statusControl:SetHidden(false)
+		statusControl:SetTexture(statusTexture)
+		
+		if previousStatusControl then
+			statusControl:SetAnchor(CENTER, previousStatusControl, CENTER, DailyQuestTracker.COLUMN_WIDTH)
+		else
+			statusControl:SetAnchor(CENTER, nameControl, LEFT,
+				DailyQuestTracker.COLUMN_INDENT - DailyQuestTracker.QUEST_TYPE_INDENT - DailyQuestTracker.QUEST_INDENT
+				+ (DailyQuestTracker.COLUMN_WIDTH - statusControl:GetWidth()) / 2)
 		end
 		
 		columnIndex = columnIndex + 1
@@ -212,15 +264,19 @@ function DailyQuestTracker:createHeader()
 	local headerControl = DQTWindow:GetNamedChild("Header")
 	local previousControl = nil
 	local headerHeight = 0
-	local headerXOffset = 10
 	
 	for index, character in ipairs(self:getCharactersToShow()) do
 		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", index)
 		columnHeaderControl:SetText(character.name)
-		columnHeaderControl:SetWidth(self.COLUMN_WIDTH - headerXOffset)
+		
+		-- set column width but leave a little padding
+		columnHeaderControl:SetWidth(self.COLUMN_WIDTH - 10)
 		
 		if previousControl then
-			columnHeaderControl:SetAnchor(LEFT, previousControl, RIGHT, headerXOffset)
+			columnHeaderControl:SetAnchor(CENTER, previousControl, CENTER, self.COLUMN_WIDTH)
+		else
+			columnHeaderControl:SetAnchor(CENTER, headerControl, LEFT,
+				self.COLUMN_INDENT + self.COLUMN_WIDTH / 2)
 		end
 		
 		columnHeaderHeight = columnHeaderControl:GetHeight()
@@ -253,12 +309,45 @@ function DailyQuestTracker:updateRows()
 			
 			local questTypeData = {
 				name = questTypeName,
-				isCompletedTodays = isCompletedTodays
+				isCompletedTodays = isCompletedTodays,
+				hasChildNodes = (#questNames > 1)
 			}
 			local questTypeNode = self.tree:AddNode("DQTQuestType", questTypeData, sectionNode)
+			
+			-- for quest types with multiple quests that you can share, add option to show each one
+			if (#questNames > 1) then
+				for _, questName in ipairs(questNames) do
+					local isQuestComplete = {}
+					
+					for _, character in ipairs(self:getCharactersToShow()) do
+						isQuestComplete[character.id] = self:isDailyQuestComplete(character.id, questName)
+					end
+					
+					local questData = {
+						name = questName,
+						isQuestComplete = isQuestComplete
+					}
+					
+					self.tree:AddNode("DQTQuest", questData, questTypeNode)
+				end
+			end
 		end
 		
 		sectionNode:SetOpen(true)
+	end
+end
+
+--[[
+	Handler for toggling showing of quests in quest type
+	
+	@param button (integer) which mouse mutton they click, e.g. MOUSE_BUTTON_INDEX_LEFT
+--]]
+function DailyQuestTracker:onToggleQuestType(buttonControl, button)
+	-- toggle only if left click
+	if button == MOUSE_BUTTON_INDEX_LEFT then
+		ZO_ToggleButton_Toggle(buttonControl)
+		local parentNode = buttonControl:GetParent().node
+		parentNode:SetOpen(not parentNode:IsOpen(), USER_REQUESTED_OPEN)
 	end
 end
 
@@ -325,7 +414,8 @@ function DailyQuestTracker:initialize()
 	local scrollContainer = DQTWindow:GetNamedChild("ScrollFrame")
 	self.tree = ZO_Tree:New(scrollContainer:GetNamedChild("ScrollChild"), 0, 0, 2000)
 	self.tree:AddTemplate("DQTQuestSection", TreeSectionSetup, nil, nil, DailyQuestTracker.QUEST_TYPE_INDENT, 0)
-	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, 0, 0)
+	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, DailyQuestTracker.QUEST_INDENT, 0)
+	self.tree:AddTemplate("DQTQuest", self.TreeQuestSetup, nil, nil, 0, 0)
 	self:updateRows()
 	
 	-- register a slash command for showing the window by typing in the chat window

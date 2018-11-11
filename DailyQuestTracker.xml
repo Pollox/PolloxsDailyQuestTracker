@@ -1,18 +1,19 @@
 <GuiXml>
+	<Font name="QuestFont" font="$(MEDIUM_FONT)|$(KB_16)|soft-shadow-thin" />
+	
     <Controls>
 		<Texture name="DQTStatus" virtual="true" hidden="true">
 			<Dimensions x="24" y="24" />
 		</Texture>
 		
 		<Label name="DQTColumnHeader" virtual="true" font="ZoFontHeader">
-			<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 		</Label>
 		
-		<Control name="DQTQuestType" inherits="ZO_TreeEntry" virtual="true">
-			<Dimensions y="28" />
+		<Control name="DQTQuest" inherits="ZO_TreeEntry" virtual="true">
+			<Dimensions y="24" />
 			<Controls>
-				<Label name="$(parent)Name" font="TBFontGame16">
-					<Dimensions x="150" y="24" />
+				<Label name="$(parent)Name" font="QuestFont">
+					<Dimensions x="230" />
 					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
 				</Label>
 				
@@ -35,12 +36,35 @@
 			</Controls>
 		</Control>
 		
+		<Control name="DQTQuestType" inherits="DQTQuest" virtual="true">
+			<!-- set y a little larger than DQTStatus y dimension so that there is a little vertical space between rows -->
+			<Dimensions y="26" />
+			<Controls>
+				<Button name="$(parent)Toggle">
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+					<Dimensions x="24" y="24" />
+					
+					<OnInitialized>
+						ZO_ToggleButton_Initialize(self, TOGGLE_BUTTON_TYPE_TREE, TOGGLE_BUTTON_CLOSED)
+					</OnInitialized>
+					<OnMouseUp>
+						DailyQuestTracker:onToggleQuestType(self, button)
+					</OnMouseUp>
+				</Button>
+				<Label name="$(parent)Name" font="ZoFontGame" override="true">
+					<Anchor point="TOPLEFT" relativeTo="$(parent)Toggle" relativePoint="TOPRIGHT" />
+					<!-- make x dimension smaller by the size of Toggle -->
+					<Dimensions x="206" />
+				</Label>
+			</Controls>
+		</Control>
+		
 		<Control name="DQTQuestSection" inherits="ZO_TreeHeader" virtual="true">
 			<Dimensions y="42" />
 			<Controls>
-				<Label name="$(parent)Name" font="ZoFontHeader">
+				<Label name="$(parent)Name" font="ZoFontHeader2">
 					<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
-					<Dimensions x="200" y="25" />
+					<Dimensions x="200"/>
 				</Label>
 			</Controls>
 		</Control>
@@ -83,11 +107,11 @@
 				</Button>
 				
 				<Control name="$(parent)Header">
-					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TimeUntilReset" offsetX="200" offsetY="5" />
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)TimeUntilReset" offsetY="5" />
 				</Control>
 				
 				<Control name="$(parent)ScrollFrame" inherits="ZO_ScrollContainer">
-					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Header" offsetX="-200" />
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$(parent)Header" />
 					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$(parent)" offsetY="-10" />
 				</Control>
             </Controls>
