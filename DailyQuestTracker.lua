@@ -108,6 +108,10 @@ function DailyQuestTracker.onQuestComplete(eventCode, questName, level, previous
 	-- if QuestStatus is nil, this is not a tracked quest, a quest started when the addon was not enabled, or a bug
 	if QuestStatus ~= nil then
 		QuestStatus.isCompleted = true
+		
+		if not DQTWindow:IsHidden() then
+			DailyQuestTracker.tree:RefreshVisible()
+		end
 	end
 end
 
@@ -157,8 +161,7 @@ function DailyQuestTracker:isDailyQuestComplete(characterId, questName)
 end
 
 function DailyQuestTracker:onShow()
-	-- FIXME: this reads in the latest quest data when you show the window, but it doesn't work if you have it open when you turn in a quest
-	self:updateRows()
+	self.tree:RefreshVisible()
 end
 
 function DailyQuestTracker:update()
@@ -167,7 +170,7 @@ function DailyQuestTracker:update()
 	-- calculate next reset time if necessary, and update rows
 	if self.resetTime < currentTime then
 		self.resetTime = DQTUtils:getResetTime()
-		self:updateRows()
+		self.tree:RefreshVisible()
 	end
 	
 	local timeUntilReset = os.difftime(self.resetTime, currentTime)
@@ -196,15 +199,23 @@ function DailyQuestTracker:closeWindow()
 	DQTWindow:SetHidden(true)
 end
 
--- data {name: section name}
-local function TreeSectionSetup(node, control, data, open, userRequested, enabled)
-	control:GetNamedChild("Name"):SetText(data.name)
+--[[
+	Sets up the controls inside a node that was created with the DQTQuestSection template
+	
+	@param data {name: sectionName}
+--]]
+function DailyQuestTracker.TreeSectionSetup(node, control, data, open, userRequested, enabled)
+	control:GetNamedChild("Name"):SetText(data.sectionName)
 end
 
--- data {name: quest type name, isCompletedTodays: characterId -> (boolean)}
+--[[
+	Sets up the controls inside a node that was created with the DQTQuestType template
+	
+	@param data {sectionName: section name, questType: questType}
+--]]
 function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open, userRequested, enabled)
 	local nameControl = questTypeControl:GetNamedChild("Name")
-	nameControl:SetText(data.name)
+	nameControl:SetText(data.questType.name)
 	
 	if not data.hasChildNodes then
 		questTypeControl:GetNamedChild("Toggle"):SetHidden(true)
@@ -214,9 +225,10 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 	local previousStatusControl = nil
 	
 	for _, character in ipairs(DailyQuestTracker:getCharactersToShow()) do
-		local statusTexture = data.isCompletedTodays[character.id] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
 		local statusControl = questTypeControl:GetNamedChild(string.format("Status%s", columnIndex))
 		statusControl:SetHidden(false)
+		local isQuestTypeComplete = DailyQuestTracker:isDailyQuestTypeComplete(character.id, data.questType.questNames)
+		local statusTexture = isQuestTypeComplete and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
 		statusControl:SetTexture(statusTexture)
 		
 		-- center status control in column
@@ -233,18 +245,22 @@ function DailyQuestTracker.TreeQuestTypeSetup(node, questTypeControl, data, open
 	end
 end
 
--- data {name: quest name, isQuestComplete: characterId -> (boolean)}
+--[[
+	Sets up the controls inside a node that was created with the DQTQuest template
+	
+	@param data {questName: quest name}
+--]]
 function DailyQuestTracker.TreeQuestSetup(node, questControl, data, open, userRequested, enabled)
 	local nameControl = questControl:GetNamedChild("Name")
-	nameControl:SetText(data.name)
+	nameControl:SetText(data.questName)
 	
 	local columnIndex = 1
 	local previousStatusControl = nil
 	
 	for _, character in ipairs(DailyQuestTracker:getCharactersToShow()) do
-		local statusTexture = data.isQuestComplete[character.id] and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
 		local statusControl = questControl:GetNamedChild(string.format("Status%s", columnIndex))
 		statusControl:SetHidden(false)
+		local statusTexture = DailyQuestTracker:isDailyQuestComplete(character.id, data.questName) and DailyQuestTracker.checkedTexture or DailyQuestTracker.uncheckedTexture
 		statusControl:SetTexture(statusTexture)
 		
 		if previousStatusControl then
@@ -291,41 +307,25 @@ function DailyQuestTracker:createHeader()
 	headerControl:SetHeight(columnHeaderHeight)
 end
 
-function DailyQuestTracker:updateRows()
-	-- seems that we have to remake the tree for any of our changes to show
-	self.tree:Reset()
-	
+function DailyQuestTracker:initializeRows()
 	-- Create a section for each category of quests
 	for _, section in ipairs(self:getSectionsToShow()) do
-		local sectionNode = self.tree:AddNode("DQTQuestSection", {name = section.name})
+		local sectionNode = self.tree:AddNode("DQTQuestSection", {sectionName = section.name})
 		
 		-- Create a row for each quest in this section
 		for _, questType in ipairs(section.questTypes) do
-			local isCompletedTodays = {}
-			
-			for _, character in ipairs(self:getCharactersToShow()) do
-				isCompletedTodays[character.id] = self:isDailyQuestTypeComplete(character.id, questType.questNames)
-			end
-			
 			local questTypeData = {
-				name = questType.name,
-				isCompletedTodays = isCompletedTodays,
+				sectionName = section.name,
+				questType = questType,
 				hasChildNodes = (#questType.questNames > 1)
 			}
 			local questTypeNode = self.tree:AddNode("DQTQuestType", questTypeData, sectionNode)
 			
 			-- for quest types with multiple quests that you can share, add option to show each one
 			if (#questType.questNames > 1) then
-				for _, questName in ipairs(questType.questNames) do
-					local isQuestComplete = {}
-					
-					for _, character in ipairs(self:getCharactersToShow()) do
-						isQuestComplete[character.id] = self:isDailyQuestComplete(character.id, questName)
-					end
-					
+				for _, questName in ipairs(questType.questNames) do					
 					local questData = {
-						name = questName,
-						isQuestComplete = isQuestComplete
+						questName = questName,
 					}
 					
 					self.tree:AddNode("DQTQuest", questData, questTypeNode)
@@ -413,10 +413,10 @@ function DailyQuestTracker:initialize()
 	
 	local scrollContainer = DQTWindow:GetNamedChild("ScrollFrame")
 	self.tree = ZO_Tree:New(scrollContainer:GetNamedChild("ScrollChild"), 0, 0, 2000)
-	self.tree:AddTemplate("DQTQuestSection", TreeSectionSetup, nil, nil, DailyQuestTracker.QUEST_TYPE_INDENT, 0)
+	self.tree:AddTemplate("DQTQuestSection", self.TreeSectionSetup, nil, nil, DailyQuestTracker.QUEST_TYPE_INDENT, 0)
 	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, DailyQuestTracker.QUEST_INDENT, 0)
 	self.tree:AddTemplate("DQTQuest", self.TreeQuestSetup, nil, nil, 0, 0)
-	self:updateRows()
+	self:initializeRows()
 	
 	-- register a slash command for showing the window by typing in the chat window
 	SLASH_COMMANDS["/dqt"] = DailyQuestTracker.toggleDisplay

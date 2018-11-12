@@ -36,7 +36,7 @@
 			</Controls>
 		</Control>
 		
-		<Control name="DQTQuestType" inherits="DQTQuest" virtual="true">
+		<Control name="DQTQuestType" inherits="ZO_TreeHeader" virtual="true">
 			<!-- set y a little larger than DQTStatus y dimension so that there is a little vertical space between rows -->
 			<Dimensions y="26" />
 			<Controls>
@@ -51,11 +51,29 @@
 						DailyQuestTracker:onToggleQuestType(self, button)
 					</OnMouseUp>
 				</Button>
-				<Label name="$(parent)Name" font="ZoFontGame" override="true">
+				
+				<Label name="$(parent)Name" font="ZoFontGame">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)Toggle" relativePoint="TOPRIGHT" />
 					<!-- make x dimension smaller by the size of Toggle -->
 					<Dimensions x="206" />
 				</Label>
+				
+				<!-- HACK: Couldn't figure out how to dynamically add columns to a tree node, nor how to add them to the template, so hardcoding here -->
+				<Texture name="$(parent)Status1" inherits="DQTStatus" />
+				<Texture name="$(parent)Status2" inherits="DQTStatus" />
+				<Texture name="$(parent)Status3" inherits="DQTStatus" />
+				<Texture name="$(parent)Status4" inherits="DQTStatus" />
+				<Texture name="$(parent)Status5" inherits="DQTStatus" />
+				<Texture name="$(parent)Status6" inherits="DQTStatus" />
+				<Texture name="$(parent)Status7" inherits="DQTStatus" />
+				<Texture name="$(parent)Status8" inherits="DQTStatus" />
+				<Texture name="$(parent)Status9" inherits="DQTStatus" />
+				<Texture name="$(parent)Status10" inherits="DQTStatus" />
+				<Texture name="$(parent)Status11" inherits="DQTStatus" />
+				<Texture name="$(parent)Status12" inherits="DQTStatus" />
+				<Texture name="$(parent)Status13" inherits="DQTStatus" />
+				<Texture name="$(parent)Status14" inherits="DQTStatus" />
+				<Texture name="$(parent)Status15" inherits="DQTStatus" />
 			</Controls>
 		</Control>
 		
