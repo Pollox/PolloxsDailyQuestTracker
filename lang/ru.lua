@@ -235,5 +235,5 @@ L.SI_DQT_CWC_BLACKFEATHER_6			= "Кусочки и частички"
 
 for stringId, translation in pairs(L) do
     -- In other language files, use SafeAddString instead, e.g. SafeAddString(stringId, translation, 0)
-    SafeAddString(stringId, translation, 0)
+    SafeAddString(_G[stringId], translation, 0)
 end

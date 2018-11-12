@@ -2,16 +2,16 @@
 local L = {}
 
 -- Miscellanoues UI
-	L.SI_DQT_TOGGLE_DISPLAY				= "Toggle Display"
-	L.SI_DQT_TIME_UNTIL_RESET			= "Time until reset"
-	L.SI_DQT_CHARACTERS_HEADER			= "Characters to Show"
-	L.SI_DQT_SECTION_HEADER				= "Sections to Show"
+	L.SI_DQT_TOGGLE_DISPLAY				= "Basculer l'affichage"
+	L.SI_DQT_TIME_UNTIL_RESET			= "Temps avant réinitialisation"
+	L.SI_DQT_CHARACTERS_HEADER			= "Personnages à afficher"
+	L.SI_DQT_SECTION_HEADER				= "Sections à afficher"
 
 -- Section Names
-	L.SI_DQT_CRAFTING					= "Crafting"
+	L.SI_DQT_CRAFTING					= "Artisanat"
 	L.SI_DQT_SUMMERSET					= "Summerset"
 	L.SI_DQT_VVARDENFELL				= "Vvardenfell"
-	L.SI_DQT_GUILD						= "Guild"
+	L.SI_DQT_GUILD						= "Guilde"
 	L.SI_DQT_CYRODILIC_COLLECTIONS		= "Cyrodilic Collections"
 	L.SI_DQT_CLOCKWORK_CITY				= "Clockwork City"
 	L.SI_DQT_WROTHGAR					= "Wrothgar"
@@ -24,9 +24,9 @@ local L = {}
 	L.SI_DQT_GEYSERS					= "Geysers"
 	L.SI_DQT_ASHLANDER_HUNT				= "Ashlander Hunt"
 	L.SI_DQT_ASHLANDER_RELIC			= "Ashlander Relic"
-	L.SI_DQT_FIGHTERS_GUILD				= "Fighters Guild"
-	L.SI_DQT_MAGES_GUILD				= "Mages Guild"
-	L.SI_DQT_UNDAUNTED_DELVE			= "Undaunted Delve"
+	L.SI_DQT_FIGHTERS_GUILD				= "Guilde des guerriers"
+	L.SI_DQT_MAGES_GUILD				= "Guilde des mages"
+	L.SI_DQT_UNDAUNTED_DELVE			= "Guilde des voleurs"
 	L.SI_DQT_TARNISHED					= "Tarnished"
 	L.SI_DQT_BLACKFEATHER_COURT			= "Blackfeather Court"
 	L.SI_DQT_RYES_REACQUISITIONS		= "Rye's Reacquisitions"
@@ -34,13 +34,13 @@ local L = {}
 	L.SI_DQT_GOLD_COAST_BOUNTY			= "Bounty"
 	L.SI_DQT_SACRAMENT					= "Sacrament"
 	
-	L.SI_DQT_CLOTHING					= "Clothing"
-	L.SI_DQT_BLACKSMITHING				= "Blacksmithing"
-	L.SI_DQT_WOODWORKING				= "Woodworking"
-	L.SI_DQT_JEWELRY					= "Jewelry"
-	L.SI_DQT_ALCHEMY					= "Alchemy"
-	L.SI_DQT_ENCHANTING					= "Enchanting"
-	L.SI_DQT_PROVISIONING				= "Provisioning"
+	L.SI_DQT_CLOTHING					= "Couture"
+	L.SI_DQT_BLACKSMITHING				= "Forge"
+	L.SI_DQT_WOODWORKING				= "Travail du bois"
+	L.SI_DQT_JEWELRY					= "Joaillerie"
+	L.SI_DQT_ALCHEMY					= "Alchimie"
+	L.SI_DQT_ENCHANTING					= "Enchantement"
+	L.SI_DQT_PROVISIONING				= "Cuisine"
 
 -- QUEST NAMES MUST BE EXACTLY AS THEY APPEAR IN GAME IN THE QUEST JOURNAL
 
@@ -234,5 +234,5 @@ local L = {}
 	L.SI_DQT_CWC_BLACKFEATHER_6			= "Petites bouchées"
 
 for stringId, translation in pairs(L) do
-	SafeAddString(stringId, translation, 0)
+	SafeAddString(_G[stringId], translation, 0)
 end

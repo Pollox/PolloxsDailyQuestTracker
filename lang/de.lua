@@ -234,5 +234,5 @@ local L = {}
 	L.SI_DQT_CWC_BLACKFEATHER_6			= "Stückchen und Häppchen"
 
 for stringId, translation in pairs(L) do
-	SafeAddString(stringId, translation, 0)
+	SafeAddString(_G[stringId], translation, 0)
 end
