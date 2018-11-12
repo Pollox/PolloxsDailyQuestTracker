@@ -1,6 +1,6 @@
 ## Title: Pollox's Daily Quest Tracker
 ## Author: pollox
-## Contributors: zelenin
+## Contributors: zelenin, Arch-kain
 ## Version: 0.6
 ## APIVersion: 100025
 ## DependsOn: LibAddonMenu-2.0
