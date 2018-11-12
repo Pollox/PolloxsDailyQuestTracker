@@ -88,7 +88,8 @@ function DQTSettings:initialize(savedSettings)
 			type = "checkbox",
 			name = section.name,
 			getFunc = function() return self.settings.sectionsToShow[section.name] end,
-			setFunc = function(value) self.settings.sectionsToShow[section.name] = value end
+			setFunc = function(value) self.settings.sectionsToShow[section.name] = value end,
+			requiresReload = true
 		}
 		
 		optionsData[#optionsData + 1] = checkbox
