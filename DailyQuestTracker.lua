@@ -280,8 +280,9 @@ function DailyQuestTracker:createHeader()
 	local headerControl = DQTWindow:GetNamedChild("Header")
 	local previousControl = nil
 	local headerHeight = 0
+	local characters = self:getCharactersToShow()
 	
-	for index, character in ipairs(self:getCharactersToShow()) do
+	for index, character in ipairs(characters) do
 		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", index)
 		columnHeaderControl:SetText(character.name)
 		
@@ -305,6 +306,16 @@ function DailyQuestTracker:createHeader()
 	end
 	
 	headerControl:SetHeight(columnHeaderHeight)
+	
+	-- ensure the window is wide enough to contain the header
+	local minWidth = self.COLUMN_INDENT + self.COLUMN_WIDTH * #characters
+	local _, minHeight, maxWidth, maxHeight = DQTWindow:GetDimensionConstraints()
+	DQTWindow:SetDimensionConstraints(minWidth, minHeight, maxWidth, maxHeight)
+	
+	if DQTWindow:GetWidth() < minWidth then
+		DQTWindow:SetDimensions(minWidth, DQTWindow:GetHeight())
+		self:onResizeStop()
+	end
 end
 
 function DailyQuestTracker:initializeRows()
