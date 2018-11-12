@@ -3,7 +3,7 @@ local L = {}
 
 -- Miscellanoues UI
 	L.SI_DQT_TOGGLE_DISPLAY				= "Toggle Display"
-	L.SI_DQT_TIME_UNTIL_RESET			= "Time until reset: <<1[/1 hour/$d hours]>> <<2[0 minutes/1 minute/$d minutes]>> <<3[/1 second/$d seconds]>>"
+	L.SI_DQT_TIME_UNTIL_RESET			= "Time until reset"
 	L.SI_DQT_CHARACTERS_HEADER			= "Characters to Show"
 	L.SI_DQT_SECTION_HEADER				= "Sections to Show"
 

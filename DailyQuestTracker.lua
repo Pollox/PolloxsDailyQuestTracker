@@ -178,15 +178,9 @@ function DailyQuestTracker:update()
 	-- format and display the remaining time
 	local hoursRemaining = math.floor(timeUntilReset / 3600)
 	local minutesRemaining = math.floor((timeUntilReset - hoursRemaining * 3600) / 60)
+	local secondsRemaining = math.floor(timeUntilReset - hoursRemaining * 3600 - minutesRemaining * 60)
 	
-	-- only display remaining seconds if there's less than a minute left
-	local secondsRemaining = 0
-	
-	if (hoursRemaining == 0) and (minutesRemaining == 0) then
-		secondsRemaining = math.floor(timeUntilReset)
-	end
-	
-    DQTWindowTimeUntilReset:SetText(zo_strformat(GetString(SI_DQT_TIME_UNTIL_RESET), hoursRemaining, minutesRemaining, secondsRemaining))
+    DQTWindowTimeUntilReset:SetText(string.format("%s: %d:%.2d:%.2d", GetString(SI_DQT_TIME_UNTIL_RESET), hoursRemaining, minutesRemaining, secondsRemaining))
 end
 
 -- Show or hide the window
