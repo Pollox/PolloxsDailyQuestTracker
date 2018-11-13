@@ -42,7 +42,11 @@ local L = {}
 	L.SI_DQT_ENCHANTING					= "Enchanting"
 	L.SI_DQT_PROVISIONING				= "Provisioning"
 
--- QUEST NAMES MUST BE EXACTLY AS THEY APPEAR IN GAME IN THE QUEST JOURNAL
+--[[
+	QUEST NAMES MUST BE EXACTLY AS THEY APPEAR IN GAME IN THE QUEST JOURNAL.
+	Some quests with have an alternate DISPLAY name under them, for however
+	we want to show the quest in the GUI
+--]]
 
 -- Daily Crafting Quests
 	L.SI_DQT_CLOTHIER_WRIT				= "Schneiderschrieb"
@@ -53,6 +57,50 @@ local L = {}
 	L.SI_DQT_ENCHANTER_WRIT				= "Verzaubererschrieb"
 	L.SI_DQT_PROVISIONER_WRIT			= "Versorgerschrieb"
 
+-- Undaunted Pledges
+	--[[ Set these to the strings at the start of each quest, including
+	the leading space. The code will generate the display name by stripping
+	any of these values from the beginning of each quest name.
+	--]]
+	L.SI_DQT_PLEDGE_PREFIX				= "Pledge: "
+
+	L.SI_DQT_PLEDGE_DARKSHADE1			= "Gelöbnis: Dunkelschattenkavernen I"
+	L.SI_DQT_PLEDGE_DARKSHADE2			= "Gelöbnis: Dunkelschattenkavernen II"
+	L.SI_DQT_PLEDGE_ELDEN1				= "Gelöbnis: Eldengrund I"
+	L.SI_DQT_PLEDGE_ELDEN2				= "Gelöbnis: Eldengrund II"
+	L.SI_DQT_PLEDGE_FUNGAL1				= "Gelöbnis: Pilzgrotte I"
+	L.SI_DQT_PLEDGE_FUNGAL2				= "Gelöbnis: Pilzgrotte II"
+	L.SI_DQT_PLEDGE_SPINDLE1			= "Gelöbnis: Spindeltiefen I"
+	L.SI_DQT_PLEDGE_SPINDLE2			= "Gelöbnis: Spindeltiefen II"
+	L.SI_DQT_PLEDGE_BANISHED1			= "Gelöbnis: Verbannungszellen I"
+	L.SI_DQT_PLEDGE_BANISHED2			= "Gelöbnis: Verbannungszellen II"
+	L.SI_DQT_PLEDGE_WAYREST1			= "Gelöbnis: Kanalisation von Wegesruh I"
+	L.SI_DQT_PLEDGE_WAYREST2			= "Gelöbnis: Kanalisation von Wegesruh II"
+	
+	L.SI_DQT_PLEDGE_ARX					= "Gelöbnis: Arx Corinium"
+	L.SI_DQT_PLEDGE_BLACKHEART			= "Gelöbnis: Schwarzherz-Unterschlupf"
+	L.SI_DQT_PLEDGE_CRUCIBLE			= "Pledge: Blessed Crucible"
+	L.SI_DQT_PLEDGE_COA1				= "Gelöbnis: Stadt der Asche I"
+	L.SI_DQT_PLEDGE_COA2				= "Gelöbnis: Stadt der Asche II"
+	L.SI_DQT_PLEDGE_COH1				= "Gelöbnis: Krypta der Herzen I"
+	L.SI_DQT_PLEDGE_COH2				= "Gelöbnis: Krypta der Herzen II"
+	L.SI_DQT_PLEDGE_DIREFROST			= "Pledge: Direfrost Keep"
+	L.SI_DQT_PLEDGE_SELENE				= "Gelöbnis: Selenes Netz"
+	L.SI_DQT_PLEDGE_TEMPEST				= "Gelöbnis: Orkaninsel"
+	L.SI_DQT_PLEDGE_VOM					= "Gelöbnis: Kammern des Wahnsinns"
+	L.SI_DQT_PLEDGE_VOLENFELL			= "Gelöbnis: Volenfell"
+	
+	L.SI_DQT_PLEDGE_CRADLE				= "Gelöbnis: Wiege der Schatten"
+	L.SI_DQT_PLEDGE_PRISON				= "Gelöbnis: Gefängnis der Kaiserstadt"
+	L.SI_DQT_PLEDGE_MAZZATUN			= "Gelöbnis: Ruinen von Mazzatun"
+	L.SI_DQT_PLEDGE_WHITE_GOLD			= "Gelöbnis: Weißgoldturm"
+	L.SI_DQT_PLEDGE_BLOODROOT			= "Gelöbnis: Blutquellschmiede"
+	L.SI_DQT_PLEDGE_FALKREATH			= "Gelöbnis: Falkenring"
+	L.SI_DQT_PLEDGE_FANG_LAIG			= "Pledge: Fang Lair"
+	L.SI_DQT_PLEDGE_SCALECALLER			= "Pledge: Scalecaller Peak"
+	L.SI_DQT_PLEDGE_MOONHUNTER			= "Pledge: Moon Hunter Keep"
+	L.SI_DQT_PLEDGE_MARCH				= "Pledge: March of Sacrifices"
+
 -- Summerset Bounty Quests (World Boss)
 	L.SI_DQT_SUMMERSET_BOUNTY_1			= "Der Kluftalchemist"
 	L.SI_DQT_SUMMERSET_BOUNTY_2			= "Fremde Federn"
@@ -60,6 +108,13 @@ local L = {}
 	L.SI_DQT_SUMMERSET_BOUNTY_4			= "Auf Grund gelaufen"
 	L.SI_DQT_SUMMERSET_BOUNTY_5			= "Die Seuchensee"
 	L.SI_DQT_SUMMERSET_BOUNTY_6			= "Die Zähmung der Wildnis"
+	
+	L.SI_DQT_SUMMERSET_BOUNTY_1_DISPLAY	= "Der Kluftalchemist"
+	L.SI_DQT_SUMMERSET_BOUNTY_2_DISPLAY	= "Fremde Federn"
+	L.SI_DQT_SUMMERSET_BOUNTY_3_DISPLAY	= "Nie vergessen"
+	L.SI_DQT_SUMMERSET_BOUNTY_4_DISPLAY	= "Auf Grund gelaufen"
+	L.SI_DQT_SUMMERSET_BOUNTY_5_DISPLAY	= "Die Seuchensee"
+	L.SI_DQT_SUMMERSET_BOUNTY_6_DISPLAY	= "Die Zähmung der Wildnis"
 
 -- Summerset Exploratory Quests (Delve)
 	L.SI_DQT_SUMMERSET_EXPLORATORY_1	= "Schlangentöter"
@@ -79,6 +134,13 @@ local L = {}
 	L.SI_DQT_VVARDENFELL_BOUNTY_4		= "Frei laufende Ochsen"
 	L.SI_DQT_VVARDENFELL_BOUNTY_5		= "Salothans Fluch"
 	L.SI_DQT_VVARDENFELL_BOUNTY_6		= "Sirenensang"
+	
+	L.SI_DQT_VVARDENFELL_BOUNTY_1_DISPLAY	= "Der besorgte Lehrling"
+	L.SI_DQT_VVARDENFELL_BOUNTY_2_DISPLAY	= "Ein schleichender Hunger"
+	L.SI_DQT_VVARDENFELL_BOUNTY_3_DISPLAY	= "Das Ausdünnen des Schwarms"
+	L.SI_DQT_VVARDENFELL_BOUNTY_4_DISPLAY	= "Frei laufende Ochsen"
+	L.SI_DQT_VVARDENFELL_BOUNTY_5_DISPLAY	= "Salothans Fluch"
+	L.SI_DQT_VVARDENFELL_BOUNTY_6_DISPLAY	= "Sirenensang"
 
 -- Vvardenfell Exploratory Quests (Delve)
 	L.SI_DQT_VVARDENFELL_EXPLORATORY_1	= "Daedrische Störungen"
@@ -98,6 +160,12 @@ local L = {}
 	L.SI_DQT_VVARDENFELL_HUNT_7			= "Jagd auf den Sich Windenden Sveeth"
 
 -- Vvardenfell Relics Quests
+	--[[ Set these to the strings at the start of each quest, including
+	the leading space. The code will generate the display name by stripping
+	any of these values from the beginning of each quest name.
+	--]]
+	L.SI_DQT_VVARDENFELL_RELICS_PREFIX	= "Die Relikte von "
+
 	L.SI_DQT_VVARDENFELL_RELICS_1		= "Die Relikte von Ashalmawia"
 	L.SI_DQT_VVARDENFELL_RELICS_2		= "Die Relikte von Ashurnabitashpi"
 	L.SI_DQT_VVARDENFELL_RELICS_3		= "Die Relikte von Assarnatamat"
@@ -115,6 +183,13 @@ local L = {}
 	L.SI_DQT_CYRODILIC_COLLECTIONS_6	= "Die Winde von Kyne"
 
 -- Fighters Guild Quests
+	--[[ Set these to the strings at the start of each quest, including
+	the leading space. The code will generate the display name by stripping
+	any of these values from the beginning of each quest name.
+	--]]
+	L.SI_DQT_FIGHTERS_GUILD_PREFIX_1		= "Dunkle Anker in "
+	L.SI_DQT_FIGHTERS_GUILD_PREFIX_2		= "" -- placeholder for other languages
+	
 	L.SI_DQT_FIGHTERS_GUILD_1			= "Dunkle Anker in der Alik'r-Wüste"
 	L.SI_DQT_FIGHTERS_GUILD_2			= "Dunkle Anker in Auridon"
 	L.SI_DQT_FIGHTERS_GUILD_3			= "Dunkle Anker in Bangkorai"
@@ -132,6 +207,13 @@ local L = {}
 	L.SI_DQT_FIGHTERS_GUILD_15			= "Dunkle Anker in Rift"
 
 -- Mages Guild Quests
+	--[[ Set these to the strings at the start of each quest, including
+	the leading space. The code will generate the display name by stripping
+	any of these values from the beginning of each quest name.
+	--]]
+	L.SI_DQT_MAGES_GUILD_PREFIX_1		= "Verrückte "
+	L.SI_DQT_MAGES_GUILD_PREFIX_2		= "Verrücktes "
+	
 	L.SI_DQT_MAGES_GUILD_1				= "Verrückte Alik'r Wüste"
 	L.SI_DQT_MAGES_GUILD_2				= "Verrücktes Auridon"
 	L.SI_DQT_MAGES_GUILD_3				= "Verrücktes Bangkorai"
@@ -180,6 +262,13 @@ local L = {}
 	L.SI_DQT_WROTHGAR_GROUP_BOSS_4		= "So riecht ein falsches Spiel"
 	L.SI_DQT_WROTHGAR_GROUP_BOSS_5		= "Gelehrtes Bergungsgut"
 	L.SI_DQT_WROTHGAR_GROUP_BOSS_6		= "Schnee und Dampf"
+	
+	L.SI_DQT_WROTHGAR_GROUP_BOSS_1_DISPLAY	= "Der Frevel des Unwissens"
+	L.SI_DQT_WROTHGAR_GROUP_BOSS_2_DISPLAY	= "Fleisch für die Massen"
+	L.SI_DQT_WROTHGAR_GROUP_BOSS_3_DISPLAY	= "Die Gabe der Natur"
+	L.SI_DQT_WROTHGAR_GROUP_BOSS_4_DISPLAY	= "So riecht ein falsches Spiel"
+	L.SI_DQT_WROTHGAR_GROUP_BOSS_5_DISPLAY	= "Gelehrtes Bergungsgut"
+	L.SI_DQT_WROTHGAR_GROUP_BOSS_6_DISPLAY	= "Schnee und Dampf"
 
 -- Thieves Guild Rye's Reacquisitions Quests
 	L.SI_DQT_RYES_REACQUISITIONS_1		= "Die verschwundenen Perlen"
@@ -188,6 +277,13 @@ local L = {}
 	L.SI_DQT_RYES_REACQUISITIONS_4		= "Sklavenbucht"
 
 -- Thieves Guild Heist Quests
+	--[[ Set these to the strings at the start of each quest, including
+	the leading space. The code will generate the display name by stripping
+	any of these values from the beginning of each quest name.
+	--]]
+	L.SI_DQT_HEIST_PREFIX_1				= "Beutezug der "
+	L.SI_DQT_HEIST_PREFIX_2				= "Beutezug des "
+	
 	L.SI_DQT_HEIST_1					= "Beutezug der Todkuhlenhallen"
 	L.SI_DQT_HEIST_2					= "Beutezug der funkelnden Grotte"
 	L.SI_DQT_HEIST_3					= "Beutezug des Verstecks"
@@ -199,8 +295,19 @@ local L = {}
 	L.SI_DQT_GOLD_COAST_BOUNTY_2		= "Das Gemeinwohl"
 	L.SI_DQT_GOLD_COAST_BOUNTY_3		= "Drohende Schatten"
 	L.SI_DQT_GOLD_COAST_BOUNTY_4		= "Das Jubeln der Menge"
+	
+	L.SI_DQT_GOLD_COAST_BOUNTY_1_DISPLAY	= "Das Übel unter der Erde"
+	L.SI_DQT_GOLD_COAST_BOUNTY_2_DISPLAY	= "Das Gemeinwohl"
+	L.SI_DQT_GOLD_COAST_BOUNTY_3_DISPLAY	= "Drohende Schatten"
+	L.SI_DQT_GOLD_COAST_BOUNTY_4_DISPLAY	= "Das Jubeln der Menge"
 
 -- Dark Brotherhood Sacrament Quests
+	--[[ Set these to the strings at the start of each quest, including
+	the leading space. The code will generate the display name by stripping
+	any of these values from the beginning of each quest name.
+	--]]
+	L.SI_DQT_SACRAMENT_PREFIX			= "Sakrament: "
+	
 	L.SI_DQT_SACRAMENT_1				= "Sakrament: Schmugglernest"
 	L.SI_DQT_SACRAMENT_2				= "Sakrament: Kanalbehausung"
 	L.SI_DQT_SACRAMENT_3				= "Sakrament: Händlerbucht"
@@ -208,6 +315,9 @@ local L = {}
 -- Clockwork City Bounty Quests
 	L.SI_DQT_CWC_BOUNTY_1				= "Ein feingefiederter Feind"
 	L.SI_DQT_CWC_BOUNTY_2				= "Das Reizen des Unvollendeten"
+	
+	L.SI_DQT_CWC_BOUNTY_1_DISPLAY		= "Ein feingefiederter Feind"
+	L.SI_DQT_CWC_BOUNTY_2_DISPLAY		= "Das Reizen des Unvollendeten"
 
 -- Clockwork City Exploratory Quests (Delve)
 	L.SI_DQT_CWC_EXPLORATORY_1			= "Filterwechsel"

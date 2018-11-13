@@ -2,7 +2,7 @@
 	<Layer name="SI_KEYBINDINGS_LAYER_GENERAL">
 		<Category name="Pollox's Daily Quest Tracker">
 			<Action name="DTQ_TOGGLE_DISPLAY">
-				<Up>DailyQuestTracker.toggleDisplay()</Up>
+				<Up>DQT.Main.toggleDisplay()</Up>
 			</Action>
 		</Category>
 	</Layer>

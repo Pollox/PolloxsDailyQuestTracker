@@ -48,7 +48,7 @@
 						ZO_ToggleButton_Initialize(self, TOGGLE_BUTTON_TYPE_TREE, TOGGLE_BUTTON_CLOSED)
 					</OnInitialized>
 					<OnMouseUp>
-						DailyQuestTracker:onToggleQuestType(self, button)
+						DQT.Main:onToggleQuestType(self, button)
 					</OnMouseUp>
 				</Button>
 				
@@ -93,19 +93,19 @@
             <Anchor point="CENTER" />
  
             <OnUpdate>
-                DailyQuestTracker:update()
+                DQT.Main:update()
             </OnUpdate>
 			
 			<OnMoveStop>
-				DailyQuestTracker:onMoveStop()
+				DQT.Main:onMoveStop()
 			</OnMoveStop>
 			
 			<OnResizeStop>
-				DailyQuestTracker:onResizeStop()
+				DQT.Main:onResizeStop()
 			</OnResizeStop>
 			
 			<OnShow>
-				DailyQuestTracker:onShow()
+				DQT.Main:onShow()
 			</OnShow>
 			
             <Controls>
@@ -121,7 +121,7 @@
 					<Dimensions y="25" x="25" />
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$(parent)" offsetX="-5" offsetY="5" />
 					<Textures normal="esoui/art/buttons/decline_up.dds" pressed="esoui/art/buttons/decline_down.dds" mouseOver="esoui/art/buttons/decline_over.dds" />
-					<OnClicked>DailyQuestTracker.closeWindow()</OnClicked>
+					<OnClicked>DQT.Main.closeWindow()</OnClicked>
 				</Button>
 				
 				<Control name="$(parent)Header">

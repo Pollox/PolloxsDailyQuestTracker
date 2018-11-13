@@ -42,7 +42,11 @@ L.SI_DQT_ALCHEMY					= "Алхимия"
 L.SI_DQT_ENCHANTING					= "Зачарование"
 L.SI_DQT_PROVISIONING				= "Снабжение"
 
--- QUEST NAMES MUST BE EXACTLY AS THEY APPEAR IN GAME IN THE QUEST JOURNAL
+--[[
+	QUEST NAMES MUST BE EXACTLY AS THEY APPEAR IN GAME IN THE QUEST JOURNAL.
+	Some quests with have an alternate DISPLAY name under them, for however
+	we want to show the quest in the GUI
+--]]
 
 -- Daily Crafting Quests
 L.SI_DQT_CLOTHIER_WRIT				= "Заказ портному"
@@ -53,6 +57,50 @@ L.SI_DQT_ALCHEMIST_WRIT				= "Заказ алхимику"
 L.SI_DQT_ENCHANTER_WRIT				= "Заказ зачарователю"
 L.SI_DQT_PROVISIONER_WRIT			= "Заказ снабженцу"
 
+-- Undaunted Pledges
+--[[ Set these to the strings at the start of each quest, including
+the leading space. The code will generate the display name by stripping
+any of these values from the beginning of each quest name.
+--]]
+L.SI_DQT_PLEDGE_PREFIX				= "Pledge: "
+
+L.SI_DQT_PLEDGE_DARKSHADE1			= "Pledge: Darkshade Caverns I"
+L.SI_DQT_PLEDGE_DARKSHADE2			= "Pledge: Darkshade II"
+L.SI_DQT_PLEDGE_ELDEN1				= "Pledge: Elden Hollow I"
+L.SI_DQT_PLEDGE_ELDEN2				= "Pledge: Elden Hollow II"
+L.SI_DQT_PLEDGE_FUNGAL1				= "Pledge: Fungal Grotto I"
+L.SI_DQT_PLEDGE_FUNGAL2				= "Pledge: Fungal Grotto II"
+L.SI_DQT_PLEDGE_SPINDLE1			= "Pledge: Spindleclutch I"
+L.SI_DQT_PLEDGE_SPINDLE2			= "Pledge: Spindleclutch II"
+L.SI_DQT_PLEDGE_BANISHED1			= "Pledge: Banished Cells I"
+L.SI_DQT_PLEDGE_BANISHED2			= "Pledge: Banished Cells II"
+L.SI_DQT_PLEDGE_WAYREST1			= "Pledge: Wayrest Sewers I"
+L.SI_DQT_PLEDGE_WAYREST2			= "Pledge: Wayrest Sewers II"
+
+L.SI_DQT_PLEDGE_ARX					= "Pledge: Arx Corinium"
+L.SI_DQT_PLEDGE_BLACKHEART			= "Pledge: Blackheart Haven"
+L.SI_DQT_PLEDGE_CRUCIBLE			= "Pledge: Blessed Crucible"
+L.SI_DQT_PLEDGE_COA1				= "Pledge: City of Ash I"
+L.SI_DQT_PLEDGE_COA2				= "Pledge: City of Ash II"
+L.SI_DQT_PLEDGE_COH1				= "Pledge: Crypt of Hearts I"
+L.SI_DQT_PLEDGE_COH2				= "Pledge: Crypt of Hearts II"
+L.SI_DQT_PLEDGE_DIREFROST			= "Pledge: Direfrost Keep"
+L.SI_DQT_PLEDGE_SELENE				= "Pledge: Selene's Web"
+L.SI_DQT_PLEDGE_TEMPEST				= "Pledge: Tempest Island"
+L.SI_DQT_PLEDGE_VOM					= "Pledge: Vaults of Madness"
+L.SI_DQT_PLEDGE_VOLENFELL			= "Pledge: Volenfell"
+
+L.SI_DQT_PLEDGE_CRADLE				= "Pledge: Cradle of Shadows"
+L.SI_DQT_PLEDGE_PRISON				= "Pledge: Imperial City Prison"
+L.SI_DQT_PLEDGE_MAZZATUN			= "Pledge: Ruins of Mazzatun"
+L.SI_DQT_PLEDGE_WHITE_GOLD			= "Pledge: White-Gold Tower"
+L.SI_DQT_PLEDGE_BLOODROOT			= "Pledge: Bloodroot Forge"
+L.SI_DQT_PLEDGE_FALKREATH			= "Pledge: Falkreath Hold"
+L.SI_DQT_PLEDGE_FANG_LAIG			= "Pledge: Fang Lair"
+L.SI_DQT_PLEDGE_SCALECALLER			= "Pledge: Scalecaller Peak"
+L.SI_DQT_PLEDGE_MOONHUNTER			= "Pledge: Moon Hunter Keep"
+L.SI_DQT_PLEDGE_MARCH				= "Pledge: March of Sacrifices"
+
 -- Summerset Bounty Quests (World Boss)
 L.SI_DQT_SUMMERSET_BOUNTY_1			= "Глубинный алхимик"
 L.SI_DQT_SUMMERSET_BOUNTY_2			= "Птицы одного пера"
@@ -60,6 +108,13 @@ L.SI_DQT_SUMMERSET_BOUNTY_3			= "Вечная память"
 L.SI_DQT_SUMMERSET_BOUNTY_4			= "На мели"
 L.SI_DQT_SUMMERSET_BOUNTY_5			= "Болезнь моря"
 L.SI_DQT_SUMMERSET_BOUNTY_6			= "Укрощение дикой природы"
+
+L.SI_DQT_SUMMERSET_BOUNTY_1_DISPLAY	= "Глубинный алхимик"
+L.SI_DQT_SUMMERSET_BOUNTY_2_DISPLAY	= "Птицы одного пера"
+L.SI_DQT_SUMMERSET_BOUNTY_3_DISPLAY	= "Вечная память"
+L.SI_DQT_SUMMERSET_BOUNTY_4_DISPLAY	= "На мели"
+L.SI_DQT_SUMMERSET_BOUNTY_5_DISPLAY	= "Болезнь моря"
+L.SI_DQT_SUMMERSET_BOUNTY_6_DISPLAY	= "Укрощение дикой природы"
 
 -- Summerset Exploratory Quests (Delve)
 L.SI_DQT_SUMMERSET_EXPLORATORY_1	= "Сокращение популяции змей"
@@ -80,6 +135,13 @@ L.SI_DQT_VVARDENFELL_BOUNTY_4		= "Волам здесь не место"
 L.SI_DQT_VVARDENFELL_BOUNTY_5		= "Проклятье Салотанов"
 L.SI_DQT_VVARDENFELL_BOUNTY_6		= "Песня сирены"
 
+L.SI_DQT_VVARDENFELL_BOUNTY_1_DISPLAY = "Обеспокоенная ученица"
+L.SI_DQT_VVARDENFELL_BOUNTY_2_DISPLAY = "Затаившийся алчущий"
+L.SI_DQT_VVARDENFELL_BOUNTY_3_DISPLAY = "Отбраковка колонии"
+L.SI_DQT_VVARDENFELL_BOUNTY_4_DISPLAY = "Волам здесь не место"
+L.SI_DQT_VVARDENFELL_BOUNTY_5_DISPLAY = "Проклятье Салотанов"
+L.SI_DQT_VVARDENFELL_BOUNTY_6_DISPLAY = "Песня сирены"
+
 -- Vvardenfell Exploratory Quests (Delve)
 L.SI_DQT_VVARDENFELL_EXPLORATORY_1	= "Даэдрический срыв"
 L.SI_DQT_VVARDENFELL_EXPLORATORY_2	= "Задачка с квама"
@@ -98,6 +160,13 @@ L.SI_DQT_VVARDENFELL_HUNT_6			= "Охота на Тарра-Судж"
 L.SI_DQT_VVARDENFELL_HUNT_7			= "Охота на Извивающегося Свита"
 
 -- Vvardenfell Relics Quests
+--[[ Set these to the strings at the start of each quest, including
+the leading space. The code will generate the display name by stripping
+any of these values from the beginning of each quest name.
+--]]
+L.SI_DQT_VVARDENFELL_RELICS_PREFIX_1	= "Реликвии "
+L.SI_DQT_VVARDENFELL_RELICS_PREFIX_2	= "" -- placeholder for other languages
+
 L.SI_DQT_VVARDENFELL_RELICS_1		= "Реликвии Ашалмавии"
 L.SI_DQT_VVARDENFELL_RELICS_2		= "Реликвии Ассурнабиташпи"
 L.SI_DQT_VVARDENFELL_RELICS_3		= "Реликвии Ассарнатамата"
@@ -115,6 +184,15 @@ L.SI_DQT_CYRODILIC_COLLECTIONS_5	= "Солонина"
 L.SI_DQT_CYRODILIC_COLLECTIONS_6	= "Ветра Кин"
 
 -- Fighters Guild Quests
+--[[ Set these to the strings at the start of each quest, including
+the leading space. The code will generate the display name by stripping
+any of these values from the beginning of each quest name.
+--]]
+L.SI_DQT_FIGHTERS_GUILD_PREFIX_1		= "Темные якоря в "
+L.SI_DQT_FIGHTERS_GUILD_PREFIX_2		= "Темные якоря на " -- placeholder for other languages
+L.SI_DQT_FIGHTERS_GUILD_PREFIX_3		= "" -- placeholder for other languages
+L.SI_DQT_FIGHTERS_GUILD_PREFIX_4		= "" -- placeholder for other languages
+
 L.SI_DQT_FIGHTERS_GUILD_1			= "Темные якоря в пустыне Алик'р"
 L.SI_DQT_FIGHTERS_GUILD_2			= "Темные якоря на Ауридоне"
 L.SI_DQT_FIGHTERS_GUILD_3			= "Темные якоря в Бангкорае"
@@ -132,6 +210,15 @@ L.SI_DQT_FIGHTERS_GUILD_14			= "Темные якоря в Стормхейве�
 L.SI_DQT_FIGHTERS_GUILD_15			= "Темные якоря в Рифте"
 
 -- Mages Guild Quests
+--[[ Set these to the strings at the start of each quest, including
+the leading space. The code will generate the display name by stripping
+any of these values from the beginning of each quest name.
+--]]
+L.SI_DQT_MAGES_GUILD_PREFIX_1		= "Безумие в "
+L.SI_DQT_MAGES_GUILD_PREFIX_2		= "Безумие на " -- placeholder for other languages
+L.SI_DQT_MAGES_GUILD_PREFIX_3		= "" -- placeholder for other languages
+L.SI_DQT_MAGES_GUILD_PREFIX_4		= "" -- placeholder for other languages
+
 L.SI_DQT_MAGES_GUILD_1				= "Безумие в пустыне Алик'р"
 L.SI_DQT_MAGES_GUILD_2				= "Безумие на Ауридоне"
 L.SI_DQT_MAGES_GUILD_3				= "Безумие в Бангкорае"
@@ -181,6 +268,13 @@ L.SI_DQT_WROTHGAR_GROUP_BOSS_4		= "Запах нечестной игры"
 L.SI_DQT_WROTHGAR_GROUP_BOSS_5		= "Спасение во имя знаний"
 L.SI_DQT_WROTHGAR_GROUP_BOSS_6		= "Снег и пар"
 
+L.SI_DQT_WROTHGAR_GROUP_BOSS_1_DISPLAY = "Ересь невежества"
+L.SI_DQT_WROTHGAR_GROUP_BOSS_2_DISPLAY = "Мясо в массы"
+L.SI_DQT_WROTHGAR_GROUP_BOSS_3_DISPLAY = "Щедрость природы"
+L.SI_DQT_WROTHGAR_GROUP_BOSS_4_DISPLAY = "Запах нечестной игры"
+L.SI_DQT_WROTHGAR_GROUP_BOSS_5_DISPLAY = "Спасение во имя знаний"
+L.SI_DQT_WROTHGAR_GROUP_BOSS_6_DISPLAY = "Снег и пар"
+
 -- Thieves Guild Rye's Reacquisitions Quests
 L.SI_DQT_RYES_REACQUISITIONS_1		= "Потерянные жемчужины"
 L.SI_DQT_RYES_REACQUISITIONS_2		= "Воспоминания о молодости"
@@ -188,6 +282,13 @@ L.SI_DQT_RYES_REACQUISITIONS_3		= "Трубка моряка"
 L.SI_DQT_RYES_REACQUISITIONS_4		= "Бухта рабов"
 
 -- Thieves Guild Heist Quests
+--[[ Set these to the strings at the start of each quest, including
+the leading space. The code will generate the display name by stripping
+any of these values from the beginning of each quest name.
+--]]
+L.SI_DQT_HEIST_PREFIX_1				= "Ограбление: "
+L.SI_DQT_HEIST_PREFIX_2				= "" -- placeholder for other languages
+
 L.SI_DQT_HEIST_1					= "Ограбление: залы Мертвой лощины"
 L.SI_DQT_HEIST_2					= "Ограбление: Сверкающий грот"
 L.SI_DQT_HEIST_3					= "Ограбление: укрытие"
@@ -200,7 +301,18 @@ L.SI_DQT_GOLD_COAST_BOUNTY_2		= "Всеобщее благо"
 L.SI_DQT_GOLD_COAST_BOUNTY_3		= "Надвигающиеся тени"
 L.SI_DQT_GOLD_COAST_BOUNTY_4		= "Рев толпы"
 
+L.SI_DQT_GOLD_COAST_BOUNTY_1_DISPLAY = "Захороненное зло"
+L.SI_DQT_GOLD_COAST_BOUNTY_2_DISPLAY = "Всеобщее благо"
+L.SI_DQT_GOLD_COAST_BOUNTY_3_DISPLAY = "Надвигающиеся тени"
+L.SI_DQT_GOLD_COAST_BOUNTY_4_DISPLAY = "Рев толпы"
+
 -- Dark Brotherhood Sacrament Quests
+--[[ Set these to the strings at the start of each quest, including
+the leading space. The code will generate the display name by stripping
+any of these values from the beginning of each quest name.
+--]]
+L.SI_DQT_SACRAMENT_PREFIX			= "Таинство: "
+
 L.SI_DQT_SACRAMENT_1				= "Таинство: логово контрабандистов"
 L.SI_DQT_SACRAMENT_2				= "Таинство: жилая канализация"
 L.SI_DQT_SACRAMENT_3				= "Таинство: пещера торговцев"
@@ -208,6 +320,9 @@ L.SI_DQT_SACRAMENT_3				= "Таинство: пещера торговцев"
 -- Clockwork City Bounty Quests
 L.SI_DQT_CWC_BOUNTY_1				= "Враг в прекрасном оперении"
 L.SI_DQT_CWC_BOUNTY_2				= "Пробуждение Несовершенства"
+
+L.SI_DQT_CWC_BOUNTY_1_DISPLAY		= "Враг в прекрасном оперении"
+L.SI_DQT_CWC_BOUNTY_2_DISPLAY		= "Пробуждение Несовершенства"
 
 -- Clockwork City Exploratory Quests (Delve)
 L.SI_DQT_CWC_EXPLORATORY_1			= "Замена фильтров"

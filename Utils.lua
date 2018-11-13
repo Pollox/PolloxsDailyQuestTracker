@@ -2,13 +2,14 @@
 	Useful standalone functions
 --]]
 
-DQTUtils = {}
+local Utils = {}
+DQT.Utils = Utils
 
 --[[ Get a table of characters, sorted alphabetically by display name
 
 	 @return list of {id=character id, name = character display name, rawName = character raw name}
 -]]
-function DQTUtils:getCharacters()
+function Utils:getCharacters()
 	if not self.characters then
 		local characters = {}
 		
@@ -32,16 +33,17 @@ function DQTUtils:getCharacters()
 end
 
 -- get current time in UTC seconds
-function DQTUtils:getCurrentTime()
+function Utils:getCurrentTime()
 	return os.time(os.date("!*t"))
 end
 
 --[[ Calculates time of next daily quest reset in UTC.
      If your computer clock is off, this will be off.
 --]]
-function DQTUtils:getResetTime()
+function Utils:getResetTime()
 	local currentDate = os.date("!*t")
-	local resetTime = os.time({year=currentDate.year, month=currentDate.month, day=currentDate.day, hour=6, minute=0, second=0, isdst=currentDate.isdst})
+	local resetTime = os.time({year=currentDate.year, month=currentDate.month, day=currentDate.day,
+		hour=6, minute=0, second=0, isdst=currentDate.isdst})
 	local currentTime = os.time(currentDate)
 	
 	-- if reset time has already happened today, increment to tomorrow's reset time
@@ -50,4 +52,20 @@ function DQTUtils:getResetTime()
 	end
 	
 	return resetTime
+end
+
+--[[
+	If the string starts with any of the given prefixes, remove that prefix.
+	e.g.
+	
+	stripPrefixes("foo_hello", {"foo", "bar"}) returns "_hello"
+--]]
+function Utils:stripPrefixes(string, prefixes)
+	for _, prefix in ipairs(prefixes) do
+		if string:sub(1, #prefix) == prefix then
+			return string:sub(#prefix + 1, #string)
+		end
+	end
+	
+	return string
 end

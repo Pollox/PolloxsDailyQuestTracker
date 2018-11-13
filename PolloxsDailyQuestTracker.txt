@@ -17,9 +17,10 @@
 lang/en.lua
 lang/$(language).lua
 
-Utils.lua
-DQTInfo.lua
-settings.lua
 DailyQuestTracker.lua
+quest.lua
+Utils.lua
+questinfo.lua
+settings.lua
 DailyQuestTracker.xml
 Bindings.xml
