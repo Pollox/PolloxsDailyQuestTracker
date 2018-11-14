@@ -164,7 +164,7 @@ L.SI_DQT_VVARDENFELL_HUNT_7			= "Охота на Извивающегося Св
 the leading space. The code will generate the display name by stripping
 any of these values from the beginning of each quest name.
 --]]
-L.SI_DQT_VVARDENFELL_RELICS_PREFIX_1	= "Реликвии "
+L.SI_DQT_VVARDENFELL_RELICS_PREFIX_1	= ""
 L.SI_DQT_VVARDENFELL_RELICS_PREFIX_2	= "" -- placeholder for other languages
 
 L.SI_DQT_VVARDENFELL_RELICS_1		= "Реликвии Ашалмавии"
