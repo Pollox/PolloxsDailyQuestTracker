@@ -38,7 +38,8 @@ end
 QUEST_TYPE_ENUM = {
 	GROUP_BOSS,
 	DELVE, -- delves and public dungeons
-	DOLMEN, -- dolmens and geysers
+	DOLMEN, -- dolmens and geysers,
+	PLEDGE,
 	MISC
 }
 	
@@ -67,7 +68,8 @@ function QuestType:init(name, type, quests, isShareable)
 	self._name = name
 	self._type = type
 	self._quests = quests
-	self._isShareable = isShareable or (#quests > 1)
+	
+	self._isShareable = (isShareable ~= false) and (#quests > 1)
 end
 
 function QuestType:getName()

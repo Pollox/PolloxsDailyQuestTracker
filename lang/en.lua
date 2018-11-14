@@ -9,6 +9,7 @@ local L = {}
 
 -- Section Names
 	L.SI_DQT_CRAFTING					= "Crafting"
+	L.SI_DQT_UNDAUNTED_PLEDGE			= "Undaunted Pledges"
 	L.SI_DQT_SUMMERSET					= "Summerset"
 	L.SI_DQT_VVARDENFELL				= "Vvardenfell"
 	L.SI_DQT_GUILD						= "Guild"

@@ -19,8 +19,12 @@ lang/$(language).lua
 
 DailyQuestTracker.lua
 quest.lua
-Utils.lua
+utils.lua
+pledges.lua
+
+# include pledges.lua first
 questinfo.lua
+
 settings.lua
 DailyQuestTracker.xml
 Bindings.xml

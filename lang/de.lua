@@ -62,7 +62,7 @@ local L = {}
 	the leading space. The code will generate the display name by stripping
 	any of these values from the beginning of each quest name.
 	--]]
-	L.SI_DQT_PLEDGE_PREFIX				= "Pledge: "
+	L.SI_DQT_PLEDGE_PREFIX				= "Gelöbnis: "
 
 	L.SI_DQT_PLEDGE_DARKSHADE1			= "Gelöbnis: Dunkelschattenkavernen I"
 	L.SI_DQT_PLEDGE_DARKSHADE2			= "Gelöbnis: Dunkelschattenkavernen II"
@@ -79,12 +79,12 @@ local L = {}
 	
 	L.SI_DQT_PLEDGE_ARX					= "Gelöbnis: Arx Corinium"
 	L.SI_DQT_PLEDGE_BLACKHEART			= "Gelöbnis: Schwarzherz-Unterschlupf"
-	L.SI_DQT_PLEDGE_CRUCIBLE			= "Pledge: Blessed Crucible"
+	L.SI_DQT_PLEDGE_CRUCIBLE			= "Gelöbnis: Gesegnete Feuerprobe"
 	L.SI_DQT_PLEDGE_COA1				= "Gelöbnis: Stadt der Asche I"
 	L.SI_DQT_PLEDGE_COA2				= "Gelöbnis: Stadt der Asche II"
 	L.SI_DQT_PLEDGE_COH1				= "Gelöbnis: Krypta der Herzen I"
 	L.SI_DQT_PLEDGE_COH2				= "Gelöbnis: Krypta der Herzen II"
-	L.SI_DQT_PLEDGE_DIREFROST			= "Pledge: Direfrost Keep"
+	L.SI_DQT_PLEDGE_DIREFROST			= "Gelöbnis: Burg Grauenfrost"
 	L.SI_DQT_PLEDGE_SELENE				= "Gelöbnis: Selenes Netz"
 	L.SI_DQT_PLEDGE_TEMPEST				= "Gelöbnis: Orkaninsel"
 	L.SI_DQT_PLEDGE_VOM					= "Gelöbnis: Kammern des Wahnsinns"
