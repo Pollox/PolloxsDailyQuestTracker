@@ -351,6 +351,38 @@ Info.DarkBrotherhoodQuests = QuestSection:new(GetString(SI_DQT_DARK_BROTHERHOOD)
 			sacramentQuest(SI_DQT_SACRAMENT_3)})
 })
 
+Info.MurkmireQuests = QuestSection:new(GetString(SI_DQT_MURKMIRE), {
+	QuestType:new(
+		GetString(SI_DQT_GROUP_BOSS),
+		QUEST_TYPE_ENUM.MISC,
+		{
+			newQuest(SI_DQT_MM_BOUNTY_1),
+			newQuest(SI_DQT_MM_BOUNTY_2),
+			newQuest(SI_DQT_MM_BOUNTY_3),
+			newQuest(SI_DQT_MM_BOUNTY_4),
+			newQuest(SI_DQT_MM_BOUNTY_5),
+			newQuest(SI_DQT_MM_BOUNTY_6)}),
+	QuestType:new(
+		GetString(SI_DQT_DELVE),
+		QUEST_TYPE_ENUM.MISC,
+		{
+			newQuest(SI_DQT_MM_EXPLORATORY_1),
+			newQuest(SI_DQT_MM_EXPLORATORY_2),
+			newQuest(SI_DQT_MM_EXPLORATORY_3),
+			newQuest(SI_DQT_MM_EXPLORATORY_4),
+			newQuest(SI_DQT_MM_EXPLORATORY_5),
+			newQuest(SI_DQT_MM_EXPLORATORY_6)}),
+	QuestType:new(
+		GetString(SI_DQT_ROOT_WHISPER),
+		QUEST_TYPE_ENUM.MISC,
+		{
+			newQuest(SI_DQT_MM_RW_1),
+			newQuest(SI_DQT_MM_RW_2),
+			newQuest(SI_DQT_MM_RW_3),
+			newQuest(SI_DQT_MM_RW_4),
+			newQuest(SI_DQT_MM_RW_5)}),
+})
+
 Info.Pledges = DQT.Pledges.getPledgeSection()
 
 Info.QuestSections = {
@@ -363,5 +395,6 @@ Info.QuestSections = {
 	Info.ClockworkCityQuests,
 	Info.WrothgarQuests,
 	Info.ThievesGuildQuests,
-	Info.DarkBrotherhoodQuests
+	Info.DarkBrotherhoodQuests,
+	Info.MurkmireQuests
 }

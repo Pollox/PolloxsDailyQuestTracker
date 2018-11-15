@@ -275,6 +275,11 @@ function Main.TreeQuestSetup(node, questControl, data, open, userRequested, enab
 	end
 end
 
+--[[
+	Creates the column labels for the rows, which are the names of the enabled charactes.
+	
+	Resizes and constrains the window as necessary to contain the header.
+--]]
 function Main:createHeader()
 	local headerControl = DQTWindow:GetNamedChild("Header")
 	local previousControl = nil

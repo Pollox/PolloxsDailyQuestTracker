@@ -18,6 +18,7 @@ local L = {}
 	L.SI_DQT_WROTHGAR					= "Wrothgar"
 	L.SI_DQT_THIEVES_GUILD				= "Thieves Guild"
 	L.SI_DQT_DARK_BROTHERHOOD			= "Dark Brotherhood"
+	L.SI_DQT_MURKMIRE					= "Murkmire"
 
 -- Quest Type Names
 	L.SI_DQT_GROUP_BOSS					= "Group Boss"
@@ -34,6 +35,7 @@ local L = {}
 	L.SI_DQT_HEIST						= "Heist"
 	L.SI_DQT_GOLD_COAST_BOUNTY			= "Bounty"
 	L.SI_DQT_SACRAMENT					= "Sacrament"
+	L.SI_DQT_ROOT_WHISPER				= "Root-Whisper"
 	
 	L.SI_DQT_CLOTHING					= "Clothing"
 	L.SI_DQT_BLACKSMITHING				= "Blacksmithing"
@@ -348,6 +350,29 @@ local L = {}
 	L.SI_DQT_CWC_BLACKFEATHER_4			= "A Matter of Tributes"
 	L.SI_DQT_CWC_BLACKFEATHER_5			= "Morsels and Pecks"
 	L.SI_DQT_CWC_BLACKFEATHER_6			= "Nibbles and Bits"
+
+-- Murkmire Bounty Quests
+	L.SI_DQT_MM_BOUNTY_1				= "Grave Circumstances"
+	L.SI_DQT_MM_BOUNTY_2				= "Grave Expectations"
+	L.SI_DQT_MM_BOUNTY_3				= "Grave Mementos"
+	L.SI_DQT_MM_BOUNTY_4				= "Old Baubles"
+	L.SI_DQT_MM_BOUNTY_5				= "Old Enemies"
+	L.SI_DQT_MM_BOUNTY_6				= "Old Growth"
+
+-- Murkmire Exploratory Quests
+	L.SI_DQT_MM_EXPLORATORY_1			= "Antique Armor"
+	L.SI_DQT_MM_EXPLORATORY_2			= "Grave Subject Matter"
+	L.SI_DQT_MM_EXPLORATORY_3			= "Old Scrolls"
+	L.SI_DQT_MM_EXPLORATORY_4			= "Sacred Candles"
+	L.SI_DQT_MM_EXPLORATORY_5			= "Tools of Slaughter"
+	L.SI_DQT_MM_EXPLORATORY_6			= "The Weight of Words"
+
+-- Murkmire Root-Whisper Quests
+	L.SI_DQT_MM_RW_1					= "Aloe That Heals"
+	L.SI_DQT_MM_RW_2					= "Envoys Who Cower"
+	L.SI_DQT_MM_RW_3					= "Leather That Protects"
+	L.SI_DQT_MM_RW_4					= "Mushrooms That Nourish"
+	L.SI_DQT_MM_RW_5					= "Offerings That Hide"
 
 for stringId, translation in pairs(L) do
 	-- In other language files, use SafeAddString instead, e.g. SafeAddString(_G[stringId], translation, 0)
