@@ -595,5 +595,5 @@ L.SI_DQT_TRIALS_05 = "最古の亡霊"
 L.SI_DQT_TRIALS_06 = "聖者の慈悲"
 
 for stringId, translation in pairs(L) do
-    ZO_CreateStringId(stringId, translation)
+    SafeAddString(_G[stringId], translation, 0)
 end

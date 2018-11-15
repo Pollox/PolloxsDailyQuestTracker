@@ -595,5 +595,5 @@ L.SI_DQT_TRIALS_05 = "The Oldest Ghost"
 L.SI_DQT_TRIALS_06 = "Милосердие святых"
 
 for stringId, translation in pairs(L) do
-    ZO_CreateStringId(stringId, translation)
+    SafeAddString(_G[stringId], translation, 0)
 end
