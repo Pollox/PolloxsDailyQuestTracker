@@ -14,10 +14,10 @@
 ##
 ## You can read the full terms at https://account.elderscrollsonline.com/add-on-terms
 
-# lang/en_quests.lua
 lang/en.lua
-# lang/$(language)_quests.lua
+lang/en_quests.lua
 lang/$(language).lua
+lang/$(language)_quests.lua
 
 DailyQuestTracker.lua
 quest.lua
