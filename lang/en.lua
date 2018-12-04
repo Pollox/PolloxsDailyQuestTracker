@@ -8,11 +8,11 @@ L.SI_DQT_CHARACTERS_HEADER			= "Characters to Show"
 L.SI_DQT_SECTION_HEADER				= "Sections to Show"
 
 -- Section Names
-L.SI_DQT_CRAFTING					= "Crafting"
+L.SI_DQT_CRAFTING					= GetString(SI_QUESTTYPE4)
 L.SI_DQT_UNDAUNTED_PLEDGE			= "Undaunted Pledges"
 L.SI_DQT_SUMMERSET					= "Summerset"
 L.SI_DQT_VVARDENFELL				= "Vvardenfell"
-L.SI_DQT_GUILD						= "Guild"
+L.SI_DQT_GUILD						= GetString(SI_QUESTTYPE3)
 L.SI_DQT_CYRODILIC_COLLECTIONS		= "Cyrodilic Collections"
 L.SI_DQT_CLOCKWORK_CITY				= "Clockwork City"
 L.SI_DQT_WROTHGAR					= "Wrothgar"
@@ -22,7 +22,7 @@ L.SI_DQT_MURKMIRE					= "Murkmire"
 
 -- Quest Type Names
 L.SI_DQT_GROUP_BOSS					= "Group Boss"
-L.SI_DQT_DELVE						= "Delve"
+L.SI_DQT_DELVE						= GetString(SI_INSTANCEDISPLAYTYPE7)
 L.SI_DQT_GEYSERS					= "Geysers"
 L.SI_DQT_ASHLANDER_HUNT				= "Ashlander Hunt"
 L.SI_DQT_ASHLANDER_RELIC			= "Ashlander Relic"
@@ -33,17 +33,17 @@ L.SI_DQT_TARNISHED					= "Tarnished"
 L.SI_DQT_BLACKFEATHER_COURT			= "Blackfeather Court"
 L.SI_DQT_RYES_REACQUISITIONS		= "Rye's Reacquisitions"
 L.SI_DQT_HEIST						= "Heist"
-L.SI_DQT_GOLD_COAST_BOUNTY			= "Bounty"
+L.SI_DQT_GOLD_COAST_BOUNTY			= GetString(SI_STATS_BOUNTY_LABEL)
 L.SI_DQT_SACRAMENT					= "Sacrament"
 L.SI_DQT_ROOT_WHISPER				= "Root-Whisper"
 
-L.SI_DQT_CLOTHING					= "Clothing"
-L.SI_DQT_BLACKSMITHING				= "Blacksmithing"
-L.SI_DQT_WOODWORKING				= "Woodworking"
-L.SI_DQT_JEWELRY					= "Jewelry"
-L.SI_DQT_ALCHEMY					= "Alchemy"
-L.SI_DQT_ENCHANTING					= "Enchanting"
-L.SI_DQT_PROVISIONING				= "Provisioning"
+L.SI_DQT_CLOTHING					= GetString(SI_ITEMFILTERTYPE14)
+L.SI_DQT_BLACKSMITHING				= GetString(SI_ITEMFILTERTYPE13)
+L.SI_DQT_WOODWORKING				= GetString(SI_ITEMFILTERTYPE15)
+L.SI_DQT_JEWELRY					= GetString(SI_ITEMFILTERTYPE25)
+L.SI_DQT_ALCHEMY					= GetString(SI_ITEMFILTERTYPE16)
+L.SI_DQT_ENCHANTING					= GetString(SI_ITEMFILTERTYPE17)
+L.SI_DQT_PROVISIONING				= GetString(SI_ITEMFILTERTYPE18)
 
 --[[ Set these to the strings at the start of each quest, including
 the leading space. The code will generate the display name by stripping

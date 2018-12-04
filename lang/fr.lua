@@ -21,7 +21,6 @@ L.SI_DQT_MURKMIRE					= "Murkmire"
 
 -- Quest Type Names
 L.SI_DQT_GROUP_BOSS					= "Group Boss"
-L.SI_DQT_DELVE						= "Delve"
 L.SI_DQT_GEYSERS					= "Geysers"
 L.SI_DQT_ASHLANDER_HUNT				= "Ashlander Hunt"
 L.SI_DQT_ASHLANDER_RELIC			= "Ashlander Relic"
@@ -32,7 +31,6 @@ L.SI_DQT_TARNISHED					= "Tarnished"
 L.SI_DQT_BLACKFEATHER_COURT			= "Blackfeather Court"
 L.SI_DQT_RYES_REACQUISITIONS		= "Rye's Reacquisitions"
 L.SI_DQT_HEIST						= "Casse"
-L.SI_DQT_GOLD_COAST_BOUNTY			= "Bounty"
 L.SI_DQT_SACRAMENT					= "Sacrement"
 L.SI_DQT_ROOT_WHISPER				= "Root-Whisper"
 
