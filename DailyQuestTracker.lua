@@ -326,7 +326,12 @@ function Main:createHeader()
 	
 	for index, character in ipairs(characters) do
 		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", index)
-		columnHeaderControl:SetText(character.name)
+		
+		-- colorize current character name
+		local formattedName = ((GetCurrentCharacterId() == character.id)
+			and string.format("|c66b2ff%s|r", character.name)
+			or character.name)
+		columnHeaderControl:SetText(formattedName)
 		columnHeaderControl:SetHorizontalAlignment(TEXT_ALIGN_CENTER)
 		
 		-- set column width but leave a little padding
