@@ -35,11 +35,11 @@ end
 
 -------- Quest Type --------
 local QUEST_TYPE_ENUM = {
-	GROUP_BOSS,
-	DELVE, -- delves and public dungeons
-	DOLMEN, -- dolmens and geysers,
-	PLEDGE,
-	MISC
+	GROUP_BOSS = 1,
+	DELVE = 2, -- delves and public dungeons
+	DOLMEN = 3, -- dolmens and geysers,
+	PLEDGE = 4,
+	MISC = 5
 }
 	
 DQT.Quest.QUEST_TYPE_ENUM = QUEST_TYPE_ENUM

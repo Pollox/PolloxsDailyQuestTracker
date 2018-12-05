@@ -20,6 +20,7 @@ L.SI_DQT_MURKMIRE = "Murkmire"
 L.SI_DQT_OTHER_TIMERS				= "Other Timers"
 L.SI_DQT_RANDOM_DUNGEON				= "Random Dungeon"
 L.SI_DQT_RANDOM_BATTLEGROUNDS		= "Random Battlegrounds"
+L.SI_DQT_MOUNT_TRAINING				= "Mount Training"
 
 -- Quest Type Names
 L.SI_DQT_GROUP_BOSS = "Gruppen Boss"

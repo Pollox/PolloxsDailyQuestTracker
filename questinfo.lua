@@ -394,6 +394,10 @@ Info.OtherTimerQuests = TimerSection:new(GetString(SI_DQT_OTHER_TIMERS), {
 	TimerQuest:new(
 		GetString(SI_DQT_RANDOM_BATTLEGROUNDS),
 		TIMER_TYPE.BATTLEGROUNDS
+	),
+	TimerQuest:new(
+		GetString(SI_DQT_MOUNT_TRAINING),
+		TIMER_TYPE.MOUNT
 	)
 })
 

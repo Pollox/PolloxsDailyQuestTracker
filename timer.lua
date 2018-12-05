@@ -5,7 +5,8 @@ DQT.Timer = Timer
 -- must keep existing enum values to not corrupt saved data
 local TIMER_TYPE = {
 	DUNGEON = 0,
-	BATTLEGROUNDS = 1
+	BATTLEGROUNDS = 1,
+	MOUNT = 2
 }
 
 Timer.TIMER_TYPE = TIMER_TYPE
@@ -20,6 +21,7 @@ function Timer.updateTimers(savedTimers)
 	local currentTime = DQT.Utils:getCurrentTime()
 	savedTimers[TIMER_TYPE.DUNGEON] = currentTime + GetLFGCooldownTimeRemainingSeconds(LFG_COOLDOWN_DUNGEON_REWARD_GRANTED)
 	savedTimers[TIMER_TYPE.BATTLEGROUNDS] = currentTime + GetLFGCooldownTimeRemainingSeconds(LFG_COOLDOWN_BATTLEGROUND_REWARD_GRANTED)
+	savedTimers[TIMER_TYPE.MOUNT] = currentTime + GetTimeUntilCanBeTrained() / 1000
 end
 
 --[[
@@ -29,11 +31,14 @@ end
 function Timer.formatTimeRemaining(timeRemaining)
 	if timeRemaining == nil then
 		return "?"
+	elseif timeRemaining == 0 then
+		-- color text green if timer is up
+		return "|c0099000:00|r"
+	else
+		local hoursRemaining = math.floor(timeRemaining / 3600)
+		local minutesRemaining = math.floor((timeRemaining - hoursRemaining * 3600) / 60)
+		return string.format("%d:%.2d", hoursRemaining, minutesRemaining)
 	end
-	
-	local hoursRemaining = math.floor(timeRemaining / 3600)
-	local minutesRemaining = math.floor((timeRemaining - hoursRemaining * 3600) / 60)
-	return string.format("%d:%.2d", hoursRemaining, minutesRemaining)
 end
 
 -------- Timer --------
