@@ -8,11 +8,14 @@ Quests Object
 
 local Info = {}
 DQT.Info = Info
-local QUEST_TYPE_ENUM = DQT.QUEST_TYPE_ENUM
-local Quest = DQT.Quest
-local QuestType = DQT.QuestType
-local QuestSection = DQT.QuestSection
+local QUEST_TYPE_ENUM = DQT.Quest.QUEST_TYPE_ENUM
+local Quest = DQT.Quest.Quest
+local QuestType = DQT.Quest.QuestType
+local QuestSection = DQT.Quest.QuestSection
 local Utils = DQT.Utils
+local TimerQuest = DQT.Timer.TimerQuest
+local TimerSection = DQT.Timer.TimerSection
+local TIMER_TYPE = DQT.Timer.TIMER_TYPE
 
 -- helper function for Quest:new when name and display name both need to be converted with GetString
 local function newQuest(siName, siDisplayName)
@@ -383,9 +386,21 @@ Info.MurkmireQuests = QuestSection:new(GetString(SI_DQT_MURKMIRE), {
 			newQuest(SI_DQT_MURKMIRE_QUESTS_ROOT_WHISPER_05)}),
 })
 
+Info.OtherTimerQuests = TimerSection:new(GetString(SI_DQT_OTHER_TIMERS), {
+	TimerQuest:new(
+		GetString(SI_DQT_RANDOM_DUNGEON),
+		TIMER_TYPE.DUNGEON
+	),
+	TimerQuest:new(
+		GetString(SI_DQT_RANDOM_BATTLEGROUNDS),
+		TIMER_TYPE.BATTLEGROUNDS
+	)
+})
+
 Info.Pledges = DQT.Pledges.getPledgeSection()
 
 Info.QuestSections = {
+	Info.OtherTimerQuests,
 	Info.CraftingQuests,
 	Info.Pledges,
 	Info.SummersetQuests,

@@ -6,8 +6,49 @@
 			<Dimensions x="24" y="24" />
 		</Texture>
 		
+		<Label name="DQTTimerLabel" virtual="true" hidden="true" font="ZoFontGame">
+			<Dimensions x="100" y="24" />
+		</Label>
+		
 		<Label name="DQTColumnHeader" virtual="true" font="ZoFontHeader">
 		</Label>
+		
+		<Control name="DQTTimer" inherits="ZO_TreeEntry" virtual="true">
+			<Dimensions y="24" />
+			<Controls>
+				<Label name="$(parent)Name" font="ZoFontGame">
+					<Dimensions x="210" />
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+				</Label>
+				
+				<!-- HACK: Couldn't figure out how to dynamically add columns to a tree node, nor how to add them to the template, so hardcoding here -->
+				<Label name="$(parent)Status1" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status2" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status3" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status4" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status5" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status6" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status7" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status8" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status9" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status10" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status11" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status12" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status13" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status14" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status15" inherits="DQTTimerLabel" />
+			</Controls>
+		</Control>
+		
+		<Control name="DQTTimerSection" inherits="ZO_TreeHeader" virtual="true">
+			<Dimensions y="42" />
+			<Controls>
+				<Label name="$(parent)Name" font="ZoFontHeader2">
+					<Anchor point="LEFT" relativeTo="$(parent)" relativePoint="LEFT" />
+					<Dimensions x="200"/>
+				</Label>
+			</Controls>
+		</Control>
 		
 		<Control name="DQTQuest" inherits="ZO_TreeEntry" virtual="true">
 			<Dimensions y="24" />

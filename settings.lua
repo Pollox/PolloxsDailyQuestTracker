@@ -11,43 +11,6 @@ Settings.panelData = {
 -- Section name -> should show section
 Settings.sectionsToShow = {}
 
--- Get default account-wide settings
-function Settings:getAccountDefaults()
-	-- get default window properties
-	local x, y = DQTWindow:GetScreenRect()
-	local width, height = DQTWindow:GetDimensions()
-	
-	local windowProperties = {
-		x = x,
-		y = y,
-		width = width,
-		height = height
-	}
-	
-	------ get default settings ------
-	-- by default, show all characters
-	local charactersToShow = {}
-	
-	for _, character in ipairs(DQT.Utils:getCharacters()) do
-		charactersToShow[character.id] = true
-	end
-	
-	-- by default, show all sections
-	local sectionsToShow = {}
-	
-	for _, section in ipairs(DQT.Info.QuestSections) do
-		sectionsToShow[section:getName()] = true
-	end
-	
-	return {
-		windowProperties = windowProperties,
-		settings = {
-			sectionsToShow = sectionsToShow,
-			charactersToShow = charactersToShow
-		}
-	}
-end
-
 -- @param savedSettings settings table that gets saved to disk
 function Settings:initialize(savedSettings)
 	self.settings = savedSettings
@@ -99,6 +62,9 @@ function Settings:initialize(savedSettings)
 	LAM:RegisterOptionControls(DQT.Main.name, optionsData)
 end
 
+--[[
+	@param section quest section or timer section
+--]]
 function Settings:shouldShowSection(section)
 	return self.settings.sectionsToShow[section:getName()]
 end

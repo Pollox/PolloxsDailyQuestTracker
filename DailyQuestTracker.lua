@@ -15,14 +15,15 @@ Main.uncheckedTexture = "esoui/art/buttons/checkbox_unchecked.dds"
 --[[
 	GUI layout settings
 --]]
-	Main.QUEST_TYPE_INDENT = 2
-	Main.QUEST_INDENT = 30
-	
-	-- how wide is each column with status box and character name
-	Main.COLUMN_WIDTH = 100
-	
-	-- how far indented from left side is first column of character name
-	Main.COLUMN_INDENT = 240
+Main.QUEST_TYPE_INDENT = 2
+Main.QUEST_INDENT = 30
+Main.TIMER_INDENT = 26
+
+-- how wide is each column with status box and character name
+Main.COLUMN_WIDTH = 100
+
+-- how far indented from left side is first column of character name
+Main.COLUMN_INDENT = 240
 
 --[[
 	Get the quest sections to show
@@ -62,10 +63,12 @@ function Main:getAllQuestNames()
 		local allQuestNames = {}
 		
 		-- track all quests, even if we're not currently showing them
-		for _, section in ipairs(DQT.Info.QuestSections) do		
-			for _, questType in ipairs(section:getQuestTypes()) do
-				for _, quest in ipairs(questType:getQuests()) do
-					allQuestNames[quest:getName()] = true
+		for _, section in ipairs(DQT.Info.QuestSections) do
+			if section.type() == "QuestSection" then
+				for _, questType in ipairs(section:getQuestTypes()) do
+					for _, quest in ipairs(questType:getQuests()) do
+						allQuestNames[quest:getName()] = true
+					end
 				end
 			end
 		end
@@ -87,7 +90,7 @@ end
 function Main.onQuestAdded(eventCode, journalIndex, questName, objectiveName)
 	-- if this is one of the daily quests we track, then update the quest status
 	if Main:getAllQuestNames()[questName] then
-		Main.questStatuses[questName] = {
+		DQT.SV:getForChar(GetCurrentCharacterId()).questStatuses[questName] = {
 			addedTime = DQT.Utils:getCurrentTime(),
 			isCompleted = false
 		}
@@ -107,7 +110,7 @@ end
 	@param instanceDisplayType (InstanceDisplayType)
 --]]
 function Main.onQuestComplete(eventCode, questName, level, previousExperience, currentExperience, championPoints, questType, instanceDisplayType)
-	local QuestStatus = Main.questStatuses[questName]
+	local QuestStatus = DQT.SV:getForChar(GetCurrentCharacterId()).questStatuses[questName]
 	
 	-- if QuestStatus is nil, this is not a tracked quest, a quest started when the addon was not enabled, or a bug
 	if QuestStatus ~= nil then
@@ -127,7 +130,7 @@ end
 	@param questType
 --]]
 function Main:isDailyQuestTypeComplete(characterId, questType)
-	local questStatuses = self.savedVarsPerChar[characterId].questStatuses
+	local questStatuses = DQT.SV:getForChar(characterId).questStatuses
 	local previousResetTime = self.resetTime - 86400
 	
 	for _, quest in ipairs(questType:getQuests()) do
@@ -151,7 +154,7 @@ end
 	@param questName (string)
 --]]
 function Main:isDailyQuestComplete(characterId, quest)
-	local questStatuses = self.savedVarsPerChar[characterId].questStatuses
+	local questStatuses = DQT.SV:getForChar(characterId).questStatuses
 	local previousResetTime = self.resetTime - 86400
 	
 	questStatus = questStatuses[quest:getName()]
@@ -235,7 +238,7 @@ function Main.TreeQuestTypeSetup(node, questTypeControl, data, open, userRequest
 		else
 			statusControl:SetAnchor(CENTER, nameControl, LEFT,
 				Main.COLUMN_INDENT - Main.QUEST_TYPE_INDENT - questTypeControl:GetNamedChild("Toggle"):GetWidth()
-				+ (Main.COLUMN_WIDTH - statusControl:GetWidth()) / 2)
+				+ Main.COLUMN_WIDTH / 2)
 		end
 		
 		columnIndex = columnIndex + 1
@@ -248,15 +251,15 @@ end
 	
 	@param data {questName: quest name}
 --]]
-function Main.TreeQuestSetup(node, questControl, data, open, userRequested, enabled)
-	local nameControl = questControl:GetNamedChild("Name")
+function Main.TreeQuestSetup(node, nodeControl, data, open, userRequested, enabled)
+	local nameControl = nodeControl:GetNamedChild("Name")
 	nameControl:SetText(data.quest:getDisplayName())
 	
 	local columnIndex = 1
 	local previousStatusControl = nil
 	
 	for _, character in ipairs(Main:getCharactersToShow()) do
-		local statusControl = questControl:GetNamedChild(string.format("Status%s", columnIndex))
+		local statusControl = nodeControl:GetNamedChild(string.format("Status%s", columnIndex))
 		statusControl:SetHidden(false)
 		local statusTexture = (Main:isDailyQuestComplete(character.id, data.quest)
 			and Main.checkedTexture or Main.uncheckedTexture)
@@ -267,11 +270,46 @@ function Main.TreeQuestSetup(node, questControl, data, open, userRequested, enab
 		else
 			statusControl:SetAnchor(CENTER, nameControl, LEFT,
 				Main.COLUMN_INDENT - Main.QUEST_TYPE_INDENT - Main.QUEST_INDENT
-				+ (Main.COLUMN_WIDTH - statusControl:GetWidth()) / 2)
+				+ Main.COLUMN_WIDTH / 2)
 		end
 		
 		columnIndex = columnIndex + 1
 		previousStatusControl = statusControl
+	end
+end
+
+--[[
+	Sets up the controls inside a node that was created with the DQTTimerSection template
+	
+	@param data {name: sectionName}
+--]]
+function Main.TreeTimerSectionSetup(node, control, data, open, userRequested, enabled)
+	control:GetNamedChild("Name"):SetText(data.section:getName())
+end
+
+function Main.TreeTimerSetup(node, nodeControl, data, open, userRequested, enabled)
+	local nameControl = nodeControl:GetNamedChild("Name")
+	nameControl:SetText(data.quest:getName())
+	
+	local columnIndex = 1
+	local previousStatusControl = nil
+	
+	for _, character in ipairs(Main:getCharactersToShow()) do
+		local timerLabelControl = nodeControl:GetNamedChild(string.format("Status%s", columnIndex))
+		timerLabelControl:SetHidden(false)
+		timerLabelControl:SetText(DQT.Timer.formatTimeRemaining(data.quest:getTimeRemaining(character.id)))
+		timerLabelControl:SetHorizontalAlignment(TEXT_ALIGN_CENTER)
+		
+		if previousStatusControl then
+			timerLabelControl:SetAnchor(CENTER, previousStatusControl, CENTER, Main.COLUMN_WIDTH)
+		else
+			timerLabelControl:SetAnchor(CENTER, nameControl, LEFT,
+				Main.COLUMN_INDENT - Main.TIMER_INDENT 
+				+ Main.COLUMN_WIDTH / 2)
+		end
+		
+		columnIndex = columnIndex + 1
+		previousStatusControl = timerLabelControl
 	end
 end
 
@@ -289,6 +327,7 @@ function Main:createHeader()
 	for index, character in ipairs(characters) do
 		columnHeaderControl = CreateControlFromVirtual("ColumnHeader", headerControl, "DQTColumnHeader", index)
 		columnHeaderControl:SetText(character.name)
+		columnHeaderControl:SetHorizontalAlignment(TEXT_ALIGN_CENTER)
 		
 		-- set column width but leave a little padding
 		columnHeaderControl:SetWidth(self.COLUMN_WIDTH - 10)
@@ -311,31 +350,39 @@ function Main:createHeader()
 	
 	headerControl:SetHeight(columnHeaderHeight)
 	
-	-- ensure the window is wide enough to contain the header
-	local minWidth = self.COLUMN_INDENT + self.COLUMN_WIDTH * #characters
+	-- ensure the window is exactly wide enough to contain the header, plus a little extra
+	local width = self.COLUMN_INDENT + self.COLUMN_WIDTH * #characters + 40
 	local _, minHeight, maxWidth, maxHeight = DQTWindow:GetDimensionConstraints()
-	DQTWindow:SetDimensionConstraints(minWidth, minHeight, maxWidth, maxHeight)
-	
-	if DQTWindow:GetWidth() < minWidth then
-		DQTWindow:SetDimensions(minWidth, DQTWindow:GetHeight())
-		self:onResizeStop()
-	end
+	DQTWindow:SetDimensionConstraints(width, minHeight, maxWidth, maxHeight)
+	DQTWindow:SetDimensions(width, DQTWindow:GetHeight())
+	self:onResizeStop()
 end
 
 function Main:initializeRows()
 	-- Create a section for each category of quests
 	for _, section in ipairs(self:getSectionsToShow()) do
-		local sectionNode = self.tree:AddNode("DQTQuestSection", {section = section})
+		local sectionNode
 		
-		-- Create a row for each quest in this section
-		for _, questType in ipairs(section:getQuestTypes()) do
-			local questTypeNode = self.tree:AddNode("DQTQuestType", {questType = questType}, sectionNode)
+		if section.type() == "QuestSection" then
+			sectionNode = self.tree:AddNode("DQTQuestSection", {section = section})
 			
-			-- for quest types with multiple quests that you can share, add option to show each one
-			if questType:isShareable() then
-				for _, quest in ipairs(questType:getQuests()) do					
-					self.tree:AddNode("DQTQuest", {quest = quest}, questTypeNode)
+			-- Create a row for each quest in this section
+			for _, questType in ipairs(section:getQuestTypes()) do
+				local questTypeNode = self.tree:AddNode("DQTQuestType", {questType = questType}, sectionNode)
+				
+				-- for quest types with multiple quests that you can share, add option to show each one
+				if questType:isShareable() then
+					for _, quest in ipairs(questType:getQuests()) do					
+						self.tree:AddNode("DQTQuest", {quest = quest}, questTypeNode)
+					end
 				end
+			end
+		else
+			-- timer section
+			sectionNode = self.tree:AddNode("DQTTimerSection", {section = section})
+			
+			for _, quest in ipairs(section:getQuests()) do
+				self.tree:AddNode("DQTTimer", {quest = quest}, sectionNode)
 			end
 		end
 		
@@ -357,12 +404,14 @@ function Main:onToggleQuestType(buttonControl, button)
 	end
 end
 
+-- save window position when moving it
 function Main:onMoveStop()
 	local x, y = DQTWindow:GetScreenRect()
 	self.windowProperties.x = x
 	self.windowProperties.y = y
 end
 
+-- save window size when resizing it
 function Main:onResizeStop()
 	local width, height = DQTWindow:GetDimensions()
 	self.windowProperties.width = width
@@ -382,36 +431,15 @@ function Main:initialize()
 	-- TODO: do we need a seperate string for this, or can we do directly in language file?
 	ZO_CreateStringId("SI_BINDING_NAME_DTQ_TOGGLE_DISPLAY", GetString(SI_DQT_TOGGLE_DISPLAY))
 	
-	-- load account-wide saved variables
-	self.savedVarsAccount = ZO_SavedVars:NewAccountWide("PolloxsDailyQuestTracker_SavedVarsAccount", 1, nil, DQT.Settings:getAccountDefaults())
+	-- load saved variables
+	DQT.SV:init()
 	
 	-- reload previous window postion/size, and enable saving of postion/size
-	self.windowProperties = self.savedVarsAccount.windowProperties
+	self.windowProperties = DQT.SV:getAccountWide().windowProperties
 	self:initializeWindowProperties()
 	
-	--[[ load saved variables for each character
-		 character id -> saved variables for that character
-	--]]
-	self.savedVarsPerChar = {}
-	
-	for _, character in ipairs(DQT.Utils:getCharacters()) do
-		--[[ questStatuses:
-				Quest Name -> (time added (in utc), completed (boolean))
-		--]]
-		defaultSavedVarsChar = {
-			questStatuses = {},
-		}
-		
-		-- Load a different set of variables for each character, and use character id as the key
-		self.savedVarsPerChar[character.id] = ZO_SavedVars:New("PolloxsDailyQuestTracker_SavedVarsChar",
-			1, nil, defaultSavedVarsChar, nil, nil, character.name, character.id, ZO_SAVED_VARS_CHARACTER_ID_KEY)
-	end
-	
 	-- setup settings in menu
-	DQT.Settings:initialize(self.savedVarsAccount.settings)
-	
-	-- quest statuses for the current character
-	self.questStatuses = self.savedVarsPerChar[GetCurrentCharacterId()].questStatuses
+	DQT.Settings:initialize(DQT.SV:getAccountWide().settings)
 	
 	-- initialize window data
 	self.resetTime = DQT.Utils:getResetTime()
@@ -422,6 +450,8 @@ function Main:initialize()
 	self.tree:AddTemplate("DQTQuestSection", self.TreeSectionSetup, nil, nil, Main.QUEST_TYPE_INDENT, 0)
 	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, Main.QUEST_INDENT, 0)
 	self.tree:AddTemplate("DQTQuest", self.TreeQuestSetup, nil, nil, 0, 0)
+	self.tree:AddTemplate("DQTTimerSection", self.TreeTimerSectionSetup, nil, nil, Main.TIMER_INDENT, 0)
+	self.tree:AddTemplate("DQTTimer", self.TreeTimerSetup, nil, nil, 0, 0)
 	self:initializeRows()
 	
 	-- register a slash command for showing the window by typing in the chat window

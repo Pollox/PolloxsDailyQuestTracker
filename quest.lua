@@ -1,10 +1,9 @@
-local Quest = ZO_Object:Subclass()
-DQT.Quest = Quest
+DQT.Quest = {}
 
 -------- Quest --------
 -- boilerplate for class definition
 local Quest = ZO_Object:Subclass()
-DQT.Quest = Quest
+DQT.Quest.Quest = Quest
 
 function Quest:new(...)
 	local object = ZO_Object.New(self)
@@ -35,7 +34,7 @@ function Quest.eq(left, right)
 end
 
 -------- Quest Type --------
-QUEST_TYPE_ENUM = {
+local QUEST_TYPE_ENUM = {
 	GROUP_BOSS,
 	DELVE, -- delves and public dungeons
 	DOLMEN, -- dolmens and geysers,
@@ -43,11 +42,11 @@ QUEST_TYPE_ENUM = {
 	MISC
 }
 	
-DQT.QUEST_TYPE_ENUM = QUEST_TYPE_ENUM
+DQT.Quest.QUEST_TYPE_ENUM = QUEST_TYPE_ENUM
 
 -- boilerplate for class definition
 local QuestType = ZO_Object:Subclass()
-DQT.QuestType = QuestType
+DQT.Quest.QuestType = QuestType
 
 function QuestType:new(...)
 	local object = ZO_Object.New(self)
@@ -107,7 +106,7 @@ end
 
 -- boilerplate for class definition
 local QuestSection = ZO_Object:Subclass()
-DQT.QuestSection = QuestSection
+DQT.Quest.QuestSection = QuestSection
 
 function QuestSection:new(...)
 	local object = ZO_Object.New(self)
@@ -137,4 +136,9 @@ end
 -- equality operator overload
 function QuestSection.eq(left, right)
 	return left._name == right._name
+end
+
+-- class type
+function QuestSection.type()
+	return "QuestSection"
 end

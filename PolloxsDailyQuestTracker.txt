@@ -22,7 +22,9 @@ lang/$(language)_quests.lua
 DailyQuestTracker.lua
 quest.lua
 utils.lua
+savedvars.lua
 pledges.lua
+timer.lua
 
 # include pledges.lua first
 questinfo.lua

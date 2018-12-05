@@ -18,6 +18,9 @@ L.SI_DQT_WROTHGAR					= "Ротгар"
 L.SI_DQT_THIEVES_GUILD				= "Гильдия воров"
 L.SI_DQT_DARK_BROTHERHOOD			= "Темное Братство"
 L.SI_DQT_MURKMIRE					= "Murkmire"
+L.SI_DQT_OTHER_TIMERS				= "Other Timers"
+L.SI_DQT_RANDOM_DUNGEON				= "Random Dungeon"
+L.SI_DQT_RANDOM_BATTLEGROUNDS		= "Random Battlegrounds"
 
 -- Quest Type Names
 L.SI_DQT_GROUP_BOSS					= "Групповой босс"

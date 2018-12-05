@@ -1,7 +1,8 @@
 local Pledges = {}
 DQT.Pledges = Pledges
 
-local QuestType = DQT.QuestType
+local QuestType = DQT.Quest.QuestType
+local Quest = DQT.Quest.Quest
 
 -------- Pledges orders --------
 
@@ -105,10 +106,10 @@ function Pledge:initPledge(name, pledgeOrder)
 	quests = {}
 	
 	for _, pledgeName in ipairs(pledgeOrder.pledgeNames) do
-		quests[#quests + 1] = DQT.Quest:new(GetString(pledgeName))
+		quests[#quests + 1] = DQT.Quest.Quest:new(GetString(pledgeName))
 	end
 	
-	self:init(name, QUEST_TYPE_ENUM.PLEDGE, quests, false)
+	self:init(name, DQT.Quest.QUEST_TYPE_ENUM.PLEDGE, quests, false)
 	self._pledgeOrder = pledgeOrder
 end
 
@@ -118,7 +119,7 @@ function Pledge:getName()
 end
 
 function Pledges.getPledgeSection()
-	return DQT.QuestSection:new(GetString(SI_DQT_UNDAUNTED_PLEDGE), {
+	return DQT.Quest.QuestSection:new(GetString(SI_DQT_UNDAUNTED_PLEDGE), {
 		Pledge:new("Maj al-Ragath", Pledges.majPledgeOrder),
 		Pledge:new("Glirion", Pledges.glirionPledgeOrder),
 		Pledge:new("Urgarlag", Pledges.urgarlagPledgeOrder)
