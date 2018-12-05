@@ -115,10 +115,7 @@ function Main.onQuestComplete(eventCode, questName, level, previousExperience, c
 	-- if QuestStatus is nil, this is not a tracked quest, a quest started when the addon was not enabled, or a bug
 	if QuestStatus ~= nil then
 		QuestStatus.isCompleted = true
-		
-		if not DQTWindow:IsHidden() then
-			Main.tree:RefreshVisible()
-		end
+		Main.refresh()()
 	end
 end
 
@@ -167,17 +164,25 @@ function Main:isDailyQuestComplete(characterId, quest)
 	end
 end
 
+function Main:refresh()
+	if not DQTWindow:IsHidden() then
+		self.tree:RefreshVisible()
+		self.lastRefreshTime = os.time()
+	end
+end
+
 function Main:onShow()
-	self.tree:RefreshVisible()
+	self:refresh()
 end
 
 function Main:update()
 	local currentTime = DQT.Utils:getCurrentTime()
 	
 	-- calculate next reset time if necessary, and update rows
-	if self.resetTime < currentTime then
+	-- also refresh periodically to update timers
+	if (os.difftime(os.time(), self.lastRefreshTime) > 60) or (self.resetTime < currentTime) then
 		self.resetTime = DQT.Utils:getResetTime()
-		self.tree:RefreshVisible()
+		self:refresh()
 	end
 	
 	local timeUntilReset = os.difftime(self.resetTime, currentTime)
@@ -448,6 +453,7 @@ function Main:initialize()
 	
 	-- initialize window data
 	self.resetTime = DQT.Utils:getResetTime()
+	self.lastRefreshTime = os.time() -- last time we called RefreshVisible, in local time
 	self:createHeader()
 	
 	local scrollContainer = DQTWindow:GetNamedChild("ScrollFrame")
