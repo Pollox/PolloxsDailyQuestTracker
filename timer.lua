@@ -11,17 +11,84 @@ local TIMER_TYPE = {
 
 Timer.TIMER_TYPE = TIMER_TYPE
 
---[[
-	updates savedTimers
+function Timer:init()
+	self.questTimers = DQT.SV:getForChar(GetCurrentCharacterId()).questTimers
 	
-	@param savedTimers saved timer info for character
-		TIMER_TYPE -> seconds remaining
+	self:resetDungeonTimer()
+	self:resetBattlegroundsTimer()
+	self:resetMountTraining()
+	
+	EVENT_MANAGER:RegisterForEvent(DQT.Main.name, EVENT_ACTIVITY_FINDER_ACTIVITY_COMPLETE, Timer.onActivityFinderActivityComplete)
+	EVENT_MANAGER:RegisterForEvent(DQT.Main.name, EVENT_BATTLEGROUND_STATE_CHANGED, Timer.onBattlegroundStateChanged)
+	EVENT_MANAGER:RegisterForEvent(DQT.Main.name, EVENT_RIDING_SKILL_IMPROVEMENT, Timer.onRidingSkillImprovement)
+end
+
+--[[
+	@param timerType (TIMER_TYPE)
+	@param cooldown (integer) : timer length, in seconds
 --]]
-function Timer.updateTimers(savedTimers)
-	local currentTime = DQT.Utils:getCurrentTime()
-	savedTimers[TIMER_TYPE.DUNGEON] = currentTime + GetLFGCooldownTimeRemainingSeconds(LFG_COOLDOWN_DUNGEON_REWARD_GRANTED)
-	savedTimers[TIMER_TYPE.BATTLEGROUNDS] = currentTime + GetLFGCooldownTimeRemainingSeconds(LFG_COOLDOWN_BATTLEGROUND_REWARD_GRANTED)
-	savedTimers[TIMER_TYPE.MOUNT] = currentTime + GetTimeUntilCanBeTrained() / 1000
+function Timer:resetTimer(timerType, cooldown)
+	self.questTimers[timerType] = DQT.Utils:getCurrentTime() + cooldown
+end
+
+function Timer:resetDungeonTimer()
+	self:resetTimer(TIMER_TYPE.DUNGEON, GetLFGCooldownTimeRemainingSeconds(LFG_COOLDOWN_DUNGEON_REWARD_GRANTED))
+end
+
+function Timer:resetBattlegroundsTimer()
+	self:resetTimer(TIMER_TYPE.BATTLEGROUNDS, GetLFGCooldownTimeRemainingSeconds(LFG_COOLDOWN_BATTLEGROUND_REWARD_GRANTED))
+end
+
+function Timer:resetMountTraining()
+	Timer:resetTimer(TIMER_TYPE.MOUNT, GetTimeUntilCanBeTrained() / 1000)
+end
+
+function Timer.onRidingSkillImprovement(eventCode, ridingSkillType, previous, current, source)
+	if source == RIDING_TRAIN_SOURCE_STABLES then
+		Timer:resetMountTraining()
+	end
+end
+
+--[[
+There seems to be a slight delay between when EVENT_ACTIVITY_FINDER_ACTIVITY_COMPLETE fires,
+and when GetLFGCooldownTimeRemainingSeconds is actually updated. I have not found a reliable
+way to determine if the activity complete was a random dungeon or not, so that we could update
+the timer manually. Instead, we try again with a slight delay.
+
+By the time EVENT_ACTIVITY_FINDER_ACTIVITY_COMPLETE fires, GetCurrentLFGActivityId() returns
+only the id for this specific dungeon, instead of the id for a random dungeon. Storing the
+activity id from when we queued is not reliable because that info could be lost in a disconnect.
+--]]
+function Timer.onActivityFinderActivityComplete(eventCode)
+	if ZO_IsActivityTypeDungeon(GetActivityType(GetCurrentLFGActivityId())) then
+		Timer:resetDungeonTimer()
+		
+		-- a 1 second delay works for me, but we throw in a few more (with exponential growth) to be safe
+		local delays = {1, 4, 16}
+		for _, delay in ipairs(delays) do
+			zo_callLater(function() Timer:resetDungeonTimer() end, 1000 * delay)
+		end
+	end
+end
+
+function Timer.onBattlegroundStateChanged(eventCode, previousState, currentState)
+	--[[
+	We check for BATTLEGROUND_STATE_POSTGAME instead of
+	BATTLEGROUND_STATE_FINISHED because this never seems to get called
+	with BATTLEGROUND_STATE_FINISHED
+	--]]
+	if currentState == BATTLEGROUND_STATE_POSTGAME then
+		-- GetLFGCooldownTimeRemainingSeconds is probably not updated yet, but we try anyway
+		Timer:resetBattlegroundsTimer()
+		
+		-- try to reset timer again after they leave the battleground
+		EVENT_MANAGER:RegisterForEvent(DQT.Main.Name, EVENT_PLAYER_ACTIVATED, Timer.onBattlegroundLeft)
+	end
+end
+
+function Timer.onBattlegroundLeft(eventCode, initial)
+	EVENT_MANAGER:UnregisterForEvent(DQT.Main.Name, EVENT_PLAYER_ACTIVATED)
+	Timer:resetBattlegroundsTimer()
 end
 
 --[[

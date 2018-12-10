@@ -115,7 +115,7 @@ function Main.onQuestComplete(eventCode, questName, level, previousExperience, c
 	-- if QuestStatus is nil, this is not a tracked quest, a quest started when the addon was not enabled, or a bug
 	if QuestStatus ~= nil then
 		QuestStatus.isCompleted = true
-		Main.refresh()()
+		Main.refresh()
 	end
 end
 
@@ -156,7 +156,7 @@ function Main:isDailyQuestComplete(characterId, quest)
 	
 	questStatus = questStatuses[quest:getName()]
 		
-	if questStatus then			
+	if questStatus then
 		-- only count quest if it is completed and it wasn't picked up yesterday
 		return questStatus.isCompleted and (questStatus.addedTime > previousResetTime)
 	else
@@ -473,10 +473,11 @@ function Main.OnAddOnLoaded(event, addonName)
 	-- The event fires each time *any* addon loads - but we only care about when our own addon loads
 	if addonName == Main.name then
 		EVENT_MANAGER:UnregisterForEvent(Main.name, EVENT_ADD_ON_LOADED)
+		
+		EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_QUEST_ADDED, Main.onQuestAdded)
+		EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_QUEST_COMPLETE, Main.onQuestComplete)
+
 		Main:initialize()
 	end
 end
-
-EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_QUEST_ADDED, Main.onQuestAdded)
-EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_QUEST_COMPLETE, Main.onQuestComplete)
 EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_ADD_ON_LOADED, Main.OnAddOnLoaded)

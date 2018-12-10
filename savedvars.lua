@@ -18,7 +18,7 @@ function SV:init()
 	end
 	
 	-- get the latest timer info for this character
-	DQT.Timer.updateTimers(self.savedVarsPerChar[GetCurrentCharacterId()].questTimers)
+	DQT.Timer:init()
 end
 
 --[[
@@ -75,11 +75,11 @@ function SV:getAccountDefaults()
 		charactersToShow[character.id] = true
 	end
 	
-	-- by default, show all sections
+	-- by default, hide all sections
 	local sectionsToShow = {}
 	
 	for _, section in ipairs(DQT.Info.QuestSections) do
-		sectionsToShow[section:getName()] = true
+		sectionsToShow[section:getName()] = false
 	end
 	
 	return {
