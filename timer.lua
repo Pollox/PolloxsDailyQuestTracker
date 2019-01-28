@@ -40,7 +40,11 @@ function Timer:resetBattlegroundsTimer()
 end
 
 function Timer:resetMountTraining()
-	Timer:resetTimer(TIMER_TYPE.MOUNT, GetTimeUntilCanBeTrained() / 1000)
+	if STABLE_MANAGER:IsRidingSkillMaxedOut() then
+		self.questTimers[TIMER_TYPE.MOUNT] = "na"
+	else
+		Timer:resetTimer(TIMER_TYPE.MOUNT, GetTimeUntilCanBeTrained() / 1000)
+	end
 end
 
 function Timer.onRidingSkillImprovement(eventCode, ridingSkillType, previous, current, source)
@@ -92,7 +96,7 @@ function Timer.onBattlegroundLeft(eventCode, initial)
 end
 
 --[[
-	@param timeRemaining time remaining in seconds (or nil if unknown
+	@param timeRemaining time remaining in seconds (or nil if unknown, "na" if not applicable)
 	@return formatted string for display in gui
 --]]
 function Timer.formatTimeRemaining(timeRemaining)
@@ -101,6 +105,8 @@ function Timer.formatTimeRemaining(timeRemaining)
 	elseif timeRemaining == 0 then
 		-- color text green if timer is up
 		return "|c0099000:00|r"
+	elseif timeRemaining == "na" then
+		return "-"
 	else
 		local hoursRemaining = math.floor(timeRemaining / 3600)
 		local minutesRemaining = math.floor((timeRemaining - hoursRemaining * 3600) / 60)
@@ -130,12 +136,14 @@ function TimerQuest:initTimerQuest(name, timerType)
 	self._type = timerType
 end
 
--- get time remaining, in seconds, or nil if unknown
+-- get time remaining, in seconds, or nil if unknown, or "na" if not applicable
 function TimerQuest:getTimeRemaining(characterId)
 	local resetTime = DQT.SV:getForChar(characterId).questTimers[self._type]
 	
 	if resetTime == nil then
 		return nil
+	elseif resetTime == "na" then
+		return "na"
 	end
 	
 	return math.max(os.difftime(resetTime, DQT.Utils:getCurrentTime()), 0)

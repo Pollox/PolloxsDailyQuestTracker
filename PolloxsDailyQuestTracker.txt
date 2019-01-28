@@ -1,7 +1,7 @@
 ## Title: Pollox's Daily Quest Tracker
 ## Author: pollox
 ## Contributors: zelenin, Arch-kain, Baertram, Siegtime
-## Version: 1.1
+## Version: 1.2
 ## APIVersion: 100025
 ## DependsOn: LibAddonMenu-2.0
 ## SavedVariables: PolloxsDailyQuestTracker_SavedVarsChar PolloxsDailyQuestTracker_SavedVarsAccount
