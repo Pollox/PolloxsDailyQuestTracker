@@ -596,6 +596,17 @@ L.SI_DQT_WEEKLY_TRIALS_04 = "The Mage's Tower"
 L.SI_DQT_WEEKLY_TRIALS_05 = "The Oldest Ghost"
 L.SI_DQT_WEEKLY_TRIALS_06 = "Saints' Mercy"
 
+-- Northern Elsweyr Defense Force
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_01 = "Dark Souls, Mighty Weapons"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_02 = "Dragon Lore: Icehammer's Vault"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_03 = "Dragon Lore: Shroud Hearth Barrow"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_04 = "Dragon Lore: Stormcrag Crypt"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_05 = "Goblin Demonstration"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_06 = "Lamia Demonstration"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_07 = "Lurcher Demonstration"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_08 = "Skeleton Demonstration"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_09 = "Spider Demonstration"
+
 for stringId, translation in pairs(L) do
     ZO_CreateStringId(stringId, translation)
 end

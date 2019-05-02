@@ -23,6 +23,7 @@ L.SI_DQT_OTHER_TIMERS				= "Other Timers"
 L.SI_DQT_RANDOM_DUNGEON				= "Random Dungeon"
 L.SI_DQT_RANDOM_BATTLEGROUNDS		= "Random Battlegrounds"
 L.SI_DQT_MOUNT_TRAINING				= "Mount Training"
+L.SI_DQT_ELSWEYR_PROLOGUE			= "Elsweyr Prologue"
 
 -- Quest Type Names
 L.SI_DQT_GROUP_BOSS					= "Group Boss"
@@ -115,6 +116,17 @@ L.SI_DQT_GOLD_COAST_QUESTS_BOUNTIES_04_DISPLAY	= "The Roar of the Crowds"
 -- Clockwork City Bounty Quests
 L.SI_DQT_CLOCKWORK_CITY_QUESTS_BOUNTY_01_DISPLAY = "Wraith-of-Crows"
 L.SI_DQT_CLOCKWORK_CITY_QUESTS_BOUNTY_02_DISPLAY = "Imperfect"
+
+-- Northern Elsweyr Defense Force (quest names are a bit too long for the gui)
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_01_DISPLAY = "Dark Souls"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_02_DISPLAY = "Icehammer's Vault"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_03_DISPLAY = "Shroud Hearth Barrow"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_04_DISPLAY = "Stormcrag Crypt"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_05_DISPLAY = "Goblin"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_06_DISPLAY = "Lamia"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_07_DISPLAY = "Lurcher"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_08_DISPLAY = "Skeleton"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_09_DISPLAY = "Spider"
 
 for stringId, translation in pairs(L) do
 	-- In other language files, use SafeAddString instead, e.g. SafeAddString(_G[stringId], translation, 0)

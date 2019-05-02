@@ -63,16 +63,22 @@ end
 	@param quests (list) Quest objects
 	@param isShareable (boolean) (optional) defaults to true if more than one quest
 --]]
-function QuestType:init(name, type, quests, isShareable)
+function QuestType:init(name, type, quests, isShareable, displayName)
 	self._name = name
+
 	self._type = type
 	self._quests = quests
 	
 	self._isShareable = (isShareable ~= false) and (#quests > 1)
+	self._displayName = displayName or name
 end
 
 function QuestType:getName()
 	return self._name
+end
+
+function QuestType:getDisplayName()
+	return self._displayName
 end
 
 function QuestType:getQuests()
