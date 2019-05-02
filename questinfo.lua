@@ -388,11 +388,9 @@ Info.MurkmireQuests = QuestSection:new(GetString(SI_DQT_MURKMIRE), {
 
 -- create Elsweyr Prologue Quest object from variable like SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_01
 local function epQuestType(questLangVar, displayLangVar)
-	return QuestType:new(GetString(questLangVar),
+	return QuestType:new(GetString(displayLangVar),
 		QUEST_TYPE_ENUM.MISC,
-		{Quest:new(GetString(questLangVar))},
-		false,
-		GetString(displayLangVar))
+		{Quest:new(GetString(questLangVar))})
 end
 
 Info.ElsweyrPrologueQuests = QuestSection:new(GetString(SI_DQT_ELSWEYR_PROLOGUE), {

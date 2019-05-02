@@ -221,7 +221,7 @@ end
 --]]
 function Main.TreeQuestTypeSetup(node, questTypeControl, data, open, userRequested, enabled)
 	local nameControl = questTypeControl:GetNamedChild("Name")
-	nameControl:SetText(data.questType:getDisplayName())
+	nameControl:SetText(data.questType:getName())
 	
 	if not data.questType:isShareable() then
 		questTypeControl:GetNamedChild("Toggle"):SetHidden(true)
