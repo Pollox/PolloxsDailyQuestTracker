@@ -37,6 +37,9 @@
 				<Label name="$(parent)Status13" inherits="DQTTimerLabel" />
 				<Label name="$(parent)Status14" inherits="DQTTimerLabel" />
 				<Label name="$(parent)Status15" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status16" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status17" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status18" inherits="DQTTimerLabel" />
 			</Controls>
 		</Control>
 		
@@ -74,6 +77,9 @@
 				<Texture name="$(parent)Status13" inherits="DQTStatus" />
 				<Texture name="$(parent)Status14" inherits="DQTStatus" />
 				<Texture name="$(parent)Status15" inherits="DQTStatus" />
+				<Texture name="$(parent)Status16" inherits="DQTStatus" />
+				<Texture name="$(parent)Status17" inherits="DQTStatus" />
+				<Texture name="$(parent)Status18" inherits="DQTStatus" />
 			</Controls>
 		</Control>
 		
@@ -115,6 +121,9 @@
 				<Texture name="$(parent)Status13" inherits="DQTStatus" />
 				<Texture name="$(parent)Status14" inherits="DQTStatus" />
 				<Texture name="$(parent)Status15" inherits="DQTStatus" />
+				<Texture name="$(parent)Status16" inherits="DQTStatus" />
+				<Texture name="$(parent)Status17" inherits="DQTStatus" />
+				<Texture name="$(parent)Status18" inherits="DQTStatus" />
 			</Controls>
 		</Control>
 		

@@ -599,7 +599,7 @@ L.SI_DQT_WEEKLY_TRIALS_06 = "Saints' Mercy"
 -- Northern Elsweyr Defense Force
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_01 = "Dark Souls, Mighty Weapons"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_02 = "Dragon Lore: Icehammer's Vault"
-L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_03 = "Dragon Lore: Shroud Hearth Barrow"
+L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_03 = "Dragon Lore: Shroud Hearth"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_04 = "Dragon Lore: Stormcrag Crypt"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_05 = "Goblin Demonstration"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_06 = "Lamia Demonstration"
