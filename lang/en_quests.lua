@@ -607,6 +607,19 @@ L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_07 = "Lurcher Demonstration"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_08 = "Skeleton Demonstration"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_09 = "Spider Demonstration"
 
+-- Elsweyr Bounty Quests
+L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_01 = "A Dastardly Duo"
+L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_02 = "Sword of the Serpent"
+L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_03 = "The Senche of Decay"
+L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_04 = "The Traders' Terror"
+
+-- Elsweyr Exploratory Quests
+L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_01 = "Dousing the Daedric Flame"
+L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_02 = "Rifling Through Ruins"
+L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_03 = "The Hungry Cat's Favor"
+L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_04 = "The Serpent's Stampede"
+L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_05 = "Tangled Tea Leaves"
+
 for stringId, translation in pairs(L) do
     ZO_CreateStringId(stringId, translation)
 end

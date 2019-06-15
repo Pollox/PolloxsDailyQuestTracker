@@ -386,6 +386,26 @@ Info.MurkmireQuests = QuestSection:new(GetString(SI_DQT_MURKMIRE), {
 			newQuest(SI_DQT_MURKMIRE_QUESTS_ROOT_WHISPER_05)}),
 })
 
+Info.ElsweyrQuests = QuestSection:new(GetString(SI_DQT_ELSWEYR), {
+	QuestType:new(
+		GetString(SI_DQT_GROUP_BOSS),
+		QUEST_TYPE_ENUM.MISC,
+		{
+			newQuest(SI_DQT_ELSWEYR_QUESTS_BOUNTY_01),
+			newQuest(SI_DQT_ELSWEYR_QUESTS_BOUNTY_02),
+			newQuest(SI_DQT_ELSWEYR_QUESTS_BOUNTY_03),
+			newQuest(SI_DQT_ELSWEYR_QUESTS_BOUNTY_04)}),
+	QuestType:new(
+		GetString(SI_DQT_DELVE),
+		QUEST_TYPE_ENUM.MISC,
+		{
+			newQuest(SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_01),
+			newQuest(SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_02),
+			newQuest(SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_03),
+			newQuest(SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_04),
+			newQuest(SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_05)})
+})
+
 -- create Elsweyr Prologue Quest object from variable like SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_01
 local function epQuestType(questLangVar, displayLangVar)
 	return QuestType:new(GetString(displayLangVar),
@@ -435,5 +455,6 @@ Info.QuestSections = {
 	Info.ThievesGuildQuests,
 	Info.DarkBrotherhoodQuests,
 	Info.MurkmireQuests,
-	Info.ElsweyrPrologueQuests
+	Info.ElsweyrPrologueQuests,
+	Info.ElsweyrQuests
 }
