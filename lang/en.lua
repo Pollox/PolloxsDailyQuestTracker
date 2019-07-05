@@ -24,7 +24,8 @@ L.SI_DQT_RANDOM_DUNGEON				= "Random Dungeon"
 L.SI_DQT_RANDOM_BATTLEGROUNDS		= "Random Battlegrounds"
 L.SI_DQT_MOUNT_TRAINING				= "Mount Training"
 L.SI_DQT_ELSWEYR_PROLOGUE			= "Elsweyr Prologue"
-L.SI_DQT_ELSWEYR					= "Elsweyr"
+L.SI_DQT_ELSWEYR			= "Northern Elsweyr"
+L.SI_DQT_IC			= "Imperial City"
 
 -- Quest Type Names
 L.SI_DQT_GROUP_BOSS					= "Group Boss"
@@ -42,6 +43,8 @@ L.SI_DQT_HEIST						= "Heist"
 L.SI_DQT_GOLD_COAST_BOUNTY			= GetString(SI_STATS_BOUNTY_LABEL)
 L.SI_DQT_SACRAMENT					= "Sacrament"
 L.SI_DQT_ROOT_WHISPER				= "Root-Whisper"
+L.SI_DQT_IC_M				= "Siege of Cyrodiil Merit"
+L.SI_DQT_HUNT				= "Dragon Hunt"
 
 L.SI_DQT_CLOTHING					= GetString(SI_ITEMFILTERTYPE14)
 L.SI_DQT_BLACKSMITHING				= GetString(SI_ITEMFILTERTYPE13)
@@ -128,6 +131,23 @@ L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_06_DISPLAY = "Lamia"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_07_DISPLAY = "Lurcher"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_08_DISPLAY = "Skeleton"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_09_DISPLAY = "Spider"
+
+-- Northern Elsweyr Group Boss Quests
+L.SI_DQT_NORTHERN_ELSWEYR_GROUP_BOSS_DAILIES_01_DISPLAY = "Another Day, Another Death"
+L.SI_DQT_NORTHERN_ELSWEYR_GROUP_BOSS_DAILIES_02_DISPLAY = "A Waking Nightmare"
+L.SI_DQT_NORTHERN_ELSWEYR_GROUP_BOSS_DAILIES_03_DISPLAY = "The Senche of Decay"
+L.SI_DQT_NORTHERN_ELSWEYR_GROUP_BOSS_DAILIES_04_DISPLAY = "Sword of the Serpent"
+L.SI_DQT_NORTHERN_ELSWEYR_GROUP_BOSS_DAILIES_05_DISPLAY = "The Traders' Terror"
+L.SI_DQT_NORTHERN_ELSWEYR_GROUP_BOSS_DAILIES_06_DISPLAY = "A Dastardly Duo"
+
+-- Imperial City Quests
+L.SI_DQT_IMPERIAL_CITY_01_DISPLAY = "Watch Your Step (Nobles District)"
+L.SI_DQT_IMPERIAL_CITY_02_DISPLAY = "Priceless Treasures (Temple District)"
+L.SI_DQT_IMPERIAL_CITY_03_DISPLAY = "Historical Accuracy (Arboretum)"
+L.SI_DQT_IMPERIAL_CITY_04_DISPLAY = "The Lifeblood of an Empire (Arena District)"
+L.SI_DQT_IMPERIAL_CITY_05_DISPLAY = "Speaking For The Dead (Memorial District)"
+L.SI_DQT_IMPERIAL_CITY_06_DISPLAY = "Dousing the Fires of Industry (Elven Gardens)"
+
 
 for stringId, translation in pairs(L) do
 	-- In other language files, use SafeAddString instead, e.g. SafeAddString(_G[stringId], translation, 0)
