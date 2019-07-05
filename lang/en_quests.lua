@@ -607,18 +607,33 @@ L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_07 = "Lurcher Demonstration"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_08 = "Skeleton Demonstration"
 L.SI_DQT_NORTHERN_ELSWEYR_DEFENSE_FORCE_09 = "Spider Demonstration"
 
--- Elsweyr Bounty Quests
-L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_01 = "A Dastardly Duo"
-L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_02 = "Sword of the Serpent"
-L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_03 = "The Senche of Decay"
-L.SI_DQT_ELSWEYR_QUESTS_BOUNTY_04 = "The Traders' Terror"
+-- Northern Elsweyr Quests. Delve Dailies
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_DELVE_DAILIES_01 = "Wisdom in the Winds" -- Desert Wind Caverns (ADAD)
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_DELVE_DAILIES_02 = "Tangled Tea Leaves" -- The Tangle (AWN)
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_DELVE_DAILIES_03 = "Dousing the Daedric Flame" -- Darkpool Mine (TSoD)
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_DELVE_DAILIES_04 = "Rifling Through Ruins" -- Abode of Ignomity (SotS)
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_DELVE_DAILIES_05 = "The Hungry Cat's Favor" -- Predator Mesa (TTT)
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_DELVE_DAILIES_06 = "The Serpent's Stampede" -- Tomb of the Serpents (ADD)
 
--- Elsweyr Exploratory Quests
-L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_01 = "Dousing the Daedric Flame"
-L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_02 = "Rifling Through Ruins"
-L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_03 = "The Hungry Cat's Favor"
-L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_04 = "The Serpent's Stampede"
-L.SI_DQT_ELSWEYR_QUESTS_EXPLORATORY_05 = "Tangled Tea Leaves"
+-- Northern Elsweyr Quests. Group Boss Dailies
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_GROUP_BOSS_DAILIES_01 = "Another Day, Another Death" -- Na'ruzz the Boneweaver
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_GROUP_BOSS_DAILIES_02 = "A Waking Nightmare" -- Zalsheem
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_GROUP_BOSS_DAILIES_03 = "The Senche of Decay" -- Thannar the Graveprowler
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_GROUP_BOSS_DAILIES_04 = "Sword of the Serpent" -- Vhysradue
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_GROUP_BOSS_DAILIES_05 = "The Traders' Terror" -- Wily Keeva
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_GROUP_BOSS_DAILIES_06 = "A Dastardly Duo" -- Azv'i and Akumjhargo
+
+-- Northern Elsweyr Dragon Hunt Quest
+L.SI_DQT_NORTHERN_ELSWEYR_QUESTS_DRAGON_HUNT = "Dragon Hunt"
+
+-- Imperial City Quests
+L.SI_DQT_IMPERIAL_CITY_01_DISPLAY = "Watch Your Step"
+L.SI_DQT_IMPERIAL_CITY_02_DISPLAY = "Priceless Treasures"
+L.SI_DQT_IMPERIAL_CITY_03_DISPLAY = "Historical Accuracy"
+L.SI_DQT_IMPERIAL_CITY_04_DISPLAY = "The Lifeblood of an Empire"
+L.SI_DQT_IMPERIAL_CITY_05_DISPLAY = "Speaking For The Dead"
+L.SI_DQT_IMPERIAL_CITY_06_DISPLAY = "Dousing the Fires of Industry"
+
 
 for stringId, translation in pairs(L) do
     ZO_CreateStringId(stringId, translation)
