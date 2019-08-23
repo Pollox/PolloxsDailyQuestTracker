@@ -71,7 +71,7 @@ Pledges.glirionPledgeOrder = {
 
 -- pledges from Urgarlag
 Pledges.urgarlagPledgeOrder = {
-	startIndex = 4,
+	startIndex = 0,
 	pledgeNames = {
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_10, -- White-Gold Tower
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_02, -- Cradle of Shadows
@@ -83,6 +83,8 @@ Pledges.urgarlagPledgeOrder = {
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_06, -- March of Sacrifices
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_12, -- Depths of Malatar
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_11, -- Frostvault
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_14, -- Moongrave Fane
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_13, -- Lair of Maarselok
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_05, -- Imperial City Prison
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_08  -- Ruins of Mazzatun
 	}
