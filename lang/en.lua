@@ -24,7 +24,9 @@ L.SI_DQT_RANDOM_DUNGEON				= "Random Dungeon"
 L.SI_DQT_RANDOM_BATTLEGROUNDS		= "Random Battlegrounds"
 L.SI_DQT_MOUNT_TRAINING				= "Mount Training"
 L.SI_DQT_ELSWEYR_PROLOGUE			= "Elsweyr Prologue"
-L.SI_DQT_ELSWEYR					= "Elsweyr"
+L.SI_DQT_ELSWEYR					= "Northern Elsweyr"
+L.SI_DQT_SOUTH_ELSWEYR				= "Southern Elsweyr"
+L.SI_DQT_WESTERN_SKYRIM				= "Western Skyrim"
 
 -- Quest Type Names
 L.SI_DQT_GROUP_BOSS					= "Group Boss"
@@ -42,6 +44,8 @@ L.SI_DQT_HEIST						= "Heist"
 L.SI_DQT_GOLD_COAST_BOUNTY			= GetString(SI_STATS_BOUNTY_LABEL)
 L.SI_DQT_SACRAMENT					= "Sacrament"
 L.SI_DQT_ROOT_WHISPER				= "Root-Whisper"
+L.SI_DQT_NEW_MOON					= "New Moon"
+L.SI_DQT_HARROWSTORM				= "Harrowstorm"
 
 L.SI_DQT_CLOTHING					= GetString(SI_ITEMFILTERTYPE14)
 L.SI_DQT_BLACKSMITHING				= GetString(SI_ITEMFILTERTYPE13)
