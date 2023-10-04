@@ -17,7 +17,7 @@ local Quest = DQT.Quest.Quest
 function Pledges.getPledges(pledgeOrder)
 	-- this is the next reset time on the day when the below pledges were active
 	local referenceResetTime = os.time({year=2018, month=11, day=4,
-		hour=6, minute=0, second=0})
+		hour=10, minute=0, second=0})
 	
 	-- this is the next reset time now
 	local resetTime = DQT.Utils:getResetTime()
@@ -85,8 +85,22 @@ Pledges.urgarlagPledgeOrder = {
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_11, -- Frostvault
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_14, -- Moongrave Fane
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_13, -- Lair of Maarselok
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_15, -- Icereach
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_16, -- Unhallowed Grave
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_18, -- Stone Garden
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_17, -- Castle Thorn
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_19, -- Pledge: Black Drake Villa
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_20, -- Pledge: The Cauldron
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_21, -- Pledge: Red Petal Bastion
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_22, -- Pledge: The Dread Cellar
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_23, -- Pledge: Coral Aerie
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_24, -- Pledge: Shipwright's Regret
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_25, -- Pledge: Earthen Root Enclave
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_26, -- Pledge: Graven Deep
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_27, -- Bal Sunnar
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_28, -- Scrivener's Hall
 		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_05, -- Imperial City Prison
-		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_08  -- Ruins of Mazzatun
+		SI_DQT_UNDAUNTED_PLEDGES_URGARLAG_CHIEF_BANE_S_PLEDGES_08 -- Ruins of Mazzatun
 	}
 }
 

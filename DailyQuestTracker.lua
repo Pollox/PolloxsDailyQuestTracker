@@ -92,7 +92,8 @@ function Main.onQuestAdded(eventCode, journalIndex, questName, objectiveName)
 	if Main:getAllQuestNames()[questName] then
 		DQT.SV:getForChar(GetCurrentCharacterId()).questStatuses[questName] = {
 			addedTime = DQT.Utils:getCurrentTime(),
-			isCompleted = false
+			isCompleted = false,
+			isWrit = false
 		}
 	end
 end
@@ -115,7 +116,7 @@ function Main.onQuestComplete(eventCode, questName, level, previousExperience, c
 	-- if QuestStatus is nil, this is not a tracked quest, a quest started when the addon was not enabled, or a bug
 	if QuestStatus ~= nil then
 		QuestStatus.isCompleted = true
-		Main.refresh()
+		Main:refresh()
 	end
 end
 
@@ -129,11 +130,10 @@ end
 function Main:isDailyQuestTypeComplete(characterId, questType)
 	local questStatuses = DQT.SV:getForChar(characterId).questStatuses
 	local previousResetTime = self.resetTime - 86400
-	
+
 	for _, quest in ipairs(questType:getQuests()) do
-		questStatus = questStatuses[quest:getName()]
-		
-		if questStatus then			
+		local questStatus = questStatuses[quest:getName()]
+		if questStatus then
 			-- only count quest if it is completed and it wasn't picked up yesterday
 			if questStatus.isCompleted and (questStatus.addedTime > previousResetTime) then
 				return true
@@ -151,12 +151,14 @@ end
 	@param questName (string)
 --]]
 function Main:isDailyQuestComplete(characterId, quest)
+	-- d(characterId)
 	local questStatuses = DQT.SV:getForChar(characterId).questStatuses
 	local previousResetTime = self.resetTime - 86400
-	
+	-- d(questStatuses)
+	-- d(quest:getName())
 	questStatus = questStatuses[quest:getName()]
-		
 	if questStatus then
+		-- d(questStatus)
 		-- only count quest if it is completed and it wasn't picked up yesterday
 		return questStatus.isCompleted and (questStatus.addedTime > previousResetTime)
 	else
@@ -437,10 +439,6 @@ function Main:initializeWindowProperties()
 end
 
 function Main:initialize()
-	-- Register keybindings
-	-- TODO: do we need a seperate string for this, or can we do directly in language file?
-	ZO_CreateStringId("SI_BINDING_NAME_DTQ_TOGGLE_DISPLAY", GetString(SI_DQT_TOGGLE_DISPLAY))
-	
 	-- load saved variables
 	DQT.SV:init()
 	
@@ -457,7 +455,7 @@ function Main:initialize()
 	self:createHeader()
 	
 	local scrollContainer = DQTWindow:GetNamedChild("ScrollFrame")
-	self.tree = ZO_Tree:New(scrollContainer:GetNamedChild("ScrollChild"), 0, 0, 2000)
+	self.tree = ZO_Tree:New(scrollContainer:GetNamedChild("ScrollChild"), 0, 0, 3000)
 	self.tree:AddTemplate("DQTQuestSection", self.TreeSectionSetup, nil, nil, Main.QUEST_TYPE_INDENT, 0)
 	self.tree:AddTemplate("DQTQuestType", self.TreeQuestTypeSetup, nil, nil, Main.QUEST_INDENT, 0)
 	self.tree:AddTemplate("DQTQuest", self.TreeQuestSetup, nil, nil, 0, 0)
@@ -467,12 +465,16 @@ function Main:initialize()
 	
 	-- register a slash command for showing the window by typing in the chat window
 	SLASH_COMMANDS["/dqt"] = Main.toggleDisplay
+	SLASH_COMMANDS["/dailyquest"] = Main.toggleDisplay
 end
 
 function Main.OnAddOnLoaded(event, addonName)
 	-- The event fires each time *any* addon loads - but we only care about when our own addon loads
 	if addonName == Main.name then
+
 		EVENT_MANAGER:UnregisterForEvent(Main.name, EVENT_ADD_ON_LOADED)
+		EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_NEW_MOVEMENT_IN_UI_MODE, DQTWindow:SetHidden(true))
+
 		
 		EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_QUEST_ADDED, Main.onQuestAdded)
 		EVENT_MANAGER:RegisterForEvent(Main.name, EVENT_QUEST_COMPLETE, Main.onQuestComplete)
