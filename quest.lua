@@ -12,6 +12,7 @@ function Quest:new(...)
 end
 
 --[[
+	
 	@param name (string) unique name of quest as it appears in quest journal
 	@param displayName (string) (optional) alternate name to display
 --]]
@@ -39,7 +40,8 @@ local QUEST_TYPE_ENUM = {
 	DELVE = 2, -- delves and public dungeons
 	DOLMEN = 3, -- dolmens and geysers,
 	PLEDGE = 4,
-	MISC = 5
+	MISC = 5,
+	WRIT = 6
 }
 	
 DQT.Quest.QUEST_TYPE_ENUM = QUEST_TYPE_ENUM
@@ -78,6 +80,10 @@ end
 
 function QuestType:getQuests()
 	return self._quests
+end
+
+function QuestType:getType()
+	return self._type
 end
 
 function QuestType:isShareable()

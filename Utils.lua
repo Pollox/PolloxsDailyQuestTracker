@@ -39,14 +39,14 @@ end
 
 --[[Calculates time of next daily quest reset in UTC.
     
-	Reset is at 6am UTC. If your computer clock is off, this will be off.
+	Reset is at 10am UTC. If your computer clock is off, this will be off.
 	
 	@return reset time in UTC seconds
 --]]
 function Utils:getResetTime()
 	local currentDate = os.date("!*t")
 	local resetTime = os.time({year=currentDate.year, month=currentDate.month, day=currentDate.day,
-		hour=6, minute=0, second=0, isdst=currentDate.isdst})
+		hour=4, minute=0, second=0, isdst=currentDate.isdst})
 	local currentTime = os.time(currentDate)
 	
 	-- if reset time has already happened today, increment to tomorrow's reset time

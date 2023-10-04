@@ -11,10 +11,13 @@ Settings.panelData = {
 -- Section name -> should show section
 Settings.sectionsToShow = {}
 
--- @param savedSettings settings table that gets saved to disk
+--[[
+
+	@param savedSettings settings table that gets saved to disk
+]]
 function Settings:initialize(savedSettings)
 	self.settings = savedSettings
-	local LAM = LibStub("LibAddonMenu-2.0")
+	local LAM = LibAddonMenu2
 	LAM:RegisterAddonPanel(DQT.Main.name, self.panelData)
 
 	local optionsData = {}
@@ -63,8 +66,9 @@ function Settings:initialize(savedSettings)
 end
 
 --[[
+	
 	@param section quest section or timer section
---]]
+]]
 function Settings:shouldShowSection(section)
 	return self.settings.sectionsToShow[section:getName()]
 end

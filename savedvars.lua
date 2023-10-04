@@ -75,11 +75,11 @@ function SV:getAccountDefaults()
 		charactersToShow[character.id] = true
 	end
 	
-	-- by default, hide all sections
+	-- by default, show all sections
 	local sectionsToShow = {}
 	
 	for _, section in ipairs(DQT.Info.QuestSections) do
-		sectionsToShow[section:getName()] = false
+		sectionsToShow[section:getName()] = true
 	end
 	
 	return {

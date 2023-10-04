@@ -14,7 +14,7 @@
 		</Label>
 		
 		<Control name="DQTTimer" inherits="ZO_TreeEntry" virtual="true">
-			<Dimensions y="24" />
+			<Dimensions y="42" />
 			<Controls>
 				<Label name="$(parent)Name" font="ZoFontGame">
 					<Dimensions x="210" />
@@ -22,15 +22,15 @@
 				</Label>
 				
 				<!-- HACK: Couldn't figure out how to dynamically add columns to a tree node, nor how to add them to the template, so hardcoding here -->
-				<Label name="$(parent)Status1" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status2" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status3" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status4" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status5" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status6" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status7" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status8" inherits="DQTTimerLabel" />
-				<Label name="$(parent)Status9" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status1"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status2"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status3"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status4"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status5"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status6"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status7"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status8"  inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status9"  inherits="DQTTimerLabel" />
 				<Label name="$(parent)Status10" inherits="DQTTimerLabel" />
 				<Label name="$(parent)Status11" inherits="DQTTimerLabel" />
 				<Label name="$(parent)Status12" inherits="DQTTimerLabel" />
@@ -40,6 +40,8 @@
 				<Label name="$(parent)Status16" inherits="DQTTimerLabel" />
 				<Label name="$(parent)Status17" inherits="DQTTimerLabel" />
 				<Label name="$(parent)Status18" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status19" inherits="DQTTimerLabel" />
+				<Label name="$(parent)Status20" inherits="DQTTimerLabel" />
 			</Controls>
 		</Control>
 		
@@ -54,7 +56,7 @@
 		</Control>
 		
 		<Control name="DQTQuest" inherits="ZO_TreeEntry" virtual="true">
-			<Dimensions y="24" />
+			<Dimensions y="42" />
 			<Controls>
 				<Label name="$(parent)Name" font="QuestFont">
 					<Dimensions x="230" />
@@ -62,15 +64,15 @@
 				</Label>
 				
 				<!-- HACK: Couldn't figure out how to dynamically add columns to a tree node, nor how to add them to the template, so hardcoding here -->
-				<Texture name="$(parent)Status1" inherits="DQTStatus" />
-				<Texture name="$(parent)Status2" inherits="DQTStatus" />
-				<Texture name="$(parent)Status3" inherits="DQTStatus" />
-				<Texture name="$(parent)Status4" inherits="DQTStatus" />
-				<Texture name="$(parent)Status5" inherits="DQTStatus" />
-				<Texture name="$(parent)Status6" inherits="DQTStatus" />
-				<Texture name="$(parent)Status7" inherits="DQTStatus" />
-				<Texture name="$(parent)Status8" inherits="DQTStatus" />
-				<Texture name="$(parent)Status9" inherits="DQTStatus" />
+				<Texture name="$(parent)Status1"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status2"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status3"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status4"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status5"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status6"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status7"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status8"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status9"  inherits="DQTStatus" />
 				<Texture name="$(parent)Status10" inherits="DQTStatus" />
 				<Texture name="$(parent)Status11" inherits="DQTStatus" />
 				<Texture name="$(parent)Status12" inherits="DQTStatus" />
@@ -80,12 +82,14 @@
 				<Texture name="$(parent)Status16" inherits="DQTStatus" />
 				<Texture name="$(parent)Status17" inherits="DQTStatus" />
 				<Texture name="$(parent)Status18" inherits="DQTStatus" />
+				<Texture name="$(parent)Status19" inherits="DQTStatus" />
+				<Texture name="$(parent)Status20" inherits="DQTStatus" />
 			</Controls>
 		</Control>
 		
 		<Control name="DQTQuestType" inherits="ZO_TreeHeader" virtual="true">
 			<!-- set y a little larger than DQTStatus y dimension so that there is a little vertical space between rows -->
-			<Dimensions y="26" />
+			<Dimensions y="28" />			
 			<Controls>
 				<Button name="$(parent)Toggle">
 					<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
@@ -106,15 +110,15 @@
 				</Label>
 				
 				<!-- HACK: Couldn't figure out how to dynamically add columns to a tree node, nor how to add them to the template, so hardcoding here -->
-				<Texture name="$(parent)Status1" inherits="DQTStatus" />
-				<Texture name="$(parent)Status2" inherits="DQTStatus" />
-				<Texture name="$(parent)Status3" inherits="DQTStatus" />
-				<Texture name="$(parent)Status4" inherits="DQTStatus" />
-				<Texture name="$(parent)Status5" inherits="DQTStatus" />
-				<Texture name="$(parent)Status6" inherits="DQTStatus" />
-				<Texture name="$(parent)Status7" inherits="DQTStatus" />
-				<Texture name="$(parent)Status8" inherits="DQTStatus" />
-				<Texture name="$(parent)Status9" inherits="DQTStatus" />
+				<Texture name="$(parent)Status1"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status2"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status3"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status4"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status5"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status6"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status7"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status8"  inherits="DQTStatus" />
+				<Texture name="$(parent)Status9"  inherits="DQTStatus" />
 				<Texture name="$(parent)Status10" inherits="DQTStatus" />
 				<Texture name="$(parent)Status11" inherits="DQTStatus" />
 				<Texture name="$(parent)Status12" inherits="DQTStatus" />
@@ -124,6 +128,8 @@
 				<Texture name="$(parent)Status16" inherits="DQTStatus" />
 				<Texture name="$(parent)Status17" inherits="DQTStatus" />
 				<Texture name="$(parent)Status18" inherits="DQTStatus" />
+				<Texture name="$(parent)Status19" inherits="DQTStatus" />
+				<Texture name="$(parent)Status20" inherits="DQTStatus" />
 			</Controls>
 		</Control>
 		
@@ -137,7 +143,7 @@
 			</Controls>
 		</Control>
 		
-        <TopLevelControl name="DQTWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true" resizeHandleSize="8">
+        <TopLevelControl name="DQTWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true" resizeHandleSize="8" tier="MEDIUM">
             <Dimensions x="500" y="500" />
 			<DimensionConstraints minX="200" minY="300" />
             <Anchor point="CENTER" />
